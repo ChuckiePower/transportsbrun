@@ -133,7 +133,7 @@ export default function PlateauGruePage() {
             />
             <p className="prose-brun text-steel">{renderRich(page.quality.network)}</p>
           </aside>
-          <p className="border-l-4 border-navy pl-5 font-display text-[clamp(1.5rem,1.2rem+1.2vw,2.1rem)] leading-tight font-semibold lg:col-span-12">
+          <p className="border-l-4 border-navy pl-5 font-display text-[clamp(1.5rem,1.2rem+1.2vw,2.1rem)] leading-tight font-bold lg:col-span-12">
             {page.quality.tagline}
           </p>
         </Container>

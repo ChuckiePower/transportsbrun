@@ -127,7 +127,7 @@ export default function SavoirFairePage() {
 
       <Section spacing="tight" aria-label="En résumé">
         <Container size="narrow">
-          <p className="border-l-4 border-navy pl-5 font-display text-[clamp(1.5rem,1.2rem+1.2vw,2.1rem)] leading-tight font-semibold">
+          <p className="border-l-4 border-navy pl-5 font-display text-[clamp(1.5rem,1.2rem+1.2vw,2.1rem)] leading-tight font-bold">
             {page.closing}
           </p>
         </Container>

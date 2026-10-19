@@ -2,8 +2,8 @@ import localFont from "next/font/local";
 
 /** Titres : Barlow Condensed (grotesque condensée, OFL), auto-hébergée */
 export const fontDisplay = localFont({
+  // Une seule graisse (700) : une requête de police en moins au premier affichage
   src: [
-    { path: "../fonts/barlow-condensed-latin-600-normal.woff2", weight: "600", style: "normal" },
     { path: "../fonts/barlow-condensed-latin-700-normal.woff2", weight: "700", style: "normal" },
   ],
   variable: "--font-barlow",

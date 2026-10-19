@@ -25,3 +25,4 @@ blob-report/
 *.log
 transports-brun-site.zip
 __pycache__/
+.playwright/

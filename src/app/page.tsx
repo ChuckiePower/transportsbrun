@@ -28,6 +28,8 @@ export default function HomePage() {
           id={page.hero.photo}
           fill
           preload
+          decoding="sync"
+          fetchPriority="high"
           quality={70}
           sizes="100vw"
           className="-z-20 object-cover object-[62%_center] lg:object-center"

@@ -5,7 +5,10 @@ import { mailtoHref, mainEmail, mainPhone, site, telHref } from "@/content/site"
 /** Barre supérieure (tablette et ordinateur) : téléphone, e-mail, horaires, Facebook */
 export function TopBar() {
   return (
-    <div className="on-dark hidden bg-ink text-[0.95rem] text-silver md:block">
+    <aside
+      aria-label="Contact rapide"
+      className="on-dark hidden bg-ink text-[0.95rem] text-silver md:block"
+    >
       <Container className="flex h-10 items-center justify-between gap-6">
         <ul className="flex items-center gap-6">
           <li>
@@ -41,6 +44,6 @@ export function TopBar() {
           <span className="sr-only">Transports Brun sur Facebook (nouvel onglet)</span>
         </a>
       </Container>
-    </div>
+    </aside>
   );
 }

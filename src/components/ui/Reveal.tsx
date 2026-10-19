@@ -1,11 +1,14 @@
 "use client";
 
-import { LazyMotion, domAnimation, m } from "motion/react";
-import type { ReactNode } from "react";
+import { inView } from "motion";
+import { animate } from "motion/mini";
+import { useEffect, useRef, type ReactNode } from "react";
 
 /**
- * Révélation discrète au défilement. Désactivée :
- * - si prefers-reduced-motion (règle CSS [data-reveal] dans globals.css) ;
+ * Révélation discrète au défilement, avec Motion en version légère
+ * (inView + animate WAAPI, ~3 Ko) pour garder un JavaScript initial minimal.
+ * Désactivée :
+ * - si prefers-reduced-motion (contenu affiché immédiatement, règle CSS [data-reveal]) ;
  * - sans JavaScript (règle <noscript> du layout).
  * Ne jamais l'utiliser sur l'élément LCP (hero).
  */
@@ -20,18 +23,40 @@ export function Reveal({
   delay?: number;
   y?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.style.opacity = "1";
+      el.style.transform = "none";
+      return;
+    }
+    return inView(
+      el,
+      () => {
+        animate(
+          el,
+          { opacity: [0, 1], transform: [`translateY(${y}px)`, "translateY(0)"] },
+          { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
+        ).then(() => {
+          el.style.opacity = "1";
+          el.style.transform = "none";
+        });
+      },
+      { margin: "0px 0px -8% 0px" },
+    );
+  }, [delay, y]);
+
   return (
-    <LazyMotion features={domAnimation} strict>
-      <m.div
-        data-reveal=""
-        className={className}
-        initial={{ opacity: 0, y }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "0px 0px -8% 0px" }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
-      >
-        {children}
-      </m.div>
-    </LazyMotion>
+    <div
+      ref={ref}
+      data-reveal=""
+      className={className}
+      style={{ opacity: 0, transform: `translateY(${y}px)` }}
+    >
+      {children}
+    </div>
   );
 }

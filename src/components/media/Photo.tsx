@@ -1,5 +1,6 @@
 import Image, { type ImageProps } from "next/image";
 import { photo, type PhotoId } from "@/content/gallery";
+import { blurBackground } from "@/lib/placeholder";
 
 type Props = Omit<
   ImageProps,
@@ -14,7 +15,14 @@ type Props = Omit<
  * Photo de la photothèque : dimensions, flou de chargement et texte alternatif
  * viennent de src/content/gallery.ts.
  */
-export function Photo({ id, decorative = false, sizes = "100vw", quality = 75, ...rest }: Props) {
+export function Photo({
+  id,
+  decorative = false,
+  sizes = "100vw",
+  quality = 75,
+  style,
+  ...rest
+}: Props) {
   const p = photo(id);
   return (
     <Image
@@ -22,7 +30,7 @@ export function Photo({ id, decorative = false, sizes = "100vw", quality = 75, .
       alt={decorative ? "" : p.alt}
       sizes={sizes}
       quality={quality}
-      placeholder="blur"
+      style={{ ...blurBackground(p.image), ...style }}
       {...rest}
     />
   );

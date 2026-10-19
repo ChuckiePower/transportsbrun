@@ -32,7 +32,9 @@ export function PageHero({
           <Photo
             id={photo}
             fill
-            preload
+            loading="eager"
+            decoding="sync"
+            fetchPriority="high"
             quality={70}
             sizes="100vw"
             className="-z-20 object-cover"

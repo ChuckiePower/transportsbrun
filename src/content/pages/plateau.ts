@@ -4,7 +4,7 @@ import type { PageMeta } from "./types";
 
 export const plateauPage = {
   meta: {
-    title: fr`Camion-grue et transport plateau, Haut-Rhin`,
+    title: fr`Transport plateau, camion-grue – Haut-Rhin`,
     description: fr`Transport par plateau et camion-grue dans le Haut-Rhin (Alsace) : charges hors normes, convois exceptionnels cat. 1 et 2, ADR. Une logistique flexible.`,
     ogPhoto: "grue/camion-grue-volvo-levage-module",
     ogTitle: fr`Transport plateau et camion-grue dans le Haut-Rhin`,
