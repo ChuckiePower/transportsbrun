@@ -141,7 +141,7 @@ export default function PlateauGruePage() {
 
       {/* Galerie */}
       <Section tone="white" aria-labelledby="galerie-titre">
-        <Container size="wide">
+        <Container>
           <SectionHeading
             id="galerie-titre"
             eyebrow={`${plateauGallery.length} photos`}

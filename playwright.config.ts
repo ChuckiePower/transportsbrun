@@ -47,6 +47,8 @@ export default defineConfig({
     env: {
       PORT: String(PORT),
       MAIL_OUTBOX_FILE: OUTBOX,
+      // Jamais d'envoi réel pendant les tests, même si un .env local définit un SMTP
+      SMTP_HOST: "",
       SITE_URL: "https://transports-brun.com",
     },
   },

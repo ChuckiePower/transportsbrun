@@ -122,7 +122,7 @@ export default function MarchandisesPage() {
 
       {/* Galerie */}
       <Section tone="white" aria-labelledby="galerie-titre">
-        <Container size="wide">
+        <Container>
           <SectionHeading
             id="galerie-titre"
             eyebrow={`${marchandisesGallery.length} photos`}

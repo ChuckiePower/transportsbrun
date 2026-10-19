@@ -134,9 +134,9 @@ export default function HomePage() {
               {page.equipment.linkLabel}
             </ButtonLink>
           </div>
-          <ul className="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-5">
+          <ul className="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0">
             {equipmentCategories.map((cat, i) => (
-              <li key={cat.id} className="w-[72%] shrink-0 snap-start sm:w-auto">
+              <li key={cat.id} className="w-[72%] shrink-0 snap-start sm:w-[40%] lg:w-auto">
                 <Reveal delay={i * 0.05}>
                   <Link
                     href={`/notre-equipement#${cat.id}`}
@@ -147,7 +147,7 @@ export default function HomePage() {
                         id={cat.photos[0]!}
                         fill
                         decorative
-                        sizes="(min-width: 1024px) 19vw, (min-width: 640px) 45vw, 72vw"
+                        sizes="(min-width: 1024px) 19vw, (min-width: 640px) 40vw, 72vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <span className="tabular absolute top-3 left-3 rounded-xs bg-ink/80 px-2 py-0.5 font-display text-sm font-bold text-white">

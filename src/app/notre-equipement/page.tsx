@@ -102,7 +102,7 @@ export default function EquipementPage() {
           tone={i % 2 === 0 ? "sand" : "paper"}
           aria-labelledby={`${cat.id}-titre`}
         >
-          <Container size="wide">
+          <Container>
             <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p aria-hidden="true" className="tabular font-display text-xl font-bold text-navy">

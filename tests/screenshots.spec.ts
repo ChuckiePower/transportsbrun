@@ -26,7 +26,12 @@ for (const p of pages) {
         })
         .catch(() => {});
       await page.waitForTimeout(300);
-      await page.screenshot({ path: `docs/screenshots/${p.name}-${width}.png`, fullPage: true });
+      await page.screenshot({
+        path: `docs/screenshots/${p.name}-${width}.jpg`,
+        fullPage: true,
+        type: "jpeg",
+        quality: 62,
+      });
     });
   }
 }
