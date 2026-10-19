@@ -3,25 +3,23 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { Icon, type IconName } from "./Icon";
 
-export type ButtonVariant = "signal" | "navy" | "outline" | "outline-light" | "ghost";
-type Size = "md" | "lg";
+export type ButtonVariant = "primary" | "secondary" | "on-night" | "link";
+type Size = "md" | "sm";
 
 const base =
-  "group inline-flex items-center justify-center gap-2.5 rounded-sm font-display font-bold uppercase tracking-wide transition-[background-color,color,border-color,box-shadow,transform] duration-150 select-none disabled:cursor-not-allowed disabled:opacity-60 active:translate-y-px";
+  "group/btn relative inline-flex items-center justify-center gap-2.5 rounded-full font-display font-semibold whitespace-nowrap select-none transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out-soft active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:transform-none";
 
 const variants: Record<ButtonVariant, string> = {
-  // CTA principal : jaune signalisation, texte graphite
-  signal:
-    "bg-signal text-ink shadow-[inset_0_-3px_0_rgb(0_0_0/0.18)] hover:bg-signal-600 border border-signal-600/60",
-  navy: "bg-navy text-white hover:bg-navy-700 shadow-[inset_0_-3px_0_rgb(0_0_0/0.25)]",
-  outline: "border-2 border-ink text-ink hover:bg-ink hover:text-white",
-  "outline-light": "border-2 border-white/80 text-white hover:bg-white hover:text-ink",
-  ghost: "text-navy underline-offset-4 hover:underline px-0",
+  // Action principale : jaune, texte bleu nuit, ombre jaune douce, reflet au survol
+  primary: "btn-shine bg-sun text-ink shadow-sun hover:-translate-y-px hover:bg-sun-hover",
+  secondary: "border-[1.5px] border-line bg-surface text-ink hover:border-ink",
+  "on-night": "border-[1.5px] border-white/35 bg-white/5 text-white hover:border-white hover:bg-white/10",
+  link: "px-0 text-brand underline-offset-4 hover:underline",
 };
 
 const sizes: Record<Size, string> = {
-  md: "min-h-11 px-5 text-[1.05rem]",
-  lg: "min-h-13 px-7 text-[1.2rem]",
+  md: "min-h-13 px-7 text-[0.95rem]",
+  sm: "min-h-11 px-5 text-[0.9rem]",
 };
 
 type Common = {
@@ -33,20 +31,21 @@ type Common = {
   className?: string;
 };
 
-function Inner({
-  icon,
-  iconPosition = "end",
-  children,
-}: Pick<Common, "icon" | "iconPosition" | "children">) {
-  const ic = icon ? (
-    <Icon
-      name={icon}
+/** Flèche dans un petit rond qui glisse au survol ; autres icônes simples */
+function Inner({ icon, iconPosition = "end", variant, children }: Pick<Common, "icon" | "iconPosition" | "children" | "variant">) {
+  const ic = !icon ? null : icon === "arrowRight" ? (
+    <span
+      aria-hidden="true"
       className={cn(
-        "size-[1.1em] shrink-0",
-        icon === "arrowRight" && "transition-transform group-hover:translate-x-0.5",
+        "inline-flex size-6 items-center justify-center rounded-full transition-transform duration-200 ease-out-soft group-hover/btn:translate-x-[3px]",
+        variant === "primary" ? "bg-ink/10" : variant === "on-night" ? "bg-white/15" : "bg-brand-soft text-brand",
       )}
-    />
-  ) : null;
+    >
+      <Icon name="arrowRight" className="size-3.5" strokeWidth={2.25} />
+    </span>
+  ) : (
+    <Icon name={icon} className="size-[18px] shrink-0" />
+  );
   return (
     <>
       {iconPosition === "start" ? ic : null}
@@ -56,47 +55,45 @@ function Inner({
   );
 }
 
-export function buttonClasses(
-  variant: ButtonVariant = "signal",
-  size: Size = "md",
-  className?: string,
-) {
-  return cn(base, variants[variant], variant !== "ghost" && sizes[size], className);
+export function buttonClasses(variant: ButtonVariant = "primary", size: Size = "md", className?: string) {
+  return cn(base, variants[variant], variant !== "link" && sizes[size], className);
 }
 
-/** Lien stylé en bouton : interne (next/link) ou externe/tel/mailto (<a>) */
+/** Lien stylé en bouton : interne (next/link) ou tel:/mailto:/externe (<a>) */
 export function ButtonLink({
   href,
-  variant,
+  variant = "primary",
   size,
   icon,
   iconPosition,
   children,
   className,
+  magnetic = variant === "primary",
   ...rest
-}: Common & { href: string } & Omit<ComponentPropsWithoutRef<"a">, "href" | "children">) {
+}: Common & { href: string; magnetic?: boolean } & Omit<ComponentPropsWithoutRef<"a">, "href" | "children">) {
   const cls = buttonClasses(variant, size, className);
   const inner = (
-    <Inner icon={icon} iconPosition={iconPosition}>
+    <Inner icon={icon} iconPosition={iconPosition} variant={variant}>
       {children}
     </Inner>
   );
+  const data = magnetic ? { "data-magnetic": "" } : {};
   if (href.startsWith("/") || href.startsWith("#")) {
     return (
-      <Link href={href} className={cls} {...rest}>
+      <Link href={href} className={cls} {...data} {...rest}>
         {inner}
       </Link>
     );
   }
   return (
-    <a href={href} className={cls} {...rest}>
+    <a href={href} className={cls} {...data} {...rest}>
       {inner}
     </a>
   );
 }
 
 export function Button({
-  variant,
+  variant = "primary",
   size,
   icon,
   iconPosition,
@@ -107,7 +104,7 @@ export function Button({
 }: Common & Omit<ComponentPropsWithoutRef<"button">, "children">) {
   return (
     <button type={type} className={buttonClasses(variant, size, className)} {...rest}>
-      <Inner icon={icon} iconPosition={iconPosition}>
+      <Inner icon={icon} iconPosition={iconPosition} variant={variant}>
         {children}
       </Inner>
     </button>

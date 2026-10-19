@@ -1,13 +1,13 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/cn";
 
-export type Tone = "paper" | "sand" | "white" | "ink";
+export type Tone = "cream" | "cream-2" | "surface" | "none";
 
 const tones: Record<Tone, string> = {
-  paper: "bg-paper text-ink",
-  sand: "bg-sand text-ink",
-  white: "bg-white text-ink",
-  ink: "on-dark bg-ink text-white",
+  cream: "bg-cream",
+  "cream-2": "bg-cream-2",
+  surface: "bg-surface",
+  none: "",
 };
 
 type Props = ComponentPropsWithoutRef<"section"> & {
@@ -15,13 +15,14 @@ type Props = ComponentPropsWithoutRef<"section"> & {
   spacing?: "default" | "tight" | "none";
 };
 
-export function Section({ tone = "paper", spacing = "default", className, ...rest }: Props) {
+/** Section : 112 px de respiration (72 px en mobile) */
+export function Section({ tone = "cream", spacing = "default", className, ...rest }: Props) {
   return (
     <section
       className={cn(
         tones[tone],
-        spacing === "default" && "py-16 sm:py-20 lg:py-28",
-        spacing === "tight" && "py-10 sm:py-14",
+        spacing === "default" && "py-[72px] lg:py-28",
+        spacing === "tight" && "py-12 lg:py-16",
         className,
       )}
       {...rest}

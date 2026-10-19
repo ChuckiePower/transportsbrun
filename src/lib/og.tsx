@@ -6,8 +6,8 @@ import type { PhotoId } from "@/content/gallery";
 import { site } from "@/content/site";
 
 /**
- * Image Open Graph (1200×630) générée à la compilation : photo réelle de la
- * photothèque, voile sombre, titre de la page et logo.
+ * Image Open Graph (1200×630) générée à la compilation, direction « Route douce » :
+ * photo réelle arrondie sur fond nuit, voile doux, titre en Plus Jakarta Sans, logo en carte blanche.
  */
 export const ogSize = { width: 1200, height: 630 };
 
@@ -30,8 +30,8 @@ export async function renderOg({ title, photo }: { title: string; photo: PhotoId
         .toBuffer(),
     ),
     readFile(path.join(root, "content/brand/logo-transports-brun.png")),
-    readFile(path.join(root, "src/fonts/og/barlow-condensed-latin-700-normal.woff")),
-    readFile(path.join(root, "src/fonts/og/source-sans-3-latin-600-normal.woff")),
+    readFile(path.join(root, "src/fonts/og/plus-jakarta-sans-latin-800-normal.woff")),
+    readFile(path.join(root, "src/fonts/og/plus-jakarta-sans-latin-600-normal.woff")),
   ]);
 
   return new ImageResponse(
@@ -41,29 +41,42 @@ export async function renderOg({ title, photo }: { title: string; photo: PhotoId
         height: "100%",
         display: "flex",
         position: "relative",
-        background: "#131417",
+        background: "#14213d",
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={`data:image/jpeg;base64,${bg.toString("base64")}`}
-        width={ogSize.width}
-        height={ogSize.height}
-        alt=""
-        style={{ position: "absolute", top: 0, left: 0 }}
-      />
       <div
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          width: ogSize.width,
-          height: ogSize.height,
+          top: 20,
+          left: 20,
+          width: ogSize.width - 40,
+          height: ogSize.height - 40,
           display: "flex",
-          background:
-            "linear-gradient(90deg, rgba(19,20,23,0.94) 0%, rgba(19,20,23,0.8) 48%, rgba(19,20,23,0.25) 100%)",
+          borderRadius: 32,
+          overflow: "hidden",
         }}
-      />
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`data:image/jpeg;base64,${bg.toString("base64")}`}
+          width={ogSize.width}
+          height={ogSize.height}
+          alt=""
+          style={{ position: "absolute", top: -20, left: -20 }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: ogSize.width - 40,
+            height: ogSize.height - 40,
+            display: "flex",
+            background:
+              "linear-gradient(35deg, rgba(20,33,61,0.92) 0%, rgba(20,33,61,0.7) 45%, rgba(20,33,61,0.1) 85%)",
+          }}
+        />
+      </div>
       <div
         style={{
           position: "relative",
@@ -79,7 +92,7 @@ export async function renderOg({ title, photo }: { title: string; photo: PhotoId
             style={{
               display: "flex",
               background: "#ffffff",
-              borderRadius: 6,
+              borderRadius: 20,
               padding: "14px 18px",
             }}
           >
@@ -93,22 +106,18 @@ export async function renderOg({ title, photo }: { title: string; photo: PhotoId
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", maxWidth: 820 }}>
-          <div style={{ display: "flex", gap: 6, marginBottom: 22 }}>
-            <div style={{ width: 70, height: 8, background: "#6c6cf0" }} />
-            <div style={{ width: 70, height: 8, background: "#8c9099" }} />
-            <div style={{ width: 70, height: 8, background: "#e2e2e2" }} />
-          </div>
           {/* Un bloc par mot : évite les coupures sur les traits d'union (Haut-Rhin) */}
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
               columnGap: 18,
-              fontFamily: "Barlow Condensed",
-              fontSize: 74,
-              lineHeight: 0.98,
+              fontFamily: "Plus Jakarta Sans",
+              fontWeight: 800,
+              fontSize: 64,
+              lineHeight: 1.08,
+              letterSpacing: -1.5,
               color: "#ffffff",
-              textTransform: "uppercase",
             }}
           >
             {title.split(/\s+/).map((word, i) => (
@@ -117,10 +126,21 @@ export async function renderOg({ title, photo }: { title: string; photo: PhotoId
               </span>
             ))}
           </div>
-          <div
-            style={{ fontFamily: "Source Sans 3", fontSize: 30, color: "#ffc21a", marginTop: 26 }}
-          >
-            {`${site.name} · ${site.address.city} (${site.address.department})`}
+          <div style={{ display: "flex", marginTop: 28 }}>
+            <div
+              style={{
+                display: "flex",
+                fontFamily: "Plus Jakarta Sans",
+                fontWeight: 600,
+                fontSize: 26,
+                color: "#14213d",
+                background: "#ffc21a",
+                borderRadius: 999,
+                padding: "10px 24px",
+              }}
+            >
+              {`${site.name} · ${site.address.city} (${site.address.department})`}
+            </div>
           </div>
         </div>
       </div>
@@ -128,8 +148,8 @@ export async function renderOg({ title, photo }: { title: string; photo: PhotoId
     {
       ...ogSize,
       fonts: [
-        { name: "Barlow Condensed", data: display, weight: 700, style: "normal" },
-        { name: "Source Sans 3", data: text, weight: 600, style: "normal" },
+        { name: "Plus Jakarta Sans", data: display, weight: 800, style: "normal" },
+        { name: "Plus Jakarta Sans", data: text, weight: 600, style: "normal" },
       ],
     },
   );

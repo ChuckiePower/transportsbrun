@@ -1,23 +1,23 @@
 import localFont from "next/font/local";
 
-/** Titres : Barlow Condensed (grotesque condensée, OFL), auto-hébergée */
+/** Titres, navigation, boutons : Plus Jakarta Sans variable (OFL), auto-hébergée */
 export const fontDisplay = localFont({
-  // Une seule graisse (700) : une requête de police en moins au premier affichage
-  src: [
-    { path: "../fonts/barlow-condensed-latin-700-normal.woff2", weight: "700", style: "normal" },
-  ],
-  variable: "--font-barlow",
+  src: "../fonts/plus-jakarta-sans-latin-wght-normal.woff2",
+  weight: "200 800",
+  style: "normal",
+  variable: "--font-jakarta",
   display: "swap",
-  fallback: ["Arial Narrow", "Roboto Condensed", "sans-serif"],
+  fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "Roboto", "sans-serif"],
   adjustFontFallback: "Arial",
 });
 
-/** Texte courant : Source Sans 3 variable (OFL), auto-hébergée */
+/** Texte courant : Inter variable (OFL), auto-hébergée */
 export const fontSans = localFont({
-  src: "../fonts/source-sans-3-latin-wght-normal.woff2",
-  weight: "200 900",
+  src: "../fonts/inter-latin-wght-normal.woff2",
+  weight: "100 900",
   style: "normal",
-  variable: "--font-source-sans",
+  variable: "--font-inter",
   display: "swap",
-  fallback: ["system-ui", "Segoe UI", "Roboto", "sans-serif"],
+  fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "Roboto", "sans-serif"],
+  adjustFontFallback: "Arial",
 });
