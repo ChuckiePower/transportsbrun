@@ -1,0 +1,27 @@
+# dépendances
+node_modules/
+.pnpm-store/
+
+# build Next.js
+.next/
+out/
+build/
+next-env.d.ts
+*.tsbuildinfo
+
+# environnement : jamais de secrets dans le dépôt
+.env
+.env*
+!.env.example
+
+# tests / rapports
+test-results/
+playwright-report/
+blob-report/
+/docs/lighthouse/*.html
+
+# divers
+.DS_Store
+*.log
+transports-brun-site.zip
+__pycache__/

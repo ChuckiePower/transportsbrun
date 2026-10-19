@@ -1,0 +1,1227 @@
+{
+  "_note": "Photos réelles de Transports Brun extraites du miroir du site actuel (variantes redimensionnées « /optimize/ »). Pour chaque photo, la plus grande variante disponible a été conservée ; les autres recadrages sont listés dans variantesEcartees. originalHebergement = chemin du fichier d'origine sur l'hébergement Joomla (quand il figure dans le HTML des galeries) : à récupérer pour remplacer la photo en haute définition.",
+  "photos": [
+    {
+      "fichier": "content/photos/grue/camion-grue-volvo-levage-module.jpg",
+      "categorie": "grue",
+      "largeur": 2550,
+      "hauteur": 1434,
+      "alt": "Camion-grue Volvo FM de Transports Brun soulevant un module préfabriqué sur une zone d'activité",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-7802bdca.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-1-478d6b0c.jpg",
+        "source-site/optimize/transports-brun-notre-equipement-15-7877cbc5.jpeg"
+      ],
+      "pagesActuelles": [
+        "/",
+        "/notre-equipement",
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/notre-equipement/galleries/camion-grue/image23.jpeg"
+    },
+    {
+      "fichier": "content/photos/grue/camion-grue-vignoble.jpg",
+      "categorie": "grue",
+      "largeur": 960,
+      "hauteur": 466,
+      "alt": "Bras de grue déployé au-dessus d'un vignoble, le camion-grue stationné en contrebas",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-b4bcd077.jpg",
+      "variantesEcartees": [
+        "source-site/images/slider/Attach011.jpg"
+      ],
+      "pagesActuelles": [
+        "/"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/grue/bras-de-grue-deploye.jpg",
+      "categorie": "grue",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Bras articulé d'un camion-grue Scania déployé sur une aire de stationnement",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-2-a9164ecb.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/transports-plateaux/galerie/image661.jpg"
+    },
+    {
+      "fichier": "content/photos/grue/camion-grue-scania-gros-plan.jpg",
+      "categorie": "grue",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Grue repliée sur un porteur Scania de Transports Brun, vue rapprochée",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-3-132058f9.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/transports-plateaux/galerie/image662.jpg"
+    },
+    {
+      "fichier": "content/photos/grue/camion-grue-scania-stabilisateurs.jpg",
+      "categorie": "grue",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Camion-grue Scania calé sur ses stabilisateurs, grue en extension",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-4-3b7bfcc0.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/transports-plateaux/galerie/image663.jpg"
+    },
+    {
+      "fichier": "content/photos/grue/camion-grue-chantier-structure.jpg",
+      "categorie": "grue",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Camion-grue déchargeant une structure métallique en treillis sur un terrain de chantier, au coucher du soleil",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-8-7d775468.JPG",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/gallery/grues/IMG-2885.JPG"
+    },
+    {
+      "fichier": "content/photos/grue/camion-grue-volvo-fm.jpg",
+      "categorie": "grue",
+      "largeur": 799,
+      "hauteur": 600,
+      "alt": "Camion-grue Volvo FM, grue dressée, sur une aire de stationnement au petit matin",
+      "sourceMiroir": "source-site/optimize/transports-brun-notre-equipement-14-45526e1d.png",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-17-1bfc5fc4.jpg"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/notre-equipement/galleries/camion-grue/image22.png"
+    },
+    {
+      "fichier": "content/photos/grue/camion-grue-batiment-historique.jpg",
+      "categorie": "grue",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Camion-grue Scania intervenant devant un bâtiment historique en rénovation, sous échafaudage",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-12-bb49f3bf.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-16-bb514337.jpg"
+      ],
+      "pagesActuelles": [
+        "/",
+        "/notre-equipement"
+      ],
+      "originalHebergement": "images/accueil/galerie/20251022_170704.jpg"
+    },
+    {
+      "fichier": "content/photos/grue/camion-grue-levage-centre-ville.jpg",
+      "categorie": "grue",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Camion-grue Scania en levage le long d'un immeuble, en centre-ville",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-13-f44e068c.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-17-ae9c408f.jpg"
+      ],
+      "pagesActuelles": [
+        "/",
+        "/notre-equipement"
+      ],
+      "originalHebergement": "images/accueil/galerie/20251105_073237.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/plateau-renault-armatures.webp",
+      "categorie": "plateau",
+      "largeur": 960,
+      "hauteur": 466,
+      "alt": "Tracteur Renault T attelé à une semi-remorque plateau chargée d'armatures métalliques, devant un entrepôt",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-1-91785949.webp",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/plateau/plateau-man-voie-rapide.jpg",
+      "categorie": "plateau",
+      "largeur": 960,
+      "hauteur": 466,
+      "alt": "Tracteur MAN gris et semi-remorque plateau sur une voie rapide",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-6-814dd812.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/plateau/porte-engins-man-ville.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur MAN attelé à une semi-remorque surbaissée orange, dans une rue pavée en ville",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-10-9d54e16c.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/gallery/plateau/1_20231023/IMG-4569.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/camions-nuit-arc-de-triomphe.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Deux camions de Transports Brun de nuit devant l'Arc de Triomphe, à Paris",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-11-dd14f8ce.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/gallery/plateau/1_20231023/IMG-4673.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/plateau-daf-zone-stockage.jpg",
+      "categorie": "plateau",
+      "largeur": 1331,
+      "hauteur": 600,
+      "alt": "Tracteur DAF et semi-remorque plateau sur une zone de stockage de matériaux",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-12-a521b90a.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/snapchat-1975727576-2.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/porte-engins-man-gris.jpg",
+      "categorie": "plateau",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Tracteur MAN gris et porte-engins chargé de matériel de chantier",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-13-bd31d275.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/1645004653368-2.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/porte-engins-pelle-volvo.jpg",
+      "categorie": "plateau",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Pelle sur chenilles Volvo chargée sur une semi-remorque porte-engins tractée par un DAF de Transports Brun",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-10-dfea4cbc.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/"
+      ],
+      "originalHebergement": "images/accueil/galerie/20241129_Messages.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/plateau-route-mouillee.jpg",
+      "categorie": "plateau",
+      "largeur": 1331,
+      "hauteur": 600,
+      "alt": "Camion à plateau, feux allumés, sur une route mouillée en fin de journée",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-14-3b09c051.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/20220330_195903-2.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/plateau-man-coucher-soleil.jpg",
+      "categorie": "plateau",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Tracteur MAN et semi-remorque plateau au bord d'une route, au coucher du soleil",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-16-5f19a4d1.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/20220321_181401.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/module-sur-plateau.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Module préfabriqué ouvert chargé sur une semi-remorque plateau tractée par un Renault",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-18-ccecf998.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-conteneur-profil.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/plateau-chantier-grue-a-tour.jpg",
+      "categorie": "plateau",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Déchargement d'un plateau Renault par une grue à tour sur un chantier de construction",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-19-1b2e440b.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-camion-travaux-btp.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/plateau-chargement-mixte.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Semi-remorque plateau chargée de palettes et d'éléments métalliques, au bord d'une route",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-20-184b3fbb.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-5-0bb100f0.jpeg"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-camion-profil.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/charge-longue-nuit.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur Renault T de nuit avec une charge longue balisée rouge et blanc sur le plateau",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-21-7766e2c1.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-camion-nuit.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/plateau-bottes-de-paille.jpg",
+      "categorie": "plateau",
+      "largeur": 1236,
+      "hauteur": 600,
+      "alt": "Camion Scania transportant des bottes de paille sur plateau, dans la brume",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-22-529aed2f.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-camion-mottes.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/poutres-beton-chantier.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Semi-remorque plateau chargée de poutres en béton sur un chantier",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-23-ab6466a0.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-4-7b266377.jpeg"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-camion-marchandises-btp.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/convoi-exceptionnel-module-arriere.jpg",
+      "categorie": "plateau",
+      "largeur": 446,
+      "hauteur": 600,
+      "alt": "Vue arrière d'un plateau chargé d'un module, panneau « convoi exceptionnel » en place",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-24-9f8c135d.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-camion-intrieur.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/scania-plateau-caisses-bois.jpg",
+      "categorie": "plateau",
+      "largeur": 291,
+      "hauteur": 600,
+      "alt": "Tracteur Scania et plateau chargé de caisses en bois, vue de face",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-25-3a324c78.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-camion-face.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/chargement-module-grue.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Chargement à la grue d'un module préfabriqué sur une semi-remorque plateau",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-26-31dca4ca.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-camion-conteneur-vide.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/convoi-exceptionnel-man-conteneur.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur MAN en convoi exceptionnel transportant un conteneur et un engin de levage jaune",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-27-6d5aa030.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-1-e89c16b2.jpeg"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transport-routier-plateaux-haut-rhin-alsace-camion-bleu.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/plateau-treillis-soudes.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur MAN et semi-remorque plateau chargée de panneaux de treillis soudés",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-28-6eb165e9.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/camion-mini-transport-brun.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/renault-caisses-palettes.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Camion Renault feux allumés entre des piles de caisses-palettes en bois et en grillage",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-29-7616e730.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/camion-plateau-transport-brun-pluie.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/man-plateau-jaune-chemin.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur MAN attelé à une semi-remorque plateau jaune sur un chemin de campagne",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-30-4a02ece4.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/camion-plateau-transport-brun-nature.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/volvo-fh-caisses-grillagees.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH et semi-remorque chargée de caisses grillagées, un second camion en arrière-plan",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-33-ddc05b30.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-c42c934b.png"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/Transports-brun-transports-plateaux-camion-arrete.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/volvo-fh-caisses-coucher-soleil.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH et semi-remorque chargée de caisses grillagées, au coucher du soleil",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-34-bfff1ae7.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/Transport-plateaux-transports-brun.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/volvo-bleu-plateau-givre.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH bleu et jaune avec un plateau chargé, dans un champ givré",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-36-c914ef40.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/20210113_084750.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/volvo-bleu-face-givre.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH bleu et jaune vu de face sur un chemin givré",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-37-9328ec19.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/20210113_084802.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/dechargement-poutrelles-acier.jpg",
+      "categorie": "plateau",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Déchargement à la grue de poutrelles en acier depuis un plateau",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-38-ef7605c9.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/FB_IMG_1616047649252.jpg"
+    },
+    {
+      "fichier": "content/photos/plateau/levage-poutrelle-chantier.jpg",
+      "categorie": "plateau",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Levage d'une poutrelle métallique depuis un plateau, sur un terrain en gravier",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-39-13e1de5e.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/FB_IMG_1616047677263.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/renault-tautliner-parking.jpg",
+      "categorie": "marchandises",
+      "largeur": 2550,
+      "hauteur": 1434,
+      "alt": "Tracteur Renault T et semi-remorque bâchée Transports Brun sur une aire de stationnement",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-421e364a.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/marchandises/porteur-man-village.jpg",
+      "categorie": "marchandises",
+      "largeur": 1920,
+      "hauteur": 1080,
+      "alt": "Porteur MAN bâché dans une rue de village fleurie",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-1-bd8d3409.jpeg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/marchandises/porteur-bache-quai.jpg",
+      "categorie": "marchandises",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Porteur bâché, rideau latéral ouvert, sous l'auvent d'un quai de chargement",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-5-68d97049.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-11-cd8f39cb.png"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/20220323_105315-2.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/volvo-tautliner-ouvert.jpg",
+      "categorie": "marchandises",
+      "largeur": 1331,
+      "hauteur": 600,
+      "alt": "Semi-remorque tautliner ouverte sur le côté, tractée par un Volvo FH, sur une aire de chargement",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-9-dd790269.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-12-2847318a.jpeg"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/20220405_111602.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/renault-t-semi-remorque.jpg",
+      "categorie": "marchandises",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur Renault T attelé à une semi-remorque, le long d'un bâtiment en bois",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-14-ab6255f1.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/marchandises/20200825_203617.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/volvo-bleu-tautliner.jpg",
+      "categorie": "marchandises",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH bleu et jaune avec une semi-remorque bâchée",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-17-56415c9e.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/20220321_150004.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/scania-fourgon-entrepot.jpg",
+      "categorie": "marchandises",
+      "largeur": 1236,
+      "hauteur": 600,
+      "alt": "Tracteur Scania et semi-remorque fourgon devant un entrepôt, au crépuscule",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-19-d0953d48.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transports-de-marchandises-et-btp-haut-rhin-alsace-sortie-camion.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/convoi-exceptionnel-cuve.jpg",
+      "categorie": "marchandises",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Convoi exceptionnel : cuve métallique levée à la grue au-dessus d'une semi-remorque Renault",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-20-efc65612.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transports-de-marchandises-et-btp-haut-rhin-alsace-camion-souleve-charge.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/murs-prefabriques-scania.jpg",
+      "categorie": "marchandises",
+      "largeur": 1236,
+      "hauteur": 600,
+      "alt": "Tracteur Scania transportant des murs préfabriqués en béton",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-21-fb9bc349.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transports-de-marchandises-et-btp-haut-rhin-alsace-camion-plateaux.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/scania-conteneur-foret.jpg",
+      "categorie": "marchandises",
+      "largeur": 1236,
+      "hauteur": 600,
+      "alt": "Tracteur Scania tirant un conteneur maritime rouge sur une route forestière",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-22-90e085f3.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transports-de-marchandises-et-btp-haut-rhin-alsace-camion-foret.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/structure-metallique-centrale.jpg",
+      "categorie": "marchandises",
+      "largeur": 1236,
+      "hauteur": 600,
+      "alt": "Semi-remorque chargée d'une structure métallique, tours de refroidissement d'une centrale en arrière-plan",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-23-18eb1d56.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transports-de-marchandises-et-btp-haut-rhin-alsace-camion-echaffaudage.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/cuve-levage-grue.jpg",
+      "categorie": "marchandises",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Grande cuve métallique soulevée par une grue au-dessus d'une semi-remorque Renault",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-24-b06209f0.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-3-5b690c5e.jpeg"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/bagallery/original/transports-de-marchandises-et-btp-haut-rhin-alsace-camion-cuve.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/benne-man-granulats.jpg",
+      "categorie": "marchandises",
+      "largeur": 1234,
+      "hauteur": 600,
+      "alt": "Camion benne MAN sur un site de granulats, chargeuse en arrière-plan",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-25-2247c749.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/marchandises/Camion-transport-marchandises-transport-brun.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/renault-tautliner-cloture.jpg",
+      "categorie": "marchandises",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur Renault T et semi-remorque bâchée le long d'une clôture",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-26-f2034df7.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-10-e8d6c5ed.png"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/marchandises/Camion-transport-brun-de-profil.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/volvo-bleu-tautliner-neige.jpg",
+      "categorie": "marchandises",
+      "largeur": 960,
+      "hauteur": 466,
+      "alt": "Tracteur Volvo FH bleu et jaune avec une semi-remorque bâchée, dans la neige",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-2-477da651.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/marchandises/bache-logo-transports-brun.jpg",
+      "categorie": "marchandises",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Bâche latérale d'une semi-remorque floquée du logo Transports Brun",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-9-814ab72c.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/"
+      ],
+      "originalHebergement": "images/accueil/galerie/20231116_Gallery.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/renault-t-tautliner-ciel-bleu.jpg",
+      "categorie": "marchandises",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Tracteur Renault T et semi-remorque bâchée blanche sous un ciel bleu",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-11-d9b8bee9.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/"
+      ],
+      "originalHebergement": "images/accueil/galerie/20240606_174028.jpg"
+    },
+    {
+      "fichier": "content/photos/marchandises/man-tgx-gris-tautliner.jpg",
+      "categorie": "marchandises",
+      "largeur": 1920,
+      "hauteur": 1080,
+      "alt": "Tracteur MAN TGX gris et semi-remorque bâchée",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-routier-de-marchandises-par-plateau-haut-rhin-alsace-2-4d723af2.jpeg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-8-f476ffce.jpg"
+      ],
+      "pagesActuelles": [
+        "/",
+        "/transport-routier-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/accueil/galerie/IMG_3334.jpg"
+    },
+    {
+      "fichier": "content/photos/equipement/remorque-trax-cadres-beton.jpg",
+      "categorie": "equipement",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Remorque Trax à rampes chargée de cadres en béton préfabriqués",
+      "sourceMiroir": "source-site/optimize/transports-brun-notre-equipement-6-622f3aae.jpeg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/notre-equipement"
+      ],
+      "originalHebergement": "images/notre-equipement/galleries/remorque-trax/image14.jpeg"
+    },
+    {
+      "fichier": "content/photos/equipement/remorque-trax-chargee.jpg",
+      "categorie": "equipement",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Remorque Trax chargée d'éléments en béton, rampes abaissées",
+      "sourceMiroir": "source-site/optimize/transports-brun-notre-equipement-7-b6f37d41.jpeg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/notre-equipement"
+      ],
+      "originalHebergement": "images/notre-equipement/galleries/remorque-trax/image15.jpeg"
+    },
+    {
+      "fichier": "content/photos/equipement/remorque-trax-rampes.jpg",
+      "categorie": "equipement",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Rampes arrière d'une remorque Trax déployées sur un parking",
+      "sourceMiroir": "source-site/optimize/transports-brun-notre-equipement-8-0e3f24c7.jpeg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/notre-equipement"
+      ],
+      "originalHebergement": "images/notre-equipement/galleries/remorque-trax/image16.jpeg"
+    },
+    {
+      "fichier": "content/photos/equipement/remorque-trax-vue-arriere.jpg",
+      "categorie": "equipement",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Vue arrière d'une remorque Trax chargée, rampes au sol",
+      "sourceMiroir": "source-site/optimize/transports-brun-notre-equipement-9-20b0d2e5.jpeg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/notre-equipement"
+      ],
+      "originalHebergement": "images/notre-equipement/galleries/remorque-trax/image17.jpeg"
+    },
+    {
+      "fichier": "content/photos/equipement/tautliner-hayon.jpg",
+      "categorie": "equipement",
+      "largeur": 409,
+      "hauteur": 600,
+      "alt": "Arrière d'une semi-remorque tautliner Transports Brun équipée d'un hayon élévateur",
+      "sourceMiroir": "source-site/optimize/transports-brun-notre-equipement-13-ea3ef408.png",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/notre-equipement"
+      ],
+      "originalHebergement": "images/notre-equipement/galleries/camion-tautliner/image21.png"
+    },
+    {
+      "fichier": "content/photos/flotte/flotte-alignee.jpg",
+      "categorie": "flotte",
+      "largeur": 1920,
+      "hauteur": 910,
+      "alt": "La flotte de tracteurs Transports Brun alignée sur un parc",
+      "sourceMiroir": "source-site/optimize/transports-brun-notre-histoire-a369ed99.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/notre-histoire"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/flotte/daf-xg-montagnes.jpg",
+      "categorie": "flotte",
+      "largeur": 2550,
+      "hauteur": 1434,
+      "alt": "Tracteur DAF XG aux couleurs de Transports Brun, montagnes en arrière-plan",
+      "sourceMiroir": "source-site/optimize/transports-brun-notre-histoire-1-3d9ada8b.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/notre-histoire"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/flotte/daf-passerelle-dunlop.jpg",
+      "categorie": "flotte",
+      "largeur": 1280,
+      "hauteur": 853,
+      "alt": "Tracteur DAF de Transports Brun sous la passerelle Dunlop d'un circuit automobile",
+      "sourceMiroir": "source-site/optimize/transports-brun-notre-histoire-2-07afbcc5.JPG",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/notre-histoire"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/flotte/flotte-nuit.jpg",
+      "categorie": "flotte",
+      "largeur": 2550,
+      "hauteur": 1434,
+      "alt": "Trois tracteurs de Transports Brun, feux allumés, à la tombée de la nuit",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-routier-de-marchandises-par-plateau-haut-rhin-alsace-3a128137.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-routier-haut-rhin-alsace"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/flotte/quatre-tracteurs.jpg",
+      "categorie": "flotte",
+      "largeur": 960,
+      "hauteur": 466,
+      "alt": "Quatre tracteurs Volvo, DAF, MAN et Renault stationnés côte à côte",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-routier-de-marchandises-par-plateau-haut-rhin-alsace-1-4cb22d63.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-routier-haut-rhin-alsace"
+      ],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/flotte/man-tgx-enseigne.jpg",
+      "categorie": "flotte",
+      "largeur": 960,
+      "hauteur": 720,
+      "alt": "Tracteur MAN TGX de Transports Brun stationné devant l'enseigne de l'entreprise",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-4-c705f422.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-9-cb8ab7c6.jpg"
+      ],
+      "pagesActuelles": [
+        "/",
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/gallery/plateau/1_20231023/IMG-3592.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/daf-xg-decoration-noire.jpg",
+      "categorie": "flotte",
+      "largeur": 1067,
+      "hauteur": 600,
+      "alt": "Tracteur DAF XG blanc décoré du grand logo circulaire Transports Brun",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-7-6159156f.jpeg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-5-ae3a7450.jpg"
+      ],
+      "pagesActuelles": [
+        "/",
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/img_3784.jpeg"
+    },
+    {
+      "fichier": "content/photos/flotte/daf-xg-livree.jpg",
+      "categorie": "flotte",
+      "largeur": 1066,
+      "hauteur": 600,
+      "alt": "Tracteur DAF XG aux couleurs de Transports Brun, d'autres camions de la flotte en arrière-plan",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-3-1ccb73b5.jpeg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-6-03e547be.jpg"
+      ],
+      "pagesActuelles": [
+        "/",
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/img_2737.jpeg"
+    },
+    {
+      "fichier": "content/photos/flotte/quatre-tracteurs-ciel-bleu.jpg",
+      "categorie": "flotte",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Quatre tracteurs Transports Brun alignés sous un ciel bleu",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-routiers-de-gros-oeuvre-et-fret-interurbains-7-8d0ed30a.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/"
+      ],
+      "originalHebergement": "images/accueil/galerie/IMG_3452.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/volvo-fh-crepuscule.jpg",
+      "categorie": "flotte",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH de Transports Brun, feux allumés, au crépuscule",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-15-b4da8b43.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/20220321_190500.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/trois-tracteurs-caisses-grillagees.jpg",
+      "categorie": "flotte",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Trois tracteurs de Transports Brun avec des semi-remorques chargées de caisses grillagées",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-31-9897def9.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/Transport-Brun-transport-sur-plateau.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/volvo-fh-blanc.jpg",
+      "categorie": "flotte",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH blanc aux couleurs de Transports Brun sous un ciel nuageux",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-32-ebf7dc6c.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/Transports-plateaux-transport-brun-camion-profil.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/deux-man-tgx.jpg",
+      "categorie": "flotte",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Deux tracteurs MAN TGX de Transports Brun stationnés côte à côte",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-35-0e2ca02f.jpg",
+      "variantesEcartees": [
+        "source-site/optimize/transports-brun-notre-equipement-2-9151b3b0.png"
+      ],
+      "pagesActuelles": [
+        "/notre-equipement",
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/20201113_095358.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/volvo-bleu-neige.jpg",
+      "categorie": "flotte",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH bleu recouvert de neige",
+      "sourceMiroir": "source-site/optimize/transports-brun-transport-plateaux-camion-grue-haut-rhin-alsace-40-98ead597.jpeg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transport-plateaux-camion-grue-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/plateau/Resized_IMG_20210115_140123_563.jpeg"
+    },
+    {
+      "fichier": "content/photos/flotte/man-tgx-blanc.jpg",
+      "categorie": "flotte",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteur MAN TGX blanc de Transports Brun, vue de trois quarts",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-2-d797015a.jpeg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/img_8698-2.jpeg"
+    },
+    {
+      "fichier": "content/photos/flotte/iveco-s-way.jpg",
+      "categorie": "flotte",
+      "largeur": 600,
+      "hauteur": 600,
+      "alt": "Tracteur Iveco S-Way décoré du logo Transports Brun",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-4-96e916fa.jpeg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/image0000001-2.jpeg"
+    },
+    {
+      "fichier": "content/photos/flotte/flotte-alignee-soir.jpg",
+      "categorie": "flotte",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Camions de Transports Brun alignés en fin de journée",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-6-10c37d8f.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/img-1234.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/daf-volvo-man.jpg",
+      "categorie": "flotte",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Tracteurs DAF, Volvo et MAN de Transports Brun stationnés côte à côte",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-7-fe437fd8.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/img-1073.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/flotte-panorama.jpg",
+      "categorie": "flotte",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Vue panoramique de la flotte de tracteurs Transports Brun sous un ciel couvert",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-8-e03f461f.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/slider3.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/trois-tracteurs-contre-plongee.jpg",
+      "categorie": "flotte",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Trois tracteurs de Transports Brun photographiés en contre-plongée",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-10-6303b6ea.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/20220206_125123-1-.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/deux-volvo-fh.jpg",
+      "categorie": "flotte",
+      "largeur": 800,
+      "hauteur": 600,
+      "alt": "Deux tracteurs Volvo FH de Transports Brun devant un atelier",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-11-d4a0bb5f.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/marchandises/camions-transport-brun.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/volvo-fh-460-face.jpg",
+      "categorie": "flotte",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH 460 de Transports Brun vu de face",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-12-eb3775ac.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/marchandises/Camion-blanc-transport-brun.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/volvo-bleu-sol-mouille.jpg",
+      "categorie": "flotte",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH bleu et jaune sur un sol mouillé",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-13-c2c08863.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "/images/gallery/marchandises/Camion-bleu-transport-brun.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/renault-t-face.jpg",
+      "categorie": "flotte",
+      "largeur": 270,
+      "hauteur": 600,
+      "alt": "Tracteur Renault T blanc de Transports Brun vu de face",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-15-c330dead.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/20220329_185511.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/volvo-fh-reflet.jpg",
+      "categorie": "flotte",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH portes ouvertes, se reflétant dans une flaque",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-27-d3ecb605.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/camion-transport-marchandises-transport-brun-face-avant.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/volvo-fh-portes-ouvertes.jpg",
+      "categorie": "flotte",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Tracteur Volvo FH de Transports Brun, portes ouvertes, en contre-plongée",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-28-97d1bff9.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/camion-transport-brun-face-avant.jpg"
+    },
+    {
+      "fichier": "content/photos/flotte/volvo-fh-460-cabine.jpg",
+      "categorie": "flotte",
+      "largeur": 450,
+      "hauteur": 600,
+      "alt": "Cabine d'un Volvo FH 460 aux couleurs de Transports Brun, vue de profil",
+      "sourceMiroir": "source-site/optimize/transports-brun-transports-de-marchandises-haut-rhin-alsace-29-6e0e6369.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [
+        "/transports-de-marchandises-et-btp-haut-rhin-alsace"
+      ],
+      "originalHebergement": "images/bagallery/original/camion-profil-transport-brun.jpg"
+    },
+    {
+      "fichier": "content/photos/divers/scania-plateau-crepuscule-assombri.jpg",
+      "categorie": "divers",
+      "largeur": 2000,
+      "hauteur": 636,
+      "alt": "Tracteur Scania et plateau chargé, feux allumés au crépuscule (version assombrie du bandeau d'origine)",
+      "sourceMiroir": "source-site/images/slider/transport-btp-alsace.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [],
+      "originalHebergement": null
+    },
+    {
+      "fichier": "content/photos/divers/man-fourgon-assombri.jpg",
+      "categorie": "divers",
+      "largeur": 2000,
+      "hauteur": 636,
+      "alt": "Tracteur MAN et semi-remorque fourgon blanche (version assombrie du bandeau d'origine)",
+      "sourceMiroir": "source-site/images/slider/transport-marchandises-haut-rhin-alsace.jpg",
+      "variantesEcartees": [],
+      "pagesActuelles": [],
+      "originalHebergement": null
+    }
+  ],
+  "marque": [
+    {
+      "fichier": "content/brand/logo-transports-brun.png",
+      "largeur": 250,
+      "hauteur": 130,
+      "note": "Logo matriciel basse résolution : fournir un vectoriel (SVG/PDF)."
+    },
+    {
+      "fichier": "content/brand/logo-france-plateaux.png",
+      "largeur": 250,
+      "hauteur": 92,
+      "note": "Logo du Groupement France Plateau tel qu'affiché sur le site actuel."
+    }
+  ]
+}
