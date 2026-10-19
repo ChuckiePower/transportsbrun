@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { SITE_HOST, SITE_URL } from "./src/lib/site-url";
 
 /**
  * En-têtes de sécurité appliqués par l'application (le reverse proxy ajoute HSTS).
@@ -64,8 +65,8 @@ const nextConfig: NextConfig = {
       // www → domaine nu (doublé par le reverse proxy)
       {
         source: "/:path*",
-        has: [{ type: "host", value: "www.transports-brun.com" }],
-        destination: "https://transports-brun.com/:path*",
+        has: [{ type: "host", value: `www.${SITE_HOST}` }],
+        destination: `${SITE_URL}/:path*`,
         statusCode: 301,
       },
       // Reliquats Joomla : /index.php et /index.php/xxx

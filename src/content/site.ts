@@ -4,6 +4,7 @@
  * e-mails du formulaire…) provient de ce fichier.
  */
 import { fr } from "@/lib/typo";
+import { SITE_URL } from "@/lib/site-url";
 
 export type Phone = {
   /** Libellé affiché (Administration, Exploitation, Commercial) */
@@ -24,8 +25,8 @@ export const site = {
   /** Accroche historique du site */
   tagline: fr`Transports routiers de gros œuvre et fret interurbains`,
   description: fr`Société familiale de transport routier basée à Saint-Hippolyte (Haut-Rhin) : transport plateau, camion-grue, charges lourdes et hors normes, fret interurbain et ADR.`,
-  /** URL publique canonique (surchargée par la variable d'environnement SITE_URL) */
-  url: (process.env.SITE_URL ?? "https://transports-brun.com").replace(/\/+$/, ""),
+  /** URL publique canonique (variable d'environnement SITE_URL, voir src/lib/site-url.ts) */
+  url: SITE_URL,
   locale: "fr_FR",
   foundingDate: "2018-03-02",
 
