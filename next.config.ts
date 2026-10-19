@@ -6,13 +6,23 @@ import type { NextConfig } from "next";
  */
 const isDev = process.env.NODE_ENV !== "production";
 
+// Mesure d'audience auto-hébergée facultative (voir src/components/seo/Analytics.tsx)
+const analyticsOrigin = (() => {
+  try {
+    return process.env.ANALYTICS_SCRIPT_URL ? new URL(process.env.ANALYTICS_SCRIPT_URL).origin : "";
+  } catch {
+    return "";
+  }
+})();
+const extra = analyticsOrigin ? ` ${analyticsOrigin}` : "";
+
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}${extra}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",
-  `connect-src 'self'${isDev ? " ws:" : ""}`,
+  `connect-src 'self'${isDev ? " ws:" : ""}${extra}`,
   // Carte OpenStreetMap chargée uniquement après un clic du visiteur
   "frame-src https://www.openstreetmap.org",
   "object-src 'none'",

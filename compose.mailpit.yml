@@ -1,0 +1,10 @@
+# Développement uniquement : boîte aux lettres de test (aucun e-mail ne sort).
+#   docker compose -f compose.mailpit.yml up -d
+#   puis dans .env.local : SMTP_HOST=127.0.0.1  SMTP_PORT=1025  SMTP_SECURE=false
+#   interface web : http://127.0.0.1:8025
+services:
+  mailpit:
+    image: axllent/mailpit:v1.27
+    ports:
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"

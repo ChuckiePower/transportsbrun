@@ -1,0 +1,35 @@
+# Lancement sur le VPS : docker compose up -d --build
+# L'application n'écoute que sur 127.0.0.1:3000 : le reverse proxy (Caddy ou nginx) est la seule porte d'entrée.
+services:
+  web:
+    build:
+      context: .
+      args:
+        SITE_URL: ${SITE_URL:-https://transports-brun.com}
+        ANALYTICS_PROVIDER: ${ANALYTICS_PROVIDER:-}
+        ANALYTICS_SCRIPT_URL: ${ANALYTICS_SCRIPT_URL:-}
+        ANALYTICS_SITE_ID: ${ANALYTICS_SITE_ID:-}
+    image: transports-brun:${IMAGE_TAG:-latest}
+    container_name: transports-brun
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      # cache des images optimisées (AVIF/WebP), conservé entre deux redémarrages
+      - next-cache:/app/.next/cache
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  next-cache:

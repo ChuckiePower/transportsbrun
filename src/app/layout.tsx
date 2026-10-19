@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileCallBar } from "@/components/layout/MobileCallBar";
 import { TopBar } from "@/components/layout/TopBar";
+import { Analytics } from "@/components/seo/Analytics";
 import { JsonLd, localBusinessJsonLd } from "@/components/seo/JsonLd";
 import { site } from "@/content/site";
 import { fontDisplay, fontSans } from "./fonts";
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Footer />
         <MobileCallBar />
         <JsonLd data={localBusinessJsonLd()} />
+        <Analytics />
       </body>
     </html>
   );

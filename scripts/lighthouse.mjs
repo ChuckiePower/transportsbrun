@@ -24,7 +24,13 @@ const chromePath =
 mkdirSync("docs/lighthouse", { recursive: true });
 const chrome = await chromeLauncher.launch({
   chromePath,
-  chromeFlags: ["--headless=new", "--no-sandbox", "--disable-gpu"],
+  chromeFlags: [
+    "--headless=new",
+    "--no-sandbox",
+    "--disable-gpu",
+    // LH_INSECURE=1 : certificat auto-signé (proxy Caddy local de test)
+    ...(process.env.LH_INSECURE ? ["--ignore-certificate-errors"] : []),
+  ],
 });
 const rows = [];
 try {

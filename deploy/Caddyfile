@@ -1,0 +1,46 @@
+# Exemple de configuration Caddy (HTTPS automatique Let's Encrypt).
+# À placer dans /etc/caddy/Caddyfile (ou à fusionner avec votre configuration existante),
+# puis : sudo systemctl reload caddy
+#
+# Prérequis : les enregistrements A/AAAA de transports-brun.com ET www.transports-brun.com
+# pointent vers le VPS (sinon Caddy ne peut pas obtenir les certificats).
+
+# www → domaine nu, redirection permanente 301
+www.transports-brun.com {
+	redir https://transports-brun.com{uri} permanent
+}
+
+transports-brun.com {
+	# Compression (les images sont déjà compressées par Next.js)
+	encode zstd gzip
+
+	header {
+		# HSTS : 1 an. Pas d'includeSubDomains tant que tous les sous-domaines
+		# (ex. webmail, autodiscover) ne sont pas garantis en HTTPS.
+		Strict-Transport-Security "max-age=31536000"
+		# Les autres en-têtes de sécurité (CSP, nosniff, Referrer-Policy,
+		# Permissions-Policy, X-Frame-Options) sont envoyés par l'application.
+		-Server
+		-X-Powered-By
+	}
+
+	# Fichiers versionnés de Next.js : cache navigateur d'un an (déjà envoyé par Next, renforcé ici)
+	@immutable path /_next/static/*
+	header @immutable Cache-Control "public, max-age=31536000, immutable"
+
+	# Corps de requête limité (le formulaire pèse quelques Ko)
+	request_body {
+		max_size 64KB
+	}
+
+	# Caddy écrase X-Forwarded-For avec l'IP réelle du client (pas d'usurpation possible),
+	# ce qui alimente la limitation de débit du formulaire.
+	reverse_proxy 127.0.0.1:3000
+
+	log {
+		output file /var/log/caddy/transports-brun.log {
+			roll_size 10MiB
+			roll_keep 5
+		}
+	}
+}
