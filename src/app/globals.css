@@ -1,0 +1,249 @@
+@import "tailwindcss";
+
+/*
+ * Design system Transports Brun — « industriel premium, sobre et chaleureux ».
+ * Palette dérivée du logo (bleu marine / graphite / argent) sur fond clair chaud,
+ * + un jaune « signalisation » (panneaux convoi exceptionnel des camions) réservé aux CTA.
+ */
+@theme inline {
+  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-barlow), "Arial Narrow", "Roboto Condensed", sans-serif;
+}
+
+@theme {
+  /* Neutres */
+  --color-ink: #131417;
+  --color-ink-2: #1c1d22;
+  --color-ink-3: #2a2c33;
+  --color-graphite: #323232;
+  --color-steel: #53565e;
+  --color-mist: #8c9099;
+  --color-silver: #bcbcbc;
+  --color-paper: #f6f4ef;
+  --color-sand: #ebe6db;
+  --color-line: #d8d1c4;
+  --color-white: #ffffff;
+
+  /* Marque */
+  --color-navy: #00007e;
+  --color-navy-700: #000063;
+  --color-navy-300: #6c6cf0;
+  --color-signal: #ffc21a;
+  --color-signal-600: #f0ad00;
+
+  /* États */
+  --color-success: #1d6b3a;
+  --color-danger: #b42318;
+
+  /* Rayons : angles francs, à peine adoucis */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* Ombres sobres, teintées graphite */
+  --shadow-card: 0 1px 2px rgb(19 20 23 / 0.06), 0 8px 24px -12px rgb(19 20 23 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(19 20 23 / 0.08), 0 18px 40px -18px rgb(19 20 23 / 0.35);
+
+  /* Typographie */
+  --text-display: clamp(2.6rem, 1.4rem + 5.4vw, 5.5rem);
+  --text-display--line-height: 0.92;
+  --text-h1: clamp(2.4rem, 1.5rem + 3.9vw, 4.4rem);
+  --text-h1--line-height: 0.95;
+  --text-h2: clamp(2rem, 1.35rem + 2.6vw, 3.3rem);
+  --text-h2--line-height: 1;
+  --text-h3: clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+  --text-h3--line-height: 1.1;
+  --text-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3rem);
+  --text-lead--line-height: 1.55;
+
+  --breakpoint-xs: 26rem;
+
+  --animate-fade-in: fade-in 0.25s ease-out;
+  --animate-fade-out: fade-out 0.2s ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@layer base {
+  :root {
+    --focus: var(--color-navy);
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 6rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern", "liga";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: -0.005em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-signal);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Sur fond sombre, l'anneau de focus passe au jaune signal */
+  .on-dark {
+    --focus: var(--color-signal);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Texte courant : liens soulignés lisibles */
+  .prose-brun p + p {
+    margin-top: 1em;
+  }
+  .prose-brun a {
+    color: var(--color-navy);
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  .prose-brun a:hover {
+    text-decoration-thickness: 2px;
+  }
+  .prose-brun strong {
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  .on-dark .prose-brun strong {
+    color: var(--color-white);
+  }
+  .on-dark .prose-brun a {
+    color: var(--color-signal);
+  }
+
+  /* Étiquette de section (« eyebrow ») */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Filet à trois bandes obliques, signature du logo */
+  .rule-stripes {
+    height: 6px;
+    background: linear-gradient(
+      90deg,
+      var(--color-navy) 0 33.33%,
+      var(--color-graphite) 33.33% 66.66%,
+      var(--color-silver) 66.66% 100%
+    );
+  }
+
+  /* Galerie justifiée (ordre de lecture conservé) */
+  .gallery-justified {
+    --row-h: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .gallery-justified::after {
+    content: "";
+    flex-grow: 999;
+  }
+  @media (min-width: 40rem) {
+    .gallery-justified {
+      --row-h: 190px;
+      gap: 8px;
+    }
+  }
+  @media (min-width: 64rem) {
+    .gallery-justified {
+      --row-h: 230px;
+    }
+  }
+  .gallery-justified > * {
+    flex-grow: var(--ratio);
+    flex-basis: calc(var(--ratio) * var(--row-h));
+    max-width: 100%;
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Animations de révélation neutralisées si l'utilisateur réduit les animations */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
