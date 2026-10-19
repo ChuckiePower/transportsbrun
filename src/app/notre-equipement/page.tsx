@@ -123,7 +123,7 @@ export default function EquipementPage() {
                 ))}
               </ul>
             </div>
-            <PhotoGallery ids={cat.photos} label={`Photos : ${cat.title}`} />
+            <PhotoGallery ids={cat.photos} label={`Photos : ${cat.title}`} layout="grid" />
           </Container>
         </Section>
       ))}

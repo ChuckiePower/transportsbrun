@@ -11,6 +11,7 @@ import {
   type PointerEvent,
 } from "react";
 import { Icon } from "@/components/ui/Icon";
+import { cn } from "@/lib/cn";
 
 export type GalleryItem = { id: string; image: StaticImageData; alt: string };
 
@@ -21,7 +22,16 @@ const ROW = { sm: 150, md: 190, lg: 230 };
  * Galerie justifiée (ordre de lecture conservé, aucune déformation) + visionneuse accessible :
  * clavier (← → Échap), balayage tactile, piège de focus, légende et compteur annoncés.
  */
-export function Gallery({ items, label }: { items: GalleryItem[]; label: string }) {
+export function Gallery({
+  items,
+  label,
+  layout = "justified",
+}: {
+  items: GalleryItem[];
+  label: string;
+  /** justified : rangées à hauteur fixe ; grid : vignettes égales (petites séries) */
+  layout?: "justified" | "grid";
+}) {
   const [index, setIndex] = useState<number | null>(null);
   const open = index !== null;
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
@@ -38,25 +48,49 @@ export function Gallery({ items, label }: { items: GalleryItem[]; label: string 
 
   return (
     <>
-      <ul className="gallery-justified" aria-label={label}>
+      <ul
+        className={
+          layout === "justified"
+            ? "gallery-justified"
+            : cn(
+                "grid grid-cols-2 gap-2 sm:gap-3",
+                items.length % 3 === 0 ? "lg:grid-cols-3" : "lg:grid-cols-4",
+              )
+        }
+        aria-label={label}
+      >
         {items.map((item, i) => {
           const ratio = item.image.width / item.image.height;
+          const sizes =
+            layout === "justified"
+              ? `(min-width: 64rem) ${Math.round(ratio * ROW.lg * 1.35)}px, (min-width: 40rem) ${Math.round(ratio * ROW.md * 1.35)}px, ${Math.round(ratio * ROW.sm * 1.5)}px`
+              : items.length % 3 === 0
+                ? "(min-width: 64rem) 30vw, 50vw"
+                : "(min-width: 64rem) 23vw, 50vw";
           return (
-            <li key={item.id} style={{ ["--ratio" as string]: ratio.toFixed(4) }}>
+            <li
+              key={item.id}
+              style={
+                layout === "justified" ? { ["--ratio" as string]: ratio.toFixed(4) } : undefined
+              }
+            >
               <button
                 ref={(el) => {
                   buttons.current[i] = el;
                 }}
                 type="button"
                 onClick={() => setIndex(i)}
-                className="group relative block h-[var(--row-h)] w-full cursor-zoom-in overflow-hidden rounded-sm bg-sand"
+                className={cn(
+                  "group relative block w-full cursor-zoom-in overflow-hidden rounded-sm bg-sand",
+                  layout === "justified" ? "h-[var(--row-h)]" : "aspect-[4/3]",
+                )}
               >
                 <Image
                   src={item.image}
                   alt={item.alt}
                   fill
                   placeholder="blur"
-                  sizes={`(min-width: 64rem) ${Math.round(ratio * ROW.lg * 1.35)}px, (min-width: 40rem) ${Math.round(ratio * ROW.md * 1.35)}px, ${Math.round(ratio * ROW.sm * 1.5)}px`}
+                  sizes={sizes}
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                 />
                 <span

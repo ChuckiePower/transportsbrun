@@ -8,15 +8,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { expertise, services } from "@/content/services";
 
 /** « Nos domaines d'expertise » : bloc commun à toutes les pages (maillage interne) */
-export function ExpertiseBlock({
-  tone = "sand",
-  currentHref,
-}: {
-  tone?: Exclude<Tone, "ink">;
-  /** Masque la vignette de la page courante */
-  currentHref?: string;
-}) {
-  const items = services.filter((s) => s.href.split("#")[0] !== currentHref);
+export function ExpertiseBlock({ tone = "sand" }: { tone?: Exclude<Tone, "ink"> }) {
+  const items = services;
   return (
     <Section tone={tone} aria-labelledby="expertise-titre">
       <Container className="grid gap-12 lg:grid-cols-12 lg:items-start">

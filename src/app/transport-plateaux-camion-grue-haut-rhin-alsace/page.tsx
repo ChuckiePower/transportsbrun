@@ -152,7 +152,7 @@ export default function PlateauGruePage() {
         </Container>
       </Section>
 
-      <ExpertiseBlock currentHref={path} />
+      <ExpertiseBlock />
       <CtaBand />
       <JsonLd
         data={serviceJsonLd({

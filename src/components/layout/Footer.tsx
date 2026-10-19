@@ -11,7 +11,7 @@ export function Footer() {
     <footer className="on-dark bg-ink text-silver">
       <div className="rule-stripes" aria-hidden="true" />
       <Container className="grid gap-12 py-14 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8 lg:py-20">
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-3">
           <LogoPlate />
           <p className="mt-6 max-w-sm text-white">{site.tagline}</p>
           <address className="mt-5 not-italic">
@@ -64,7 +64,7 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-4">
           <h2 className="eyebrow text-white">E-mail</h2>
           <ul className="mt-4 space-y-3">
             {site.emails.map((e) => (
@@ -72,7 +72,7 @@ export function Footer() {
                 <span className="block text-sm">{e.label}</span>
                 <a
                   href={mailtoHref(e)}
-                  className="break-all text-white hover:text-signal hover:underline"
+                  className="[overflow-wrap:anywhere] text-white hover:text-signal hover:underline"
                 >
                   {e.address}
                 </a>

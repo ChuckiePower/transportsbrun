@@ -133,7 +133,7 @@ export default function MarchandisesPage() {
         </Container>
       </Section>
 
-      <ExpertiseBlock currentHref={path} />
+      <ExpertiseBlock />
       <CtaBand />
       <JsonLd
         data={serviceJsonLd({
