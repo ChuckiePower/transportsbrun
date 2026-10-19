@@ -3,7 +3,7 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { Icon, type IconName } from "./Icon";
 
-export type ButtonVariant = "primary" | "secondary" | "on-night" | "link";
+export type ButtonVariant = "primary" | "secondary" | "on-asphalt" | "link";
 type Size = "md" | "sm";
 
 const base =
@@ -13,8 +13,9 @@ const variants: Record<ButtonVariant, string> = {
   // Action principale : jaune, texte bleu nuit, ombre jaune douce, reflet au survol
   primary: "btn-shine bg-sun text-ink shadow-sun hover:-translate-y-px hover:bg-sun-hover",
   secondary: "border-[1.5px] border-line bg-surface text-ink hover:border-ink",
-  "on-night":
-    "border-[1.5px] border-white/35 bg-white/5 text-white hover:border-white hover:bg-white/10",
+  // Sur asphalte : contour couleur marquage, translucide
+  "on-asphalt":
+    "border-[1.5px] border-marking/40 bg-transparent text-marking hover:border-marking hover:bg-marking/5",
   link: "px-0 text-brand underline-offset-4 hover:underline",
 };
 
@@ -46,7 +47,7 @@ function Inner({
         "inline-flex size-6 items-center justify-center rounded-full transition-transform duration-200 ease-out-soft group-hover/btn:translate-x-[3px]",
         variant === "primary"
           ? "bg-ink/10"
-          : variant === "on-night"
+          : variant === "on-asphalt"
             ? "bg-white/15"
             : "bg-brand-soft text-brand",
       )}

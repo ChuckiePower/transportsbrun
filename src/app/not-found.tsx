@@ -15,7 +15,7 @@ export default function NotFound() {
   return (
     <section className="py-10 lg:py-16">
       <Container>
-        <div className="on-night relative isolate overflow-hidden rounded-xl bg-night px-6 py-14 text-white shadow-lg sm:px-10 sm:py-20 lg:px-16">
+        <div className="on-asphalt surface-asphalt relative isolate overflow-hidden rounded-xl px-6 py-14 text-white shadow-lg sm:px-10 sm:py-20 lg:px-16">
           <svg
             aria-hidden="true"
             viewBox="0 0 600 200"
@@ -27,7 +27,7 @@ export default function NotFound() {
               stroke="currentColor"
               strokeWidth="26"
               strokeLinecap="round"
-              className="text-night-2"
+              className="text-asphalt-2"
             />
             <path
               d="M0 170 C 150 170, 200 40, 360 60 S 560 150, 600 40"
@@ -38,9 +38,9 @@ export default function NotFound() {
               className="text-sun"
             />
           </svg>
-          <Eyebrow className="mb-4 text-brand-light">Erreur 404</Eyebrow>
+          <Eyebrow className="mb-4 text-sun">Erreur 404</Eyebrow>
           <h1 className="text-h1 font-extrabold text-white">Cette page a changé de route</h1>
-          <p className="mt-5 max-w-2xl text-lead text-night-muted">
+          <p className="mt-5 max-w-2xl text-lead text-marking/80">
             La page demandée n&apos;existe pas ou a été déplacée. Reprenez la route depuis
             l&apos;accueil ou appelez-nous directement&#8239;: nous vous répondons du lundi au
             vendredi.
@@ -51,7 +51,7 @@ export default function NotFound() {
             </ButtonLink>
             <ButtonLink
               href={telHref(mainPhone)}
-              variant="on-night"
+              variant="on-asphalt"
               icon="phone"
               iconPosition="start"
             >
@@ -69,7 +69,7 @@ export default function NotFound() {
                     {item.label}
                     <Icon
                       name="arrowRight"
-                      className="size-4 text-brand-light transition-transform group-hover:translate-x-[3px]"
+                      className="size-4 text-sun transition-transform group-hover:translate-x-[3px]"
                     />
                   </Link>
                 </li>

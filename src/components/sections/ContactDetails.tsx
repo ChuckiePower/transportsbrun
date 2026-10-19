@@ -14,24 +14,24 @@ export function ContactDetails({
   stacked = false,
   className,
 }: {
-  tone?: "light" | "night";
+  tone?: "light" | "asphalt";
   headingLevel?: "h2" | "h3";
   stacked?: boolean;
   className?: string;
 }) {
-  const night = tone === "night";
+  const dark = tone === "asphalt";
   const head = cn(
     "flex items-center gap-3 font-display text-[1rem] font-bold",
-    night ? "text-white" : "text-ink",
+    dark ? "text-white" : "text-ink",
   );
-  const muted = night ? "text-night-muted" : "text-ink-soft";
-  const strong = night ? "text-white" : "text-ink";
-  const hover = night ? "hover:text-brand-light" : "hover:text-brand";
+  const muted = dark ? "text-marking/80" : "text-ink-soft";
+  const strong = dark ? "text-white" : "text-ink";
+  const hover = dark ? "hover:text-sun" : "hover:text-brand";
   return (
     <div className={cn("grid gap-8", !stacked && "sm:grid-cols-2", className)}>
       <div>
         <H className={head}>
-          <IconChip name="phone" tone={night ? "night" : "light"} />
+          <IconChip name="phone" tone={dark ? "asphalt" : "light"} />
           Téléphone
         </H>
         <ul className="mt-4 space-y-3">
@@ -40,7 +40,7 @@ export function ContactDetails({
               <span className={muted}>{p.label}</span>
               <a
                 href={telHref(p)}
-                className={cn("tabular font-display text-[1.375rem] font-bold", strong, hover)}
+                className={cn("tabular font-sign text-[1.375rem] font-extrabold", strong, hover)}
               >
                 {p.display}
               </a>
@@ -50,7 +50,7 @@ export function ContactDetails({
       </div>
       <div>
         <H className={head}>
-          <IconChip name="mail" tone={night ? "night" : "light"} />
+          <IconChip name="mail" tone={dark ? "asphalt" : "light"} />
           E-mail
         </H>
         <ul className="mt-4 space-y-3">
@@ -73,14 +73,14 @@ export function ContactDetails({
       </div>
       <div>
         <H className={head}>
-          <IconChip name="clock" tone={night ? "night" : "light"} />
+          <IconChip name="clock" tone={dark ? "asphalt" : "light"} />
           Horaires
         </H>
         <p className={cn("mt-4", strong)}>{site.hours.display}</p>
       </div>
       <div>
         <H className={head}>
-          <IconChip name="pin" tone={night ? "night" : "light"} />
+          <IconChip name="pin" tone={dark ? "asphalt" : "light"} />
           Adresse
         </H>
         <address className={cn("mt-4 not-italic", strong)}>
@@ -92,7 +92,7 @@ export function ContactDetails({
           href={site.googleMapsUrl}
           className={cn(
             "mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-full border-[1.5px] px-4 font-display text-[0.875rem] font-semibold transition-colors",
-            night
+            dark
               ? "border-white/30 text-white hover:border-white"
               : "border-line text-ink hover:border-ink",
           )}

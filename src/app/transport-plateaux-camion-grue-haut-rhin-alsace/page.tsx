@@ -78,7 +78,7 @@ export default function PlateauGruePage() {
             ))}
             <li
               data-reveal=""
-              className="on-night flex flex-col justify-between gap-6 rounded-lg bg-night p-7 text-white shadow-md"
+              className="on-asphalt surface-asphalt flex flex-col justify-between gap-6 rounded-lg p-7 text-white shadow-md"
             >
               <p className="font-display text-h3 font-bold text-white">
                 Un transport hors normes à organiser&#8239;?

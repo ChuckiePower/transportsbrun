@@ -57,15 +57,15 @@ export default function MarchandisesPage() {
         <Container className="grid gap-6 lg:grid-cols-12">
           <div
             data-reveal=""
-            className="on-night rounded-xl bg-night p-8 text-white shadow-md sm:p-12 lg:col-span-7"
+            className="on-asphalt surface-asphalt rounded-xl p-8 text-white shadow-md sm:p-12 lg:col-span-7"
           >
-            <IconChip name="flame" tone="night" />
+            <IconChip name="flame" tone="asphalt" />
             <p className="eyebrow mt-6">{page.adr.eyebrow}</p>
             <h2 id="adr-titre" className="mt-2 text-h2 font-extrabold text-white">
               {page.adr.title}
             </h2>
             {page.adr.paragraphs.map((p, i) => (
-              <p key={i} className="mt-5 text-lead text-night-muted">
+              <p key={i} className="mt-5 text-lead text-marking/80">
                 {p}
               </p>
             ))}

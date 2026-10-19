@@ -1,17 +1,21 @@
 import Link from "next/link";
-import { FacebookIcon, Icon } from "@/components/ui/Icon";
+import { RoadLine } from "@/components/route/RoadLine";
+import { Icon } from "@/components/ui/Icon";
 import { EmailText } from "@/components/ui/EmailText";
 import { legalNav, mailtoHref, mainNav, site, telHref } from "@/content/site";
 import { LogoTile } from "./Logo";
 
-/** Pied de page : grande carte nuit arrondie posée dans la page */
+/**
+ * Pied de page : grande carte « asphalte » arrondie posée dans la page ;
+ * un marquage au sol fait office de ligne d'arrivée avant le copyright.
+ */
 export function Footer() {
   const year = new Date().getFullYear();
   const heading = "font-display text-[0.95rem] font-bold text-white";
-  const link = "text-cream/80 transition-colors hover:text-white";
+  const link = "text-marking/80 transition-colors hover:text-white";
   return (
     <footer className="px-3 pb-[calc(5.5rem+env(safe-area-inset-bottom))] sm:px-4 md:pb-4">
-      <div className="on-night mx-auto max-w-[87.5rem] rounded-xl bg-night text-cream/80">
+      <div className="on-asphalt surface-asphalt mx-auto max-w-[87.5rem] rounded-xl text-marking/80">
         <div className="mx-auto grid max-w-[75rem] gap-12 px-6 py-14 sm:grid-cols-2 sm:px-10 lg:grid-cols-12 lg:gap-8 lg:py-20">
           <div className="lg:col-span-4">
             <LogoTile />
@@ -23,7 +27,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <Icon name="pin" className="mt-1 size-4 shrink-0 text-brand-light" />
+                <Icon name="pin" className="mt-1 size-4 shrink-0 text-sun" />
                 <span>
                   {site.address.street},
                   <br />
@@ -38,7 +42,7 @@ export function Footer() {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <FacebookIcon className="size-4" />
+              <Icon name="facebook" className="size-4" />
               <span>Suivez-nous sur Facebook</span>
               <span className="sr-only">(nouvel onglet)</span>
             </a>
@@ -49,10 +53,10 @@ export function Footer() {
             <ul className="mt-4 space-y-3">
               {site.phones.map((p) => (
                 <li key={p.e164}>
-                  <span className="block text-[0.875rem] text-night-muted">{p.label}</span>
+                  <span className="block text-[0.875rem] text-marking/80">{p.label}</span>
                   <a
                     href={telHref(p)}
-                    className="tabular font-display text-xl font-bold text-white hover:text-brand-light"
+                    className="tabular font-sign text-[1.35rem] leading-tight font-extrabold text-white hover:text-sun"
                   >
                     {p.display}
                   </a>
@@ -68,7 +72,7 @@ export function Footer() {
             <ul className="mt-4 space-y-3">
               {site.emails.map((e) => (
                 <li key={e.address}>
-                  <span className="block text-[0.875rem] text-night-muted">{e.label}</span>
+                  <span className="block text-[0.875rem] text-marking/80">{e.label}</span>
                   <a
                     href={mailtoHref(e)}
                     className={`[overflow-wrap:anywhere] ${link} hover:underline`}
@@ -94,17 +98,13 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mx-auto flex max-w-[75rem] flex-col gap-3 border-t border-white/10 px-6 py-6 text-[0.875rem] sm:flex-row sm:items-center sm:justify-between sm:px-10">
-          <p className="flex items-center gap-2.5">
-            {/* Les trois barres du logo, une seule fois sur le site, en miniature */}
-            <svg viewBox="0 0 30 12" aria-hidden="true" className="h-2.5 w-auto">
-              <polygon points="5,0 11,0 6,12 0,12" fill="#a9b4f2" />
-              <polygon points="14,0 20,0 15,12 9,12" fill="#bcc5da" />
-              <polygon points="23,0 29,0 24,12 18,12" fill="#ffffff" opacity="0.7" />
-            </svg>
-            <span>
-              © {year} {site.name}
-            </span>
+        {/* Ligne d'arrivée */}
+        <div className="mx-auto max-w-[75rem] px-6 sm:px-10">
+          <RoadLine tone="marking-soft" />
+        </div>
+        <div className="mx-auto flex max-w-[75rem] flex-col gap-3 px-6 py-6 text-[0.8125rem] text-marking/70 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+          <p>
+            © {year} {site.name}
           </p>
           <ul className="flex flex-wrap gap-x-5 gap-y-1">
             {legalNav.map((item) => (

@@ -4,18 +4,18 @@ import { cn } from "@/lib/cn";
 export function PullQuote({
   children,
   className,
-  night = false,
+  dark = false,
 }: {
   children: string;
   className?: string;
-  night?: boolean;
+  dark?: boolean;
 }) {
   return (
     <figure
       data-reveal=""
       className={cn(
         "relative rounded-lg p-8 sm:p-10",
-        night ? "bg-night-2" : "bg-brand-soft",
+        dark ? "bg-asphalt-2" : "bg-brand-soft",
         className,
       )}
     >
@@ -23,7 +23,7 @@ export function PullQuote({
         aria-hidden="true"
         className={cn(
           "block font-display text-6xl leading-none font-extrabold",
-          night ? "text-brand-light" : "text-brand",
+          dark ? "text-sun" : "text-brand",
         )}
       >
         «
@@ -32,7 +32,7 @@ export function PullQuote({
         <p
           className={cn(
             "font-display text-[clamp(1.4rem,1.1rem+1.2vw,2rem)] leading-snug font-bold tracking-tight",
-            night ? "text-white" : "text-ink",
+            dark ? "text-white" : "text-ink",
           )}
         >
           {children}

@@ -10,7 +10,7 @@ export function IconChip({
 }: {
   name: IconName;
   className?: string;
-  tone?: "light" | "night";
+  tone?: "light" | "asphalt";
   size?: "md" | "lg";
 }) {
   return (
@@ -19,7 +19,7 @@ export function IconChip({
       className={cn(
         "icon-chip inline-flex shrink-0 items-center justify-center rounded-full transition-transform duration-300 ease-out-soft",
         size === "md" ? "size-11 text-[22px]" : "size-14 text-[26px]",
-        tone === "light" ? "bg-brand-soft text-brand" : "bg-white/10 text-brand-light",
+        tone === "light" ? "bg-brand-soft text-brand" : "bg-white/10 text-sun",
         className,
       )}
     >

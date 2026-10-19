@@ -101,19 +101,19 @@ export default function EquipementPage() {
             ))}
             <li
               data-reveal=""
-              className="on-night rounded-lg bg-night p-7 text-white shadow-md sm:col-span-2 lg:col-span-1"
+              className="on-asphalt surface-asphalt rounded-lg p-7 text-white shadow-md sm:col-span-2 lg:col-span-1"
             >
-              <IconChip name="shield" tone="night" />
+              <IconChip name="shield" tone="asphalt" />
               <h3 className="mt-5 text-h3 font-bold text-white">{fleetCapabilities.title}</h3>
               <ul className="mt-4 flex flex-wrap gap-2">
                 <li>
-                  <Tag tone="night">Convoi exceptionnel cat. 1</Tag>
+                  <Tag tone="asphalt">Convoi exceptionnel cat. 1</Tag>
                 </li>
                 <li>
-                  <Tag tone="night">Convoi exceptionnel cat. 2</Tag>
+                  <Tag tone="asphalt">Convoi exceptionnel cat. 2</Tag>
                 </li>
                 <li>
-                  <Tag tone="night">ADR</Tag>
+                  <Tag tone="asphalt">ADR</Tag>
                 </li>
               </ul>
             </li>

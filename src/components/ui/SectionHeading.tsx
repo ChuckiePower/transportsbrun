@@ -10,7 +10,7 @@ type Props = {
   align?: "left" | "center";
   className?: string;
   id?: string;
-  night?: boolean;
+  dark?: boolean;
 };
 
 export function SectionHeading({
@@ -21,7 +21,7 @@ export function SectionHeading({
   align = "left",
   className,
   id,
-  night,
+  dark,
 }: Props) {
   return (
     <div
@@ -29,14 +29,14 @@ export function SectionHeading({
       className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}
     >
       {eyebrow ? <Eyebrow className="mb-3">{eyebrow}</Eyebrow> : null}
-      <Tag id={id} className={cn("text-h2 font-extrabold", night && "text-white")}>
+      <Tag id={id} className={cn("text-h2 font-extrabold", dark && "text-white")}>
         {title}
       </Tag>
       {lead ? (
         <p
           className={cn(
             "mt-5 text-lead",
-            night ? "text-night-muted" : "text-ink-soft",
+            dark ? "text-marking/80" : "text-ink-soft",
             align === "center" && "mx-auto",
           )}
         >

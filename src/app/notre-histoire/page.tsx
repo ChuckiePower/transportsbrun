@@ -65,7 +65,7 @@ export default function NotreHistoirePage() {
       {/* Découvrez notre équipe : grande carte nuit */}
       <section aria-labelledby="equipe-titre" className="py-[72px] lg:py-28">
         <Container>
-          <div className="on-night grid gap-10 overflow-hidden rounded-xl bg-night p-6 text-white shadow-lg sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-14 lg:p-14">
+          <div className="on-asphalt surface-asphalt grid gap-10 overflow-hidden rounded-xl p-6 text-white shadow-lg sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-14 lg:p-14">
             <div className="lg:order-2 lg:col-span-6">
               <div
                 data-reveal-photo=""
@@ -82,16 +82,16 @@ export default function NotreHistoirePage() {
             <div className="lg:order-1 lg:col-span-6">
               <SectionHeading
                 id="equipe-titre"
-                night
+                dark
                 eyebrow="Nos chauffeurs"
                 title={page.team.title}
               />
-              <div data-reveal="" className="mt-6 space-y-4 text-lead text-night-muted">
+              <div data-reveal="" className="mt-6 space-y-4 text-lead text-marking/80">
                 {page.team.paragraphs.map((p, i) => (
                   <p key={i}>{p}</p>
                 ))}
               </div>
-              <PullQuote night className="mt-8">
+              <PullQuote dark className="mt-8">
                 {page.team.quote}
               </PullQuote>
             </div>

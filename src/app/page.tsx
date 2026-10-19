@@ -53,7 +53,7 @@ export default function HomePage() {
 
       {/* 1. Hero : grande photo arrondie, voile doux sous le texte */}
       <section className="px-3 pt-4 sm:px-4 lg:pt-6">
-        <div className="relative isolate mx-auto flex min-h-[calc(100svh-7rem)] max-w-[87.5rem] overflow-hidden rounded-xl bg-night md:min-h-[78vh]">
+        <div className="surface-asphalt relative isolate mx-auto flex min-h-[calc(100svh-7rem)] max-w-[87.5rem] overflow-hidden rounded-xl md:min-h-[78vh]">
           <div data-parallax="" className="absolute inset-0 -z-20">
             <Photo
               id={page.hero.photo}
@@ -93,13 +93,13 @@ export default function HomePage() {
                 </ButtonLink>
                 <ButtonLink
                   href={telHref(mainPhone)}
-                  variant="on-night"
+                  variant="on-asphalt"
                   icon="phone"
                   iconPosition="start"
                 >
                   Appeler le {mainPhone.display}
                 </ButtonLink>
-                <CallbackTrigger className="on-night justify-center px-2 text-white xs:justify-start" />
+                <CallbackTrigger className="on-asphalt justify-center px-2 text-white xs:justify-start" />
               </div>
             </div>
           </Container>

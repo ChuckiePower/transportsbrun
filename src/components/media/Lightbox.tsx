@@ -80,12 +80,12 @@ export default function Lightbox({
   return (
     <Dialog.Root open onOpenChange={(o) => !o && onClose()}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-night/92 backdrop-blur-sm data-[state=open]:animate-fade-in" />
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-asphalt/92 backdrop-blur-sm data-[state=open]:animate-fade-in" />
         <Dialog.Content
           aria-describedby="lightbox-legende"
           onKeyDown={onKeyDown}
           onCloseAutoFocus={onCloseAutoFocus}
-          className="on-night fixed inset-0 z-50 flex flex-col text-white outline-none"
+          className="on-asphalt fixed inset-0 z-50 flex flex-col text-white outline-none"
         >
           <div className="flex items-center justify-between gap-4 px-4 py-4 sm:px-6">
             <Dialog.Title
@@ -159,7 +159,7 @@ export default function Lightbox({
           <p
             id="lightbox-legende"
             aria-live="polite"
-            className="mx-auto max-w-3xl px-4 pt-4 pb-6 text-center text-[0.95rem] text-night-muted"
+            className="mx-auto max-w-3xl px-4 pt-4 pb-6 text-center text-[0.95rem] text-marking/80"
           >
             {item.alt}
           </p>

@@ -35,22 +35,17 @@
   /* Marque */
   --color-brand: #2b3a9f;
   --color-brand-soft: #e8ebfa;
-  --color-brand-light: #a9b4f2; /* focus et accents sur fond nuit */
 
   /* Action principale */
   --color-sun: #ffc21a;
   --color-sun-hover: #ffb400;
 
-  /* Surfaces sombres */
-  --color-night: #14213d;
-  --color-night-2: #1d2e57;
-  --color-night-muted: #bcc5da; /* texte secondaire sur nuit (≥ 8:1) */
-
-  /* Route : asphalte, marquage, plaque ADR */
+  /* Route : asphalte (sections sombres, footer, bandeau final, panneau contact), marquage, plaque ADR.
+     Sur asphalte, les accents sont jaunes ou blancs, jamais le bleu de marque. */
   --color-asphalt: #23262c;
   --color-asphalt-2: #2e3239;
   --color-marking: #f4f1ea;
-  --color-adr: #f28c1b;
+  --color-adr: #f28c1b; /* réservé à la plaque ADR */
 
   /* États */
   --color-ok: #1f8a5b;
@@ -178,10 +173,6 @@
     outline-offset: 2px;
   }
 
-  /* Sur fond nuit, l'anneau de focus s'éclaircit pour rester visible */
-  .on-night {
-    --focus: var(--color-brand-light);
-  }
   /* Sur asphalte, accents jaunes ou blancs (jamais le bleu de marque) */
   .on-asphalt {
     --focus: var(--color-sun);
@@ -205,17 +196,48 @@
 }
 
 @layer components {
+  /* Marquage au sol : tirets arrondis (masque SVG) ; la couleur est le fond de l'élément */
+  .road-x {
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='4'%3E%3Crect width='13' height='4' rx='2'/%3E%3C/svg%3E")
+      left center / 24px 100% repeat-x;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='4'%3E%3Crect width='13' height='4' rx='2'/%3E%3C/svg%3E")
+      left center / 24px 100% repeat-x;
+  }
+  .road-y {
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='24'%3E%3Crect width='4' height='13' rx='2'/%3E%3C/svg%3E")
+      center top / 100% 24px repeat-y;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='24'%3E%3Crect width='4' height='13' rx='2'/%3E%3C/svg%3E")
+      center top / 100% 24px repeat-y;
+  }
+
+  /* Asphalte : fond sombre + grain très léger (bruit SVG, 5 %) */
+  .surface-asphalt {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--color-asphalt);
+    color: var(--color-marking);
+  }
+  .surface-asphalt::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
   /* Petit label au-dessus d'un titre : seul endroit en capitales */
   .eyebrow {
-    font-family: var(--font-display);
+    font-family: var(--font-sign);
     font-weight: 700;
     font-size: var(--text-eyebrow);
-    letter-spacing: 0.06em;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-brand);
-  }
-  .on-night .eyebrow {
-    color: var(--color-brand-light);
   }
   .on-asphalt .eyebrow {
     color: var(--color-sun);

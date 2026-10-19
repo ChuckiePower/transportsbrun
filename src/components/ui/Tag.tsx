@@ -11,7 +11,7 @@ export function Tag({
 }: {
   children: ReactNode;
   icon?: IconName;
-  tone?: "brand" | "neutral" | "night";
+  tone?: "brand" | "neutral" | "asphalt";
   className?: string;
 }) {
   return (
@@ -20,7 +20,7 @@ export function Tag({
         "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-display text-[0.8125rem] leading-none font-semibold",
         tone === "brand" && "bg-brand-soft text-brand",
         tone === "neutral" && "border border-line bg-surface text-ink",
-        tone === "night" && "bg-white/10 text-white",
+        tone === "asphalt" && "bg-white/10 text-white",
         className,
       )}
     >

@@ -107,15 +107,15 @@ export default function SavoirFairePage() {
       {/* Sécurité : grande carte nuit */}
       <section aria-labelledby="securite-titre" className="py-[72px] lg:py-28">
         <Container>
-          <div className="on-night grid gap-10 overflow-hidden rounded-xl bg-night p-6 text-white shadow-lg sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-14 lg:p-14">
+          <div className="on-asphalt surface-asphalt grid gap-10 overflow-hidden rounded-xl p-6 text-white shadow-lg sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-14 lg:p-14">
             <div className="lg:col-span-6">
               <SectionHeading
                 id="securite-titre"
-                night
+                dark
                 eyebrow={page.safety.eyebrow}
                 title={page.safety.title}
               />
-              <p data-reveal="" className="mt-6 text-lead text-night-muted">
+              <p data-reveal="" className="mt-6 text-lead text-marking/80">
                 {page.safety.text}
               </p>
               <ul className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -124,13 +124,13 @@ export default function SavoirFairePage() {
                     key={pt.title}
                     data-reveal=""
                     style={{ ["--i" as string]: i }}
-                    className="rounded-lg bg-night-2 p-5"
+                    className="rounded-lg bg-asphalt-2 p-5"
                   >
-                    <IconChip name={i === 0 ? "shield" : "clipboard"} tone="night" />
+                    <IconChip name={i === 0 ? "shield" : "clipboard"} tone="asphalt" />
                     <span className="mt-4 block font-display text-[1.125rem] font-bold text-white">
                       {pt.title}
                     </span>
-                    <span className="mt-1 block text-night-muted">{pt.text}</span>
+                    <span className="mt-1 block text-marking/80">{pt.text}</span>
                   </li>
                 ))}
               </ul>

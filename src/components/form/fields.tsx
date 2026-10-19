@@ -2,9 +2,12 @@ import type { ReactNode } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 
-/** Champ : 52 px, rayon 14 px, contour gris (≥ 3:1), anneau bleu au focus */
+/**
+ * Champ : 52 px, rayon 14 px, fond crème ; contour gris fin (≥ 3:1, WCAG 1.4.11) ;
+ * fond blanc et anneau bleu à 25 % au focus.
+ */
 export const inputClass =
-  "block w-full min-h-13 rounded-field border-[1.5px] border-field-line bg-surface px-4 py-3 text-body text-ink transition-[border-color,box-shadow] duration-200 placeholder:text-ink-soft hover:border-ink focus:border-brand focus:shadow-focus focus:outline-none aria-[invalid=true]:border-error";
+  "block w-full min-h-13 rounded-field border-[1.5px] border-field-line bg-cream-2 px-4 py-3 text-body text-ink transition-[background-color,border-color,box-shadow] duration-200 placeholder:text-ink-soft hover:border-ink focus:border-brand focus:bg-surface focus:shadow-focus focus:outline-none aria-[invalid=true]:border-error";
 
 export const checkboxClass =
   "mt-0.5 size-6 shrink-0 cursor-pointer appearance-none rounded-[7px] border-[1.5px] border-field-line bg-surface bg-center bg-no-repeat transition-colors checked:border-brand checked:bg-brand checked:bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E\")] checked:bg-[length:16px] aria-[invalid=true]:border-error";

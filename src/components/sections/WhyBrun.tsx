@@ -19,13 +19,13 @@ export function WhyBrun() {
         <div className="mt-12 grid gap-5 lg:mt-16 lg:grid-cols-12 lg:gap-6">
           <div
             data-reveal=""
-            className="on-night flex flex-col justify-between rounded-xl bg-night p-8 text-white shadow-md lg:col-span-4 lg:p-10"
+            className="on-asphalt surface-asphalt flex flex-col justify-between rounded-xl p-8 text-white shadow-md lg:col-span-4 lg:p-10"
           >
             <div
               role="img"
               aria-label={`${why.experience.prefix} ${why.experience.value} ${why.experience.label}`}
             >
-              <p className="font-display text-[1.05rem] font-semibold text-night-muted">
+              <p className="font-display text-[1.05rem] font-semibold text-marking/80">
                 {why.experience.prefix}
               </p>
               <p className="mt-2 font-display leading-none font-extrabold tracking-tight">

@@ -1,5 +1,5 @@
 import { Container } from "@/components/ui/Container";
-import { FacebookIcon, Icon } from "@/components/ui/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { mailtoHref, mainEmail, mainPhone, site, telHref } from "@/content/site";
 
 /** Fine ligne d'informations au-dessus de l'en-tête (tablette et ordinateur) */
@@ -37,7 +37,7 @@ export function TopBar() {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <FacebookIcon className="size-3.5" />
+          <Icon name="facebook" className="size-3.5" />
           <span>Facebook</span>
           <span className="sr-only">(nouvel onglet)</span>
         </a>

@@ -51,9 +51,9 @@ export default function ContactPage() {
             className="flex flex-col gap-8 lg:sticky lg:top-28 lg:col-span-5"
             aria-label="Coordonnées"
           >
-            <div className="on-night rounded-panel bg-night p-7 text-white shadow-md sm:p-9">
+            <div className="on-asphalt surface-asphalt rounded-panel p-7 text-white shadow-md sm:p-9">
               <h2 className="font-display text-h3 font-bold text-white">Nous contacter</h2>
-              <ContactDetails tone="night" stacked className="mt-7" />
+              <ContactDetails tone="asphalt" stacked className="mt-7" />
             </div>
             <div>
               <h2 className="mb-4 font-display text-h3 font-bold">{page.map.title}</h2>
