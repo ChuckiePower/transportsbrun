@@ -1,0 +1,541 @@
+@import "tailwindcss";
+
+/*
+ * Design system « Route douce » — chaleureux · fluide · fiable.
+ * Source unique des tokens : couleurs, rayons, ombres, typographie.
+ * Le jaune (--color-sun) est réservé aux actions principales.
+ */
+
+/* Variante « js » : styles appliqués seulement si JavaScript est actif (classe posée sur <html>) */
+@custom-variant js (&:where(.js, .js *));
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+@theme {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-white: #ffffff;
+
+  /* Surfaces claires */
+  --color-cream: #f8f5ef;
+  --color-cream-2: #f1ece2;
+  --color-surface: #ffffff;
+  --color-line: #e6e0d3;
+  --color-field-line: #828a9b; /* contour des champs : ≥ 3:1 sur blanc et crème */
+
+  /* Texte */
+  --color-ink: #14213d;
+  --color-ink-soft: #4a5670;
+
+  /* Marque */
+  --color-brand: #2b3a9f;
+  --color-brand-soft: #e8ebfa;
+  --color-brand-light: #a9b4f2; /* focus et accents sur fond nuit */
+
+  /* Action principale */
+  --color-sun: #ffc21a;
+  --color-sun-hover: #ffb400;
+
+  /* Surfaces sombres */
+  --color-night: #14213d;
+  --color-night-2: #1d2e57;
+  --color-night-muted: #bcc5da; /* texte secondaire sur nuit (≥ 8:1) */
+
+  /* États */
+  --color-ok: #1f8a5b;
+  --color-error: #c2362b;
+
+  /* Rayons */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-field: 14px;
+  --radius-md: 16px;
+  --radius-gallery: 20px;
+  --radius-lg: 24px;
+  --radius-panel: 28px;
+  --radius-xl: 32px;
+  --radius-2xl: 40px;
+
+  /* Ombres douces, teintées bleu nuit */
+  --shadow-sm: 0 1px 2px rgb(20 33 61 / 0.05), 0 2px 8px -2px rgb(20 33 61 / 0.06);
+  --shadow-md: 0 2px 4px rgb(20 33 61 / 0.04), 0 12px 28px -10px rgb(20 33 61 / 0.14);
+  --shadow-lg: 0 4px 8px rgb(20 33 61 / 0.05), 0 28px 60px -20px rgb(20 33 61 / 0.22);
+  --shadow-sun: 0 8px 20px -8px rgb(255 194 26 / 0.7);
+  --shadow-focus: 0 0 0 3px rgb(43 58 159 / 0.25); /* halo des champs au focus */
+
+  /* Typographie */
+  --text-h1: clamp(2.4rem, 5.2vw, 4.25rem);
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h2: clamp(1.9rem, 3.6vw, 3rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+  --text-lead: 1.25rem;
+  --text-lead--line-height: 1.55;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65;
+  --text-ui: 0.95rem;
+  --text-eyebrow: 0.8125rem;
+
+  --breakpoint-xs: 26rem;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-fade-in: fade-in 0.25s var(--ease-out-soft);
+  --animate-fade-out: fade-out 0.2s ease-in;
+  --animate-sheet-in: sheet-in 0.32s var(--ease-out-soft);
+  --animate-shake: shake 0.4s ease-in-out 1;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+@keyframes shake {
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+@layer base {
+  :root {
+    --focus: var(--color-brand);
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 7rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-soft);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* Sur fond nuit, l'anneau de focus s'éclaircit pour rester visible */
+  .on-night {
+    --focus: var(--color-brand-light);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Petit label au-dessus d'un titre : seul endroit en capitales */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-eyebrow);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+  }
+  .on-night .eyebrow {
+    color: var(--color-brand-light);
+  }
+
+  /* Texte courant */
+  .prose-route {
+    color: var(--color-ink-soft);
+    max-width: 68ch;
+  }
+  .prose-route p + p {
+    margin-top: 1em;
+  }
+  .prose-route a {
+    color: var(--color-brand);
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  .prose-route strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  /* Bouton principal : reflet qui traverse au survol */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      rgb(255 255 255 / 0.55) 50%,
+      transparent 70%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.7s var(--ease-out-soft);
+  }
+  @media (hover: hover) {
+    .btn-shine:hover::after {
+      transform: translateX(120%);
+    }
+  }
+
+  /* Galerie en maçonnerie */
+  .masonry {
+    column-gap: 12px;
+    columns: 2;
+  }
+  @media (min-width: 40rem) {
+    .masonry {
+      columns: 3;
+      column-gap: 16px;
+    }
+  }
+  @media (min-width: 64rem) {
+    .masonry {
+      columns: 4;
+    }
+  }
+  .masonry > * {
+    break-inside: avoid;
+    margin-bottom: 12px;
+  }
+  @media (min-width: 40rem) {
+    .masonry > * {
+      margin-bottom: 16px;
+    }
+  }
+
+  /* Bandeau défilant de pastilles */
+  .marquee-track {
+    animation: marquee 36s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Accordéon (details/summary) : hauteur animée là où le navigateur le permet */
+  .faq-item {
+    interpolate-size: allow-keywords;
+  }
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.3s var(--ease-out-soft),
+      content-visibility 0.3s allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations — amélioration progressive                               */
+/* Les états « avant révélation » ne s'appliquent qu'avec JavaScript   */
+/* (classe .js sur <html>) et sans préférence de mouvement réduit.     */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  /* Révélation au défilement : opacité + translation, une seule fois */
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s var(--ease-out-soft),
+      transform 0.7s var(--ease-out-soft);
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Photos : révélation par masque arrondi + léger dézoom */
+  .js [data-reveal-photo] {
+    clip-path: inset(8% round 32px);
+    transition: clip-path 0.9s var(--ease-out-soft);
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+  .js [data-reveal-photo] img {
+    transform: scale(1.05);
+    transition: transform 1.1s var(--ease-out-soft);
+  }
+  .js [data-reveal-photo].is-in {
+    clip-path: inset(0 round 32px);
+  }
+  .js [data-reveal-photo].is-in img {
+    transform: none;
+  }
+
+  /* Entrée du hero : la photo n'est jamais masquée (LCP immédiat) */
+  .js .hero-zoom {
+    animation: hero-zoom 1.1s var(--ease-out-soft) both;
+  }
+  .js .hero-veil {
+    animation: fade-in 0.9s var(--ease-out-soft) both;
+  }
+  .js .hero-in {
+    animation: hero-in 0.7s var(--ease-out-soft) both;
+    animation-delay: calc(120ms + var(--i, 0) * 90ms);
+  }
+  .js .hero-word {
+    display: inline-block;
+    animation: hero-word 0.75s var(--ease-out-soft) both;
+    animation-delay: calc(160ms + var(--w, 0) * 45ms);
+  }
+  .js .hero-trust {
+    animation: hero-in 0.8s var(--ease-out-soft) both;
+    animation-delay: 0.55s;
+  }
+  @keyframes hero-zoom {
+    from {
+      transform: scale(1.06);
+    }
+  }
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+  @keyframes hero-word {
+    from {
+      transform: translateY(105%);
+    }
+  }
+
+  /* Parallaxe douce pilotée par le défilement (navigateurs compatibles) */
+  @supports (animation-timeline: view()) {
+    @media (min-width: 64rem) {
+      [data-parallax] {
+        animation: parallax linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+    }
+  }
+  @keyframes parallax {
+    from {
+      transform: translateY(-4%) scale(1.08);
+    }
+    to {
+      transform: translateY(4%) scale(1.08);
+    }
+  }
+
+  /* Étapes « Comment ça marche » : numéros puis trait de liaison */
+  .js [data-steps] [data-step-num] {
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 0.5s var(--ease-out-soft),
+      transform 0.5s var(--ease-out-soft);
+    transition-delay: calc(var(--i, 0) * 220ms);
+  }
+  .js [data-steps] [data-step-line] {
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.9s var(--ease-out-soft) 0.25s;
+  }
+  .js [data-steps].is-in [data-step-num] {
+    opacity: 1;
+    transform: none;
+  }
+  .js [data-steps].is-in [data-step-line] {
+    transform: none;
+  }
+
+  /* Coche de succès qui se trace */
+  .check-draw path {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: draw 0.6s var(--ease-out-soft) 0.15s forwards;
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Étapes du formulaire */
+  .step-enter {
+    animation: step-enter 0.35s var(--ease-out-soft) both;
+  }
+  .step-enter-back {
+    animation: step-enter-back 0.35s var(--ease-out-soft) both;
+  }
+  @keyframes step-enter {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+  }
+  @keyframes step-enter-back {
+    from {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+  }
+}
+
+/* Mouvement réduit : bandeau statique, pas de parallaxe ni de dessin */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    transform: none;
+  }
+  .marquee-clone {
+    display: none;
+  }
+}
+
+/* Transitions de page (View Transitions API) : fondu court */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* En-tête flottant : plus compact et plus ombré après 24 px de défilement */
+.site-header {
+  transition:
+    padding 0.3s var(--ease-out-soft),
+    box-shadow 0.3s var(--ease-out-soft),
+    background-color 0.3s var(--ease-out-soft);
+}
+[data-scrolled] .site-header {
+  padding-block: 0.375rem;
+  box-shadow: var(--shadow-lg);
+  background-color: rgb(255 255 255 / 0.92);
+}
+
+/* Pastille « Demander un devis » flottante (ordinateur), visible après 600 px */
+.float-cta {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition:
+    opacity 0.3s var(--ease-out-soft),
+    transform 0.3s var(--ease-out-soft),
+    visibility 0.3s;
+}
+[data-float-cta] .float-cta {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+/* Barre d'appel mobile masquée pendant la saisie (clavier ouvert) */
+[data-typing] .mobile-bar {
+  transform: translateY(140%);
+}
+
+/* Bouton Pause du bandeau défilant */
+.marquee-wrap:has(#marquee-pause:checked) .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Formulaire en deux étapes : avec JavaScript, seule l'étape active est affichée.
+   Sans JavaScript, les deux étapes restent visibles et le formulaire s'envoie d'un bloc. */
+.js .quote-step:not([data-active]) {
+  display: none;
+}

@@ -1,0 +1,11 @@
+# Caddy de test local (HTTPS auto-signé, HTTP/2) : sert uniquement à mesurer
+# les performances dans des conditions proches de la production.
+{
+	local_certs
+	auto_https disable_redirects
+}
+
+localhost:8443 {
+	encode zstd gzip
+	reverse_proxy web:3000
+}

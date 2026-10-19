@@ -1,0 +1,11 @@
+content/images-manifest.json
+pnpm-lock.yaml
+.next/
+node_modules/
+docs/screenshots/
+docs/lighthouse/
+test-results/
+playwright-report/
+docs/
+README.md
+DEPLOY.md

@@ -1,0 +1,14 @@
+.git
+.github
+node_modules
+.next
+.playwright
+test-results
+playwright-report
+docs
+tests
+deploy
+*.md
+.env
+.env.*
+!.env.example
