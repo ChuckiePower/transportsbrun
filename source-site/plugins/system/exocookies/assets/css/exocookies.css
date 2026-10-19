@@ -1,0 +1,111 @@
+.exocookie,.exocookie * {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+.exocookie {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+	overflow: hidden;
+    z-index: 2147483647;
+	box-shadow: rgb(0 0 0 / 15%) 0px 4px 24px, rgb(0 0 0 / 5%) 0px 2px 6px;
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+.exocookie .cookie-text,.exocookie .btn-cookie {width: 100%;flex: 1;}
+.exocookie .cookie-text {padding-top: 20px;padding-right: 20px;padding-left: 20px;}
+.exocookie .btn-privacy {display: inline-block;margin-top: 18px;text-decoration: underline;}
+.exocookie .btn-cookie {
+    border-top: 1px solid rgb(237, 237, 237);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.exocookie .btn-cookie > a,
+.exocookie .btn-cookie > button {
+	display: flex;
+	justify-content: center;
+	width: 50%;
+	flex: 1;
+    padding-top: 10px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+	cursor: pointer;
+}
+/* .exocookie .btn-cookie > a:first-child a {border-right: 1px solid rgb(237, 237, 237);} */
+/* .exocookie .btn-cookie > button:first-child a {border-right: 1px solid rgb(237, 237, 237);} */
+.exocookie .title-cookie {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.exocookie .cookie-img {
+    max-width: 36px;
+	height: auto;
+}
+.exocookie p {
+    line-height: 20px;
+    margin: 0px;
+    padding: 0px;
+}
+.exocookie {
+	max-width: var(--cookie-width);
+	background-color: var(--color-bg-cookie);
+	border-radius: var(--cookie-radius);
+}
+.exocookie .title-cookie h1,
+.exocookie .title-cookie h2,
+.exocookie .title-cookie h3,
+.exocookie .title-cookie h4,
+.exocookie .title-cookie h5,
+.exocookie .title-cookie h6,
+.exocookie .title-cookie span {
+    font-family: inherit;
+    font-style: normal;
+    line-height: 24px;
+	text-transform: initial;
+	letter-spacing: 0px;
+    font-weight: 400;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+	font-size: var(--cookie-font-size-title);
+	color: var(--color-title-cookie);
+}
+.exocookie .cookie-text p {
+	font-size: var(--cookie-font-size-text);
+	color: var(--color-cookie-text);
+}
+.exocookie .btn-privacy {
+	font-size: var(--cookie-font-size-link);
+	color: var(--color-link-cookie);
+}
+.exocookie a.btn-accept,
+.exocookie a.btn-reject,
+.exocookie button.btn-accept,
+.exocookie button.btn-reject {
+	border: none;
+    outline: none;
+	font-size: var(--cookie-font-size-buttons);
+}
+.exocookie a.btn-reject,
+.exocookie button.btn-reject {
+	background-color: var(--color-bg-button-reject-cookie);
+	color: var(--color-text-button-reject-cookie);
+}
+.exocookie a.btn-accept,
+.exocookie button.btn-accept {
+	background-color: var(--color-bg-button-accept-cookie);
+	color: var(--color-text-button-accept-cookie);
+}
+.exocookie a.btn-reject:hover,
+.exocookie a.btn-accept:hover,
+.exocookie button.btn-reject:hover,
+.exocookie button.btn-accept:hover {
+	text-decoration: underline;
+}
