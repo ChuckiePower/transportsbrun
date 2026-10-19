@@ -8,7 +8,7 @@ import { Icon } from "@/components/ui/Icon";
 const MobileMenuPanel = dynamic(() => import("./MobileMenuPanel"), { ssr: false });
 const MENU_ID = "menu-mobile";
 
-/** Bouton « Menu » (mobile et tablette) ouvrant la navigation plein écran */
+/** Bouton « Menu » (mobile et tablette) ouvrant la navigation */
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -30,14 +30,12 @@ export function MobileMenu() {
           setLoaded(true);
           setOpen(true);
         }}
-        className="inline-flex min-h-11 items-center gap-2 rounded-sm border-2 border-ink px-3.5 font-display text-[1.05rem] font-bold tracking-wide uppercase hover:bg-ink hover:text-white xl:hidden"
+        className="inline-flex min-h-11 items-center gap-2 rounded-full border-[1.5px] border-line bg-surface px-4 font-display text-[0.9rem] font-semibold text-ink transition-colors hover:border-ink xl:hidden"
       >
-        <Icon name="menu" className="size-5" />
+        <Icon name="menu" className="size-[18px]" />
         <span>Menu</span>
       </button>
-      {loaded ? (
-        <MobileMenuPanel open={open} onOpenChange={setOpen} returnFocusTo={button} />
-      ) : null}
+      {loaded ? <MobileMenuPanel open={open} onOpenChange={setOpen} returnFocusTo={button} /> : null}
     </>
   );
 }

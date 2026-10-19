@@ -4,15 +4,12 @@ import * as Dialog from "@radix-ui/react-dialog";
 import type { RefObject } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
-import { mainNav, quoteHref, site, telHref } from "@/content/site";
+import { mainNav, mainPhone, quoteHref, site, telHref } from "@/content/site";
 import { NavLinks } from "./NavLinks";
 
 export const MOBILE_MENU_ID = "menu-mobile";
 
-/**
- * Panneau du menu plein écran (chargé à la demande) : piège de focus,
- * fermeture par Échap, reste de la page masqué aux lecteurs d'écran (Radix Dialog).
- */
+/** Panneau du menu : carte arrondie plein écran, piège de focus, Échap (Radix Dialog) */
 export default function MobileMenuPanel({
   open,
   onOpenChange,
@@ -26,7 +23,7 @@ export default function MobileMenuPanel({
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-ink/70 data-[state=closed]:animate-fade-out data-[state=open]:animate-fade-in" />
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-night/40 backdrop-blur-sm data-[state=closed]:animate-fade-out data-[state=open]:animate-fade-in" />
         <Dialog.Content
           id={MOBILE_MENU_ID}
           aria-describedby={undefined}
@@ -34,53 +31,34 @@ export default function MobileMenuPanel({
             e.preventDefault();
             returnFocusTo.current?.focus();
           }}
-          className="on-dark fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ink text-white data-[state=closed]:animate-fade-out data-[state=open]:animate-fade-in"
+          className="fixed inset-3 z-50 flex flex-col overflow-y-auto rounded-xl bg-surface shadow-lg data-[state=closed]:animate-fade-out data-[state=open]:animate-sheet-in"
         >
-          <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-6">
-            <Dialog.Title className="eyebrow text-signal">Menu</Dialog.Title>
-            <Dialog.Close className="inline-flex min-h-11 items-center gap-2 rounded-sm border-2 border-white/70 px-3.5 font-display text-[1.05rem] font-bold tracking-wide uppercase hover:bg-white hover:text-ink">
-              <Icon name="close" className="size-5" />
+          <div className="flex items-center justify-between px-5 pt-4 pb-2">
+            <Dialog.Title className="eyebrow">Menu</Dialog.Title>
+            <Dialog.Close className="inline-flex min-h-11 items-center gap-2 rounded-full border-[1.5px] border-line px-4 font-display text-[0.9rem] font-semibold hover:border-ink">
+              <Icon name="close" className="size-[18px]" />
               <span>Fermer</span>
             </Dialog.Close>
           </div>
 
-          <nav aria-label="Navigation principale" className="px-4 pt-6 sm:px-6">
+          <nav aria-label="Navigation principale" className="px-3 pt-2">
             <NavLinks
               items={[{ href: "/", label: "Accueil" }, ...mainNav]}
               onNavigate={close}
-              className="divide-y divide-white/10 border-y border-white/10"
-              linkClassName="flex min-h-14 items-center justify-between py-3 font-display text-[1.85rem] leading-tight font-bold uppercase hover:text-signal"
-              activeClassName="text-signal"
+              className="space-y-1"
+              linkClassName="flex min-h-13 items-center justify-between rounded-lg px-4 py-2.5 font-display text-[1.6rem] leading-tight font-bold tracking-tight text-ink hover:bg-cream"
+              activeClassName="bg-brand-soft text-brand"
             />
           </nav>
 
-          <div className="mt-auto space-y-5 px-4 pt-8 pb-[max(2rem,env(safe-area-inset-bottom))] sm:px-6">
-            <ButtonLink
-              href={quoteHref}
-              size="lg"
-              icon="arrowRight"
-              className="w-full"
-              onClick={close}
-            >
+          <div className="mt-auto space-y-3 px-5 pt-8 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+            <ButtonLink href={quoteHref} icon="arrowRight" className="w-full" onClick={close}>
               Demander un devis
             </ButtonLink>
-            <ul className="grid gap-2 sm:grid-cols-3">
-              {site.phones.map((p) => (
-                <li key={p.e164}>
-                  <a
-                    href={telHref(p)}
-                    className="flex min-h-12 items-center gap-3 rounded-sm border border-white/15 px-4 py-2 hover:border-signal"
-                  >
-                    <Icon name="phone" className="size-5 shrink-0 text-signal" />
-                    <span className="leading-tight">
-                      <span className="block text-sm text-silver">{p.label}</span>
-                      <span className="tabular font-semibold">{p.display}</span>
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <p className="flex items-center gap-2 text-silver">
+            <ButtonLink href={telHref(mainPhone)} variant="secondary" icon="phone" iconPosition="start" className="w-full">
+              Appeler le {mainPhone.display}
+            </ButtonLink>
+            <p className="flex items-center justify-center gap-2 pt-2 text-[0.875rem] text-ink-soft">
               <Icon name="clock" className="size-4" /> {site.hours.display}
             </p>
           </div>

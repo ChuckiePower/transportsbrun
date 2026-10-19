@@ -4,38 +4,26 @@ import logo from "@brand/logo-transports-brun.png";
 import { cn } from "@/lib/cn";
 
 /**
- * Logo actuel (PNG 250×130) affiché au plus à 125 px de large pour rester net
- * sur écran haute densité. À remplacer par un SVG dès que le vectoriel est fourni.
+ * Logo actuel (PNG 250×130) affiché au plus à 125 px de large pour rester net.
+ * À remplacer par un SVG dès que le vectoriel est fourni.
  */
-export function Logo({ className, priority = false }: { className?: string; priority?: boolean }) {
+export function Logo({ className }: { className?: string }) {
   return (
-    <Link
-      href="/"
-      className={cn("inline-flex shrink-0 items-center", className)}
-      aria-label="Transports Brun — accueil"
-    >
-      <Image
-        src={logo}
-        alt=""
-        width={125}
-        height={65}
-        sizes="125px"
-        className="h-auto w-[96px] sm:w-[112px] lg:w-[125px]"
-        preload={priority}
-      />
+    <Link href="/" className={cn("inline-flex shrink-0 items-center rounded-md", className)} aria-label="Transports Brun — accueil">
+      <Image src={logo} alt="" width={125} height={65} sizes="125px" className="h-auto w-[92px] sm:w-[104px]" />
     </Link>
   );
 }
 
-/** Logo posé sur une plaque blanche (pour les fonds sombres) */
-export function LogoPlate({ className }: { className?: string }) {
+/** Logo dans une tuile blanche arrondie (pour les fonds nuit) */
+export function LogoTile({ className }: { className?: string }) {
   return (
     <Link
       href="/"
-      className={cn("inline-flex rounded-sm bg-white px-4 py-3 shadow-card", className)}
+      className={cn("inline-flex rounded-lg bg-white px-5 py-4 shadow-sm", className)}
       aria-label="Transports Brun — accueil"
     >
-      <Image src={logo} alt="" width={125} height={65} sizes="125px" className="h-auto w-[125px]" />
+      <Image src={logo} alt="" width={125} height={65} sizes="125px" className="h-auto w-[120px]" />
     </Link>
   );
 }

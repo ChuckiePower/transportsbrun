@@ -1,33 +1,27 @@
 import { ButtonLink } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
 import { mainNav, quoteHref } from "@/content/site";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
-import { NavLinks } from "./NavLinks";
+import { DesktopNav } from "./NavLinks";
 
+/** En-tête flottant arrondi, translucide ; se resserre après 24 px de défilement */
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/85">
-      <Container size="wide" className="flex h-[4.5rem] items-center justify-between gap-4 sm:h-20">
+    <div className="site-header-wrap sticky top-0 z-40 px-3 pt-3 sm:px-4">
+      <header className="site-header mx-auto flex max-w-[75rem] items-center justify-between gap-3 rounded-xl border border-white/60 bg-white/85 py-2.5 pr-2.5 pl-4 shadow-md backdrop-blur-md sm:pl-5">
         <Logo />
         <nav aria-label="Navigation principale" className="hidden xl:block">
-          <NavLinks
-            items={mainNav}
-            className="flex items-center gap-0.5 2xl:gap-1"
-            linkClassName="relative inline-flex min-h-11 items-center px-2 font-display text-[1rem] font-bold whitespace-nowrap text-graphite uppercase hover:text-navy 2xl:px-3 2xl:text-[1.1rem] after:absolute after:inset-x-2 after:bottom-1.5 2xl:after:inset-x-3 after:h-[3px] after:origin-left after:scale-x-0 after:bg-navy after:transition-transform hover:after:scale-x-100"
-            activeClassName="text-navy after:scale-x-100"
-          />
+          <DesktopNav items={mainNav} />
         </nav>
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Sur mobile, la barre d'action collante en bas d'écran prend le relais */}
+        <div className="flex items-center gap-2">
           <div className="hidden sm:block">
-            <ButtonLink href={quoteHref} icon="arrowRight">
+            <ButtonLink href={quoteHref} icon="arrowRight" size="sm">
               Demander un devis
             </ButtonLink>
           </div>
           <MobileMenu />
         </div>
-      </Container>
-    </header>
+      </header>
+    </div>
   );
 }
