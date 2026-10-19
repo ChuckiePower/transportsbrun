@@ -20,7 +20,7 @@ export default function MerciPage() {
           className="rounded-xl border border-line bg-surface p-8 text-center shadow-md sm:p-14"
         >
           <CheckDraw className="mx-auto" />
-          <h1 className="mt-6 text-h2 font-extrabold">Demande envoyée, merci !</h1>
+          <h1 className="mt-6 text-h2 font-extrabold">Demande bien reçue, merci !</h1>
           <p className="mx-auto mt-4 max-w-xl text-lead text-ink">
             Votre demande a bien été transmise à l&apos;équipe Transports Brun. Nous vous
             contacterons dans les plus brefs délais.

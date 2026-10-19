@@ -31,7 +31,7 @@ export const services: Service[] = [
     icon: "crane",
     href: "/transport-plateaux-camion-grue-haut-rhin-alsace#flotte",
     linkLabel: "Le camion-grue",
-    photo: "grue/camion-grue-vignoble",
+    photo: "grue/camion-grue-chantier-structure",
   },
   {
     id: "plateau",

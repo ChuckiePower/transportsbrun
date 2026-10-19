@@ -1,4 +1,5 @@
 import { CallbackTrigger } from "@/components/form/CallbackTrigger";
+import { CallbackFallbackForm } from "@/components/form/CallbackFallbackForm";
 import { QuoteForm } from "@/components/form/QuoteForm";
 import { MapEmbed } from "@/components/media/MapEmbed";
 import { ContactDetails } from "@/components/sections/ContactDetails";
@@ -59,6 +60,7 @@ export default function ContactPage() {
               <MapEmbed />
             </div>
           </aside>
+          <CallbackFallbackForm className="lg:col-span-7" />
         </Container>
       </div>
     </>

@@ -123,7 +123,7 @@ export async function POST(req: Request) {
     }
   }
 
-  const isCallback = !isForm && body.source === "rappel";
+  const isCallback = body.source === "rappel";
   let send: () => Promise<void>;
   if (isCallback) {
     const parsed = callbackSchema.safeParse(body);

@@ -135,10 +135,7 @@ export default function EquipementPage() {
           <Container>
             <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div data-reveal="">
-                <p className="eyebrow">
-                  Catégorie {i + 1} sur {equipmentCategories.length}
-                </p>
-                <h2 id={`${cat.id}-titre`} className="mt-2 text-h2 font-extrabold">
+                <h2 id={`${cat.id}-titre`} className="text-h2 font-extrabold">
                   {cat.title}
                 </h2>
               </div>

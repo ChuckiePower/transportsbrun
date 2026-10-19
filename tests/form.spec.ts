@@ -5,21 +5,21 @@ import { freshIp, outbox, validPayload } from "./helpers";
 const MIN_FILL_WAIT = 3200;
 
 async function fillStep1(page: Page) {
-  await page.getByLabel("Type de demande").selectOption("Camion-grue");
-  await page.getByLabel("Lieu de chargement").fill("Sélestat");
-  await page.getByLabel("Lieu de livraison").fill("Strasbourg");
-  await page.getByLabel("Nature de la charge").fill("Poutres, 12 m, 8 t");
+  await page.locator("#devis").getByLabel("Type de demande").selectOption("Camion-grue");
+  await page.locator("#devis").getByLabel("Lieu de chargement").fill("Sélestat");
+  await page.locator("#devis").getByLabel("Lieu de livraison").fill("Strasbourg");
+  await page.locator("#devis").getByLabel("Nature de la charge").fill("Poutres, 12 m, 8 t");
 }
 
 async function fillStep2(page: Page) {
-  await page.getByLabel(/^Nom/).fill("Dominique <b>Essai</b>");
-  await page.getByLabel("Entreprise").fill("BTP & Fils");
-  await page.getByLabel("E-mail").fill("dominique@example.com");
-  await page.getByLabel("Téléphone").fill("+33 6 12 34 56 78");
+  await page.locator("#devis").getByLabel(/^Nom/).fill("Dominique <b>Essai</b>");
+  await page.locator("#devis").getByLabel("Entreprise").fill("BTP & Fils");
+  await page.locator("#devis").getByLabel("E-mail").fill("dominique@example.com");
+  await page.locator("#devis").getByLabel("Téléphone").fill("+33 6 12 34 56 78");
   await page
     .getByLabel("Message")
     .fill("Levage de poutres <script>alert(1)</script> sur chantier.");
-  await page.getByRole("checkbox").check();
+  await page.locator("#devis").getByRole("checkbox").check();
 }
 
 test.describe("Formulaire de devis en deux étapes", () => {
@@ -29,10 +29,10 @@ test.describe("Formulaire de devis en deux étapes", () => {
     await page.goto("/contact");
     await expect(page.getByText("Étape 1 sur 2")).toBeVisible();
     // L'étape 2 est masquée tant que l'étape 1 n'est pas validée
-    await expect(page.getByLabel("Message")).toBeHidden();
+    await expect(page.locator("#devis").getByLabel("Message")).toBeHidden();
 
     await page.getByRole("button", { name: /Suivant/ }).click();
-    const type = page.getByLabel("Type de demande");
+    const type = page.locator("#devis").getByLabel("Type de demande");
     await expect(type).toBeFocused();
     await expect(type).toHaveAttribute("aria-invalid", "true");
     await expect(page.getByText("Choisissez le type de demande.")).toBeVisible();
@@ -42,11 +42,11 @@ test.describe("Formulaire de devis en deux étapes", () => {
     await page.getByRole("button", { name: /Suivant/ }).click();
     await expect(page.getByText("Étape 2 sur 2")).toBeVisible();
     await expect(page.getByRole("heading", { name: "Vos coordonnées" })).toBeFocused();
-    await expect(page.getByLabel("Type de demande")).toBeHidden();
+    await expect(page.locator("#devis").getByLabel("Type de demande")).toBeHidden();
 
     // Étape 2 vide : erreurs et focus sur le Nom
     await page.getByRole("button", { name: "Envoyer" }).click();
-    const name = page.getByLabel(/^Nom/);
+    const name = page.locator("#devis").getByLabel(/^Nom/);
     await expect(name).toBeFocused();
     await expect(page.getByText("Indiquez votre nom.")).toBeVisible();
     await expect(
@@ -56,7 +56,7 @@ test.describe("Formulaire de devis en deux étapes", () => {
     // Retour : la saisie de l'étape 1 est conservée
     await page.getByRole("button", { name: "Retour" }).click();
     await expect(page.getByText("Étape 1 sur 2")).toBeVisible();
-    await expect(page.getByLabel("Lieu de chargement")).toHaveValue("Sélestat");
+    await expect(page.locator("#devis").getByLabel("Lieu de chargement")).toHaveValue("Sélestat");
   });
 
   test("parcours complet : présélection par l'URL → 2 étapes → succès (e-mail simulé)", async ({
@@ -66,8 +66,8 @@ test.describe("Formulaire de devis en deux étapes", () => {
     await page.setExtraHTTPHeaders({ "x-forwarded-for": freshIp() });
     await page.goto("/contact?type=camion-grue&nature=modules#devis");
 
-    await expect(page.getByLabel("Type de demande")).toHaveValue("Camion-grue");
-    await expect(page.getByLabel("Nature de la charge")).toHaveValue("Modules");
+    await expect(page.locator("#devis").getByLabel("Type de demande")).toHaveValue("Camion-grue");
+    await expect(page.locator("#devis").getByLabel("Nature de la charge")).toHaveValue("Modules");
     await fillStep1(page);
     await page.getByRole("button", { name: /Suivant/ }).click();
     await fillStep2(page);
@@ -95,17 +95,17 @@ test.describe("Formulaire de devis en deux étapes", () => {
 
   test("présélection : une valeur inconnue dans l'URL est ignorée", async ({ page }) => {
     await page.goto("/contact?type=%3Cscript%3E&nature=n-importe-quoi");
-    await expect(page.getByLabel("Type de demande")).toHaveValue("");
-    await expect(page.getByLabel("Nature de la charge")).toHaveValue("");
+    await expect(page.locator("#devis").getByLabel("Type de demande")).toHaveValue("");
+    await expect(page.locator("#devis").getByLabel("Nature de la charge")).toHaveValue("");
   });
 
   test("saisie conservée pendant la session (hors consentement)", async ({ page }) => {
     await page.goto("/contact");
-    await page.getByLabel("Lieu de chargement").fill("Colmar");
-    await page.getByLabel("Type de demande").selectOption("ADR");
+    await page.locator("#devis").getByLabel("Lieu de chargement").fill("Colmar");
+    await page.locator("#devis").getByLabel("Type de demande").selectOption("ADR");
     await page.reload();
-    await expect(page.getByLabel("Lieu de chargement")).toHaveValue("Colmar");
-    await expect(page.getByLabel("Type de demande")).toHaveValue("ADR");
+    await expect(page.locator("#devis").getByLabel("Lieu de chargement")).toHaveValue("Colmar");
+    await expect(page.locator("#devis").getByLabel("Type de demande")).toHaveValue("ADR");
     const saved = await page.evaluate(() => sessionStorage.getItem("tb-devis") ?? "");
     expect(saved).not.toContain("consent");
   });
@@ -121,15 +121,15 @@ test.describe("Formulaire de devis en deux étapes", () => {
     const page = await context.newPage();
     await page.goto("/contact");
     // Les deux étapes sont visibles, sans boutons d'étape
-    await expect(page.getByLabel("Type de demande")).toBeVisible();
-    await expect(page.getByLabel("Message")).toBeVisible();
+    await expect(page.locator("#devis").getByLabel("Type de demande")).toBeVisible();
+    await expect(page.locator("#devis").getByLabel("Message")).toBeVisible();
     await expect(page.getByRole("button", { name: /Suivant/ })).toBeHidden();
 
     await fillStep1(page);
     await fillStep2(page);
     await page.getByRole("button", { name: "Envoyer" }).click();
     await expect(page).toHaveURL(/\/contact\/merci$/);
-    await expect(page.getByRole("heading", { name: /Demande envoyée/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Demande bien reçue/ })).toBeVisible();
     expect(outbox().length).toBe(before + 1);
     expect(outbox().at(-1)!.subject).toContain("Camion-grue");
     await context.close();
@@ -168,6 +168,30 @@ test.describe("Être rappelé", () => {
     await expect(dialog).toBeHidden();
     await expect(trigger).toBeFocused();
   });
+});
+
+test("Être rappelé sans JavaScript : le lien mène au mini-formulaire de rappel, envoi classique", async ({
+  browser,
+}) => {
+  const before = outbox().length;
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    extraHTTPHeaders: { "x-forwarded-for": freshIp() },
+  });
+  const page = await context.newPage();
+  await page.goto("/notre-histoire");
+  await page.getByRole("main").getByRole("link", { name: "Être rappelé" }).click();
+  await expect(page).toHaveURL(/\/contact#rappel$/);
+  const form = page.locator("#rappel");
+  await expect(form.getByRole("heading", { name: "Être rappelé" })).toBeVisible();
+  await form.getByLabel(/^Nom/).fill("Sacha Sansjs");
+  await form.getByLabel("Téléphone").fill("06 98 76 54 32");
+  await form.getByRole("checkbox").check();
+  await form.getByRole("button", { name: "Être rappelé" }).click();
+  await expect(page).toHaveURL(/\/contact\/merci$/);
+  expect(outbox().length).toBe(before + 1);
+  expect(outbox().at(-1)!.subject).toContain("Demande de rappel");
+  await context.close();
 });
 
 test.describe("API /api/contact", () => {

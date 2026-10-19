@@ -20,6 +20,8 @@ export function CallbackHost() {
       setOpen(true);
     }
     window.addEventListener(CALLBACK_EVENT, onOpen);
+    // Lien direct vers /contact#rappel (favori, partage) : on ouvre le tiroir
+    if (window.location.hash === "#rappel") window.dispatchEvent(new CustomEvent(CALLBACK_EVENT));
     return () => window.removeEventListener(CALLBACK_EVENT, onOpen);
   }, []);
 

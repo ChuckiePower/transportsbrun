@@ -21,3 +21,19 @@ export const fontSans = localFont({
   fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "Roboto", "sans-serif"],
   adjustFontFallback: "Arial",
 });
+
+/**
+ * Signalétique (eyebrows, chiffres, fiches techniques, plaques, numéros) : Overpass (OFL),
+ * dessinée d'après la police des panneaux autoroutiers. Sous-ensemble latin français,
+ * axe de graisse réduit à 600-800 (26 Ko). Non préchargée : textes courts, affichage en swap.
+ */
+export const fontSign = localFont({
+  src: "../fonts/overpass-latin-600-800.woff2",
+  weight: "600 800",
+  style: "normal",
+  variable: "--font-overpass",
+  display: "swap",
+  preload: false,
+  fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "Roboto", "sans-serif"],
+  adjustFontFallback: "Arial",
+});

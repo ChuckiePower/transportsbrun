@@ -73,7 +73,9 @@ export default function HomePage() {
           />
           <Container className="flex flex-col justify-end pt-28 pb-28 sm:pb-32 lg:pb-36">
             <div className="max-w-[44rem]">
-              <Eyebrow className="hero-in mb-4 text-brand-light">{page.hero.eyebrow}</Eyebrow>
+              <Eyebrow className="hero-in mb-5 inline-flex rounded-full bg-[rgb(20_33_61/0.55)] px-3.5 py-1.5 text-white backdrop-blur-md">
+                {page.hero.eyebrow}
+              </Eyebrow>
               <HeroTitle text={page.hero.title} />
               <p
                 className="hero-in mt-6 max-w-[36rem] text-lead text-white/90"
@@ -82,6 +84,7 @@ export default function HomePage() {
                 {page.hero.lead}
               </p>
               <div
+                data-hero-cta=""
                 className="hero-in mt-9 flex flex-col gap-3 xs:flex-row xs:flex-wrap xs:items-center"
                 style={{ ["--i" as string]: 4 }}
               >

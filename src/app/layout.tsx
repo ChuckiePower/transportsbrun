@@ -10,7 +10,7 @@ import { TopBar } from "@/components/layout/TopBar";
 import { Analytics } from "@/components/seo/Analytics";
 import { JsonLd, localBusinessJsonLd } from "@/components/seo/JsonLd";
 import { site } from "@/content/site";
-import { fontDisplay, fontSans } from "./fonts";
+import { fontDisplay, fontSans, fontSign } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="fr"
-      className={`${fontSans.variable} ${fontDisplay.variable}`}
+      className={`${fontSans.variable} ${fontDisplay.variable} ${fontSign.variable}`}
       suppressHydrationWarning
     >
       <head>

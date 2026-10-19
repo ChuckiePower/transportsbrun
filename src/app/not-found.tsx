@@ -45,7 +45,7 @@ export default function NotFound() {
             l&apos;accueil ou appelez-nous directement&#8239;: nous vous répondons du lundi au
             vendredi.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div data-hero-cta="" className="mt-9 flex flex-wrap gap-3">
             <ButtonLink href="/" icon="arrowRight">
               Retour à l&apos;accueil
             </ButtonLink>

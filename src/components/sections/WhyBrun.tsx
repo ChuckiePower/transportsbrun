@@ -21,22 +21,26 @@ export function WhyBrun() {
             data-reveal=""
             className="on-night flex flex-col justify-between rounded-xl bg-night p-8 text-white shadow-md lg:col-span-4 lg:p-10"
           >
-            <p className="font-display text-[1.05rem] font-semibold text-night-muted">
-              {why.experience.prefix}
-            </p>
-            <p className="mt-2 font-display leading-none font-extrabold tracking-tight">
-              {/* Valeur finale déjà dans le HTML ; le décompte n'est qu'une animation */}
-              <span
-                className="tabular text-[clamp(5rem,12vw,8.5rem)]"
-                data-count={why.experience.value}
-                aria-hidden="true"
-              >
-                {why.experience.value}
-              </span>
-              <span className="sr-only">{why.experience.value}</span>
-            </p>
-            <p className="mt-3 font-display text-xl font-bold text-white">{why.experience.label}</p>
-            <p className="mt-6 text-night-muted">{why.experience.note}</p>
+            <div
+              role="img"
+              aria-label={`${why.experience.prefix} ${why.experience.value} ${why.experience.label}`}
+            >
+              <p className="font-display text-[1.05rem] font-semibold text-night-muted">
+                {why.experience.prefix}
+              </p>
+              <p className="mt-2 font-display leading-none font-extrabold tracking-tight">
+                {/* Valeur finale déjà dans le HTML ; le décompte n'est qu'une animation */}
+                <span
+                  className="tabular text-[clamp(5rem,12vw,8.5rem)]"
+                  data-count={why.experience.value}
+                >
+                  {why.experience.value}
+                </span>
+              </p>
+              <p className="mt-3 font-display text-xl font-bold text-white">
+                {why.experience.label}
+              </p>
+            </div>
           </div>
           <ul className="grid gap-5 sm:grid-cols-2 lg:col-span-8 lg:gap-6">
             {why.cards.map((c, i) => (

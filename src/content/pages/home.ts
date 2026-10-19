@@ -55,7 +55,6 @@ export const homePage = {
       value: 25,
       label: fr`ans d'expérience dans le domaine du transport`,
       prefix: fr`Près de`,
-      note: fr`Une société familiale née le 2 mars 2018, avec près de 25 ans d'expérience à sa tête.`,
     },
     cards: [
       {

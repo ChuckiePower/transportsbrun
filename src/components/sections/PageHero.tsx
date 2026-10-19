@@ -43,6 +43,7 @@ export function PageHero({
             {lead ? <p className="mt-6 max-w-[40rem] text-lead text-ink">{lead}</p> : null}
             {children ? (
               <div
+                data-hero-cta=""
                 className="hero-in mt-8 flex flex-wrap items-center gap-3"
                 style={{ ["--i" as string]: 1 }}
               >

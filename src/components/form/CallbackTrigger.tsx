@@ -7,7 +7,7 @@ export const CALLBACK_EVENT = "tb:rappel";
 
 /**
  * Lien « Être rappelé » : ouvre le tiroir de rappel (JavaScript),
- * ou mène au formulaire de la page Contact sans JavaScript.
+ * ou mène au mini-formulaire de rappel de la page Contact (#rappel) sans JavaScript.
  */
 export function CallbackTrigger({
   className,
@@ -18,7 +18,7 @@ export function CallbackTrigger({
 }) {
   return (
     <a
-      href="/contact#devis"
+      href="/contact#rappel"
       onClick={(e) => {
         e.preventDefault();
         window.dispatchEvent(

@@ -19,6 +19,7 @@ export function Steps() {
           {items.map((s, i) => (
             <li key={s.title} className="relative flex flex-col items-center text-center">
               <span
+                aria-hidden="true"
                 data-step-num=""
                 style={{ ["--i" as string]: i }}
                 className="relative z-10 inline-flex size-14 items-center justify-center rounded-full bg-brand font-display text-xl font-extrabold text-white shadow-md ring-8 ring-cream"

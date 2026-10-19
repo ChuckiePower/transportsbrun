@@ -94,6 +94,10 @@ export const equipmentCategories: EquipmentCategory[] = [
     ],
     photos: [
       "plateau/plateau-man-voie-rapide",
+      "plateau/convoi-exceptionnel-man-conteneur",
+      "plateau/poutres-beton-chantier",
+      "marchandises/cuve-levage-grue",
+      "plateau/plateau-chargement-mixte",
       "plateau/plateau-daf-zone-stockage",
       "plateau/man-plateau-jaune-chemin",
       "plateau/plateau-man-coucher-soleil",
@@ -103,14 +107,9 @@ export const equipmentCategories: EquipmentCategory[] = [
     id: "openbox",
     title: "Openbox",
     composition: [fr`Openbox, dont une adaptable en porte-conteneur`],
-    photos: [
-      "plateau/volvo-fh-caisses-grillagees",
-      "plateau/convoi-exceptionnel-man-conteneur",
-      "flotte/deux-man-tgx",
-      "marchandises/cuve-levage-grue",
-      "plateau/poutres-beton-chantier",
-      "plateau/plateau-chargement-mixte",
-    ],
+    // Seules les photos de l'ancienne galerie Openbox qui ne montrent pas un plateau sont gardées ici
+    // (poutres béton, cuve, chargement mixte et conteneur reclassés dans « Plateaux »)
+    photos: ["plateau/volvo-fh-caisses-grillagees", "flotte/deux-man-tgx"],
   },
   {
     id: "remorque-trax",

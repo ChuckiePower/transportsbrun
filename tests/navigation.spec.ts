@@ -35,12 +35,11 @@ test("menu mobile : ouverture, aria-expanded, Échap, retour du focus", async ({
 test("barre d'appel mobile : liens tel: et devis", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto("/notre-histoire");
-  const bar = page.getByRole("navigation", { name: "Actions rapides" });
-  await expect(bar.getByRole("link", { name: /Appeler/ })).toHaveAttribute(
-    "href",
-    "tel:+33389733463",
-  );
-  await expect(bar.getByRole("link", { name: /Devis/ })).toHaveAttribute("href", "/contact#devis");
+  // Barre masquée tant que les boutons du hero sont à l'écran : on vérifie les liens directement
+  const bar = page.locator("nav.mobile-bar");
+  await expect(bar.locator('a[href^="tel:"]')).toHaveAttribute("href", "tel:+33389733463");
+  await expect(bar.locator("a")).toHaveCount(2);
+  await expect(bar.locator("a").last()).toHaveAttribute("href", "/contact#devis");
 });
 
 test("visionneuse : clavier, compteur, légende et retour du focus", async ({ page }) => {
@@ -167,15 +166,34 @@ test("pastille devis flottante (ordinateur) : après 600 px, jamais sur Contact"
   await expect(page.getByRole("complementary", { name: "Devis rapide" })).toBeHidden();
 });
 
+test("barre d'appel mobile : absente au premier écran, 2 actions après les boutons du hero", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/");
+  const bar = page.getByRole("navigation", { name: "Actions rapides" });
+  // Les boutons du hero sont visibles : pas de doublon
+  await expect(page.locator("[data-hero-cta]")).toBeInViewport();
+  await expect(bar).toBeHidden();
+  await page
+    .locator("[data-hero-cta]")
+    .evaluate((el) => window.scrollTo(0, el.getBoundingClientRect().bottom + window.scrollY + 40));
+  await expect(bar).toBeVisible();
+  await expect(bar.getByRole("link")).toHaveCount(2);
+  await expect(bar.getByRole("link", { name: /Appeler/ })).toBeVisible();
+  await expect(bar.getByRole("link", { name: /Devis/ })).toBeVisible();
+});
+
 test("barre d'appel mobile masquée pendant la saisie", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto("/contact");
   const bar = page.getByRole("navigation", { name: "Actions rapides" });
-  await expect(bar).toBeInViewport();
+  await page.getByLabel("Lieu de chargement").scrollIntoViewIfNeeded();
+  await expect(bar).toBeVisible();
   await page.getByLabel("Lieu de chargement").focus();
-  await expect(bar).not.toBeInViewport();
+  await expect(bar).toBeHidden();
   await page.getByLabel("Lieu de chargement").blur();
-  await expect(bar).toBeInViewport();
+  await expect(bar).toBeVisible();
 });
 
 test("navigation : la pastille de page active suit le lien courant", async ({ page }) => {

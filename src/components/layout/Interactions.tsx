@@ -4,12 +4,15 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { onScroll, prefersReducedMotion } from "@/lib/scroll-bus";
 import { track } from "@/lib/track";
+import { watch } from "@/lib/visibility";
 
 /**
  * Moteur d'interactions du site, monté une seule fois :
- * - révélations au défilement ([data-reveal], [data-reveal-photo], [data-steps]) via UN IntersectionObserver ;
+ * - révélations au défilement ([data-reveal], [data-reveal-photo], [data-steps]) ;
  * - compteur animé ([data-count]) ;
+ * - barre d'appel mobile affichée une fois les boutons du hero ([data-hero-cta]) sortis de l'écran ;
  * - état de défilement (en-tête compact, pastille « Demander un devis » flottante) via le bus de défilement ;
+ * Tous les éléments observés passent par le même IntersectionObserver (src/lib/visibility.ts).
  * - effet magnétique des boutons principaux (souris uniquement) ;
  * - masquage de la barre d'appel mobile quand le clavier est ouvert ;
  * - événements de mesure facultatifs (appel, devis).
@@ -23,27 +26,34 @@ export function Interactions() {
     const els = document.querySelectorAll<HTMLElement>(
       "[data-reveal]:not(.is-in), [data-reveal-photo]:not(.is-in), [data-steps]:not(.is-in), [data-count]:not(.is-in)",
     );
-    const reveal = (el: HTMLElement) => {
-      el.classList.add("is-in");
-      if (el.dataset.count !== undefined) countUp(el);
-    };
-    if (!("IntersectionObserver" in window)) {
-      els.forEach(reveal);
+    const offs: (() => void)[] = [];
+    els.forEach((el) => {
+      const off = watch(el, (entry) => {
+        if (!entry.isIntersecting) return;
+        el.classList.add("is-in");
+        if (el.dataset.count !== undefined) countUp(el);
+        off();
+      });
+      offs.push(off);
+    });
+    return () => offs.forEach((off) => off());
+  }, [pathname]);
+
+  // Barre d'appel mobile : seulement une fois les boutons du hero sortis de l'écran
+  useEffect(() => {
+    const root = document.documentElement;
+    const cta = document.querySelector("[data-hero-cta]");
+    if (!cta) {
+      root.setAttribute("data-past-hero", "");
       return;
     }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            reveal(e.target as HTMLElement);
-            io.unobserve(e.target);
-          }
-        }
-      },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    root.removeAttribute("data-past-hero");
+    return watch(cta, (entry) => {
+      root.toggleAttribute(
+        "data-past-hero",
+        !entry.isIntersecting && entry.boundingClientRect.bottom < 0,
+      );
+    });
   }, [pathname]);
 
   // En-tête compact et pastille de devis flottante
@@ -51,14 +61,12 @@ export function Interactions() {
     const root = document.documentElement;
     const footer = document.querySelector("footer");
     let footerVisible = false;
-    const fio =
-      footer && "IntersectionObserver" in window
-        ? new IntersectionObserver(([e]) => {
-            footerVisible = !!e?.isIntersecting;
-            update(window.scrollY);
-          })
-        : null;
-    if (footer && fio) fio.observe(footer);
+    const unwatchFooter = footer
+      ? watch(footer, (entry) => {
+          footerVisible = entry.isIntersecting;
+          update(window.scrollY);
+        })
+      : () => {};
     const onContact = pathname === "/contact";
     function update(y: number) {
       root.toggleAttribute("data-scrolled", y > 24);
@@ -67,7 +75,7 @@ export function Interactions() {
     const off = onScroll(update);
     return () => {
       off();
-      fio?.disconnect();
+      unwatchFooter();
     };
   }, [pathname]);
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Photo } from "@/components/media/Photo";
 import { Icon } from "@/components/ui/Icon";
+import { AdrPlate } from "@/components/route/AdrPlate";
 import { IconChip } from "@/components/ui/IconChip";
 import { transported } from "@/content/transported";
 
@@ -66,24 +67,27 @@ export function TransportedCards() {
         <article
           key={t.id}
           data-reveal=""
-          className={`${cardBase} flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8`}
+          className="on-asphalt relative isolate flex flex-col gap-6 overflow-hidden rounded-lg bg-asphalt p-7 text-marking shadow-md sm:flex-row sm:items-center sm:justify-between sm:p-9"
         >
-          <div className="flex flex-col items-start gap-4 sm:flex-row">
-            <IconChip
-              name={t.icon}
-              size="lg"
-              className="group-hover:rotate-6 motion-reduce:rotate-0"
-            />
+          <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+            <AdrPlate size="lg" />
             <div>
-              <h3 className="text-h3 font-bold">
-                <Link href={t.serviceHref} className="rounded-sm hover:text-brand">
+              <h3 className="text-h3 font-bold text-white">
+                <Link href={t.serviceHref} className="rounded-sm hover:underline">
                   {t.title}
                 </Link>
               </h3>
-              <p className="mt-1 text-ink-soft">{t.text}</p>
+              <p className="mt-1 max-w-xl text-marking/80">{t.text}</p>
             </div>
           </div>
-          <QuoteButton href={t.quoteHref} label={t.title} />
+          <Link
+            href={t.quoteHref}
+            className="inline-flex min-h-11 items-center gap-2 self-start rounded-full bg-sun px-5 py-2 font-display text-[0.9rem] font-semibold text-ink shadow-sun transition-colors hover:bg-sun-hover sm:self-center"
+          >
+            Demander un devis pour ce transport
+            <span className="sr-only"> : {t.title}</span>
+            <Icon name="arrowRight" className="size-4" />
+          </Link>
         </article>
       ))}
     </div>
