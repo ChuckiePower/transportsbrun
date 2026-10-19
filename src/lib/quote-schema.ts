@@ -45,7 +45,9 @@ const phoneField = singleLine(30, "Numéro trop long.")
       (v.match(/\d/g)?.length ?? 0) <= 15,
     { message: "Numéro de téléphone invalide (exemple : 06 12 34 56 78)." },
   );
-const consentField = z.literal(true, { error: "Votre accord est nécessaire pour traiter la demande." });
+const consentField = z.literal(true, {
+  error: "Votre accord est nécessaire pour traiter la demande.",
+});
 
 export const quoteSchema = z.object({
   name: nameField,

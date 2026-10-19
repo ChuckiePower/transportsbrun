@@ -96,7 +96,8 @@ export function Interactions() {
     // Clavier mobile ouvert : on masque la barre d'appel flottante
     function onFocusIn(e: FocusEvent) {
       const t = e.target as HTMLElement | null;
-      if (t?.matches("input:not([type=checkbox]):not([type=radio]), textarea, select")) root.setAttribute("data-typing", "");
+      if (t?.matches("input:not([type=checkbox]):not([type=radio]), textarea, select"))
+        root.setAttribute("data-typing", "");
     }
     function onFocusOut() {
       root.removeAttribute("data-typing");

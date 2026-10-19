@@ -10,16 +10,27 @@ export function WhyBrun() {
   return (
     <Section tone="cream-2" aria-labelledby="pourquoi-titre">
       <Container>
-        <SectionHeading id="pourquoi-titre" eyebrow={why.eyebrow} title={why.title} lead={why.lead} />
+        <SectionHeading
+          id="pourquoi-titre"
+          eyebrow={why.eyebrow}
+          title={why.title}
+          lead={why.lead}
+        />
         <div className="mt-12 grid gap-5 lg:mt-16 lg:grid-cols-12 lg:gap-6">
           <div
             data-reveal=""
             className="on-night flex flex-col justify-between rounded-xl bg-night p-8 text-white shadow-md lg:col-span-4 lg:p-10"
           >
-            <p className="font-display text-[1.05rem] font-semibold text-night-muted">{why.experience.prefix}</p>
+            <p className="font-display text-[1.05rem] font-semibold text-night-muted">
+              {why.experience.prefix}
+            </p>
             <p className="mt-2 font-display leading-none font-extrabold tracking-tight">
               {/* Valeur finale déjà dans le HTML ; le décompte n'est qu'une animation */}
-              <span className="text-[clamp(5rem,12vw,8.5rem)] tabular" data-count={why.experience.value} aria-hidden="true">
+              <span
+                className="tabular text-[clamp(5rem,12vw,8.5rem)]"
+                data-count={why.experience.value}
+                aria-hidden="true"
+              >
                 {why.experience.value}
               </span>
               <span className="sr-only">{why.experience.value}</span>

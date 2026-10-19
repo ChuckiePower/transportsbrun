@@ -85,9 +85,18 @@ export const homePage = {
     eyebrow: fr`Comment ça marche`,
     title: fr`Votre transport en trois étapes`,
     items: [
-      { title: fr`Vous décrivez votre transport`, text: fr`Type de charge, lieux de chargement et de livraison, date souhaitée : décrivez votre besoin dans le formulaire de devis.` },
-      { title: fr`Nous vous répondons`, text: fr`Nous prenons connaissance de votre demande et vous contactons dans les plus brefs délais.` },
-      { title: fr`Nous organisons le transport`, text: fr`Du quai d'expédition jusqu'au client, dans le respect des législations et des réglementations en vigueur.` },
+      {
+        title: fr`Vous décrivez votre transport`,
+        text: fr`Type de charge, lieux de chargement et de livraison, date souhaitée : décrivez votre besoin dans le formulaire de devis.`,
+      },
+      {
+        title: fr`Nous vous répondons`,
+        text: fr`Nous prenons connaissance de votre demande et vous contactons dans les plus brefs délais.`,
+      },
+      {
+        title: fr`Nous organisons le transport`,
+        text: fr`Du quai d'expédition jusqu'au client, dans le respect des législations et des réglementations en vigueur.`,
+      },
     ],
   },
 

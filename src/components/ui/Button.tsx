@@ -13,7 +13,8 @@ const variants: Record<ButtonVariant, string> = {
   // Action principale : jaune, texte bleu nuit, ombre jaune douce, reflet au survol
   primary: "btn-shine bg-sun text-ink shadow-sun hover:-translate-y-px hover:bg-sun-hover",
   secondary: "border-[1.5px] border-line bg-surface text-ink hover:border-ink",
-  "on-night": "border-[1.5px] border-white/35 bg-white/5 text-white hover:border-white hover:bg-white/10",
+  "on-night":
+    "border-[1.5px] border-white/35 bg-white/5 text-white hover:border-white hover:bg-white/10",
   link: "px-0 text-brand underline-offset-4 hover:underline",
 };
 
@@ -32,13 +33,22 @@ type Common = {
 };
 
 /** Flèche dans un petit rond qui glisse au survol ; autres icônes simples */
-function Inner({ icon, iconPosition = "end", variant, children }: Pick<Common, "icon" | "iconPosition" | "children" | "variant">) {
+function Inner({
+  icon,
+  iconPosition = "end",
+  variant,
+  children,
+}: Pick<Common, "icon" | "iconPosition" | "children" | "variant">) {
   const ic = !icon ? null : icon === "arrowRight" ? (
     <span
       aria-hidden="true"
       className={cn(
         "inline-flex size-6 items-center justify-center rounded-full transition-transform duration-200 ease-out-soft group-hover/btn:translate-x-[3px]",
-        variant === "primary" ? "bg-ink/10" : variant === "on-night" ? "bg-white/15" : "bg-brand-soft text-brand",
+        variant === "primary"
+          ? "bg-ink/10"
+          : variant === "on-night"
+            ? "bg-white/15"
+            : "bg-brand-soft text-brand",
       )}
     >
       <Icon name="arrowRight" className="size-3.5" strokeWidth={2.25} />
@@ -55,7 +65,11 @@ function Inner({ icon, iconPosition = "end", variant, children }: Pick<Common, "
   );
 }
 
-export function buttonClasses(variant: ButtonVariant = "primary", size: Size = "md", className?: string) {
+export function buttonClasses(
+  variant: ButtonVariant = "primary",
+  size: Size = "md",
+  className?: string,
+) {
   return cn(base, variants[variant], variant !== "link" && sizes[size], className);
 }
 
@@ -70,7 +84,10 @@ export function ButtonLink({
   className,
   magnetic = variant === "primary",
   ...rest
-}: Common & { href: string; magnetic?: boolean } & Omit<ComponentPropsWithoutRef<"a">, "href" | "children">) {
+}: Common & { href: string; magnetic?: boolean } & Omit<
+    ComponentPropsWithoutRef<"a">,
+    "href" | "children"
+  >) {
   const cls = buttonClasses(variant, size, className);
   const inner = (
     <Inner icon={icon} iconPosition={iconPosition} variant={variant}>

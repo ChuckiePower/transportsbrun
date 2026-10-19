@@ -3,7 +3,15 @@ import { Container } from "@/components/ui/Container";
 import { PageHero } from "./PageHero";
 
 /** Pages légales : en-tête sans photo + grande carte de lecture */
-export function LegalLayout({ title, path, children }: { title: string; path: string; children: ReactNode }) {
+export function LegalLayout({
+  title,
+  path,
+  children,
+}: {
+  title: string;
+  path: string;
+  children: ReactNode;
+}) {
   return (
     <>
       <PageHero eyebrow="Informations légales" title={title} crumbs={[{ name: title, path }]} />

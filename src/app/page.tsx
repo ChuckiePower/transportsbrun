@@ -75,14 +75,25 @@ export default function HomePage() {
             <div className="max-w-[44rem]">
               <Eyebrow className="hero-in mb-4 text-brand-light">{page.hero.eyebrow}</Eyebrow>
               <HeroTitle text={page.hero.title} />
-              <p className="hero-in mt-6 max-w-[36rem] text-lead text-white/90" style={{ ["--i" as string]: 3 }}>
+              <p
+                className="hero-in mt-6 max-w-[36rem] text-lead text-white/90"
+                style={{ ["--i" as string]: 3 }}
+              >
                 {page.hero.lead}
               </p>
-              <div className="hero-in mt-9 flex flex-col gap-3 xs:flex-row xs:flex-wrap xs:items-center" style={{ ["--i" as string]: 4 }}>
+              <div
+                className="hero-in mt-9 flex flex-col gap-3 xs:flex-row xs:flex-wrap xs:items-center"
+                style={{ ["--i" as string]: 4 }}
+              >
                 <ButtonLink href={quoteHref} icon="arrowRight">
                   Demander un devis
                 </ButtonLink>
-                <ButtonLink href={telHref(mainPhone)} variant="on-night" icon="phone" iconPosition="start">
+                <ButtonLink
+                  href={telHref(mainPhone)}
+                  variant="on-night"
+                  icon="phone"
+                  iconPosition="start"
+                >
                   Appeler le {mainPhone.display}
                 </ButtonLink>
                 <CallbackTrigger className="on-night justify-center px-2 text-white xs:justify-start" />
@@ -101,16 +112,32 @@ export default function HomePage() {
       {/* 4. Les trois métiers */}
       <Section spacing="none" className="pt-6 pb-10 lg:pt-10" aria-labelledby="metiers-titre">
         <Container>
-          <SectionHeading id="metiers-titre" eyebrow={page.services.eyebrow} title={page.services.title} lead={page.services.lead} className="mb-12" />
+          <SectionHeading
+            id="metiers-titre"
+            eyebrow={page.services.eyebrow}
+            title={page.services.title}
+            lead={page.services.lead}
+            className="mb-12"
+          />
           <ServiceCards />
         </Container>
       </Section>
-      <CtaBand variant="compact" title="Un transport plateau ou grue à prévoir ?" text="Décrivez-le en quelques champs : nous vous répondons dans les plus brefs délais." />
+      <CtaBand
+        variant="compact"
+        title="Un transport plateau ou grue à prévoir ?"
+        text="Décrivez-le en quelques champs : nous vous répondons dans les plus brefs délais."
+      />
 
       {/* 5. Ce que nous transportons */}
       <Section tone="none" aria-labelledby="transport-titre">
         <Container>
-          <SectionHeading id="transport-titre" eyebrow={page.transported.eyebrow} title={page.transported.title} lead={page.transported.lead} className="mb-12" />
+          <SectionHeading
+            id="transport-titre"
+            eyebrow={page.transported.eyebrow}
+            title={page.transported.title}
+            lead={page.transported.lead}
+            className="mb-12"
+          />
           <TransportedCards />
         </Container>
       </Section>
@@ -120,7 +147,11 @@ export default function HomePage() {
 
       {/* 7. Comment ça marche */}
       <Steps />
-      <CtaBand variant="compact" title="Prêt à décrire votre transport ?" text="Le formulaire de devis se remplit en deux étapes." />
+      <CtaBand
+        variant="compact"
+        title="Prêt à décrire votre transport ?"
+        text="Le formulaire de devis se remplit en deux étapes."
+      />
 
       {/* 8. Nos domaines d'expertise */}
       <ExpertiseBlock tone="none" photo={page.expertise.photo} />
@@ -137,24 +168,51 @@ export default function HomePage() {
                 className={[
                   "relative overflow-hidden bg-cream shadow-sm",
                   photoRadii[i],
-                  i === 0 ? "col-span-4 row-span-2 aspect-[4/5]" : i === 3 ? "col-span-6 aspect-[16/7]" : "col-span-2 aspect-[3/4]",
+                  i === 0
+                    ? "col-span-4 row-span-2 aspect-[4/5]"
+                    : i === 3
+                      ? "col-span-6 aspect-[16/7]"
+                      : "col-span-2 aspect-[3/4]",
                 ].join(" ")}
               >
-                <Photo id={id} fill sizes={i === 3 ? "(min-width: 1024px) 670px, 100vw" : i === 0 ? "(min-width: 1024px) 440px, 66vw" : "(min-width: 1024px) 220px, 33vw"} className="object-cover" />
+                <Photo
+                  id={id}
+                  fill
+                  sizes={
+                    i === 3
+                      ? "(min-width: 1024px) 670px, 100vw"
+                      : i === 0
+                        ? "(min-width: 1024px) 440px, 66vw"
+                        : "(min-width: 1024px) 220px, 33vw"
+                  }
+                  className="object-cover"
+                />
               </div>
             ))}
           </div>
           <div className="lg:order-1 lg:col-span-5">
-            <SectionHeading id="histoire-titre" eyebrow={page.story.eyebrow} title={page.story.title} />
+            <SectionHeading
+              id="histoire-titre"
+              eyebrow={page.story.eyebrow}
+              title={page.story.title}
+            />
             <div data-reveal="" className="prose-route mt-6">
               {page.story.paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
             </div>
-            <p data-reveal="" className="mt-6 rounded-lg bg-surface p-5 font-display font-semibold text-ink shadow-sm">
+            <p
+              data-reveal=""
+              className="mt-6 rounded-lg bg-surface p-5 font-display font-semibold text-ink shadow-sm"
+            >
               {page.story.quote}
             </p>
-            <ButtonLink href="/notre-histoire" variant="secondary" icon="arrowRight" className="mt-8">
+            <ButtonLink
+              href="/notre-histoire"
+              variant="secondary"
+              icon="arrowRight"
+              className="mt-8"
+            >
               {page.story.linkLabel}
             </ButtonLink>
           </div>
@@ -166,10 +224,18 @@ export default function HomePage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
-              <SectionHeading id="equipement-titre" eyebrow={page.equipment.eyebrow} title={page.equipment.title} lead={page.equipment.lead} />
+              <SectionHeading
+                id="equipement-titre"
+                eyebrow={page.equipment.eyebrow}
+                title={page.equipment.title}
+                lead={page.equipment.lead}
+              />
             </div>
             <div data-reveal="" className="lg:col-span-5 lg:justify-self-end">
-              <ul className="flex flex-wrap gap-2 lg:justify-end" aria-label="Catégories de véhicules">
+              <ul
+                className="flex flex-wrap gap-2 lg:justify-end"
+                aria-label="Catégories de véhicules"
+              >
                 {equipmentCategories.map((cat) => (
                   <li key={cat.id}>
                     <Link
@@ -185,8 +251,18 @@ export default function HomePage() {
           </div>
           <div className="mt-12 grid gap-4 sm:grid-cols-3">
             {page.equipment.thumbs.map((id, i) => (
-              <div key={id} data-reveal-photo="" style={{ ["--i" as string]: i }} className="relative aspect-[4/3] overflow-hidden rounded-lg bg-cream-2 shadow-sm">
-                <Photo id={id} fill sizes="(min-width: 640px) 384px, 100vw" className="object-cover" />
+              <div
+                key={id}
+                data-reveal-photo=""
+                style={{ ["--i" as string]: i }}
+                className="relative aspect-[4/3] overflow-hidden rounded-lg bg-cream-2 shadow-sm"
+              >
+                <Photo
+                  id={id}
+                  fill
+                  sizes="(min-width: 640px) 384px, 100vw"
+                  className="object-cover"
+                />
               </div>
             ))}
           </div>

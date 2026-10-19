@@ -9,7 +9,12 @@ import { Icon } from "@/components/ui/Icon";
 import { contactPage } from "@/content/pages/contact";
 import { mainPhone, site, telHref } from "@/content/site";
 import { cn } from "@/lib/cn";
-import { callbackSchema, requestTypes, type CallbackData, type CallbackInput } from "@/lib/quote-schema";
+import {
+  callbackSchema,
+  requestTypes,
+  type CallbackData,
+  type CallbackInput,
+} from "@/lib/quote-schema";
 import { track } from "@/lib/track";
 import { fr } from "@/lib/typo";
 import { CheckDraw, checkboxClass, ErrorText, Field, inputClass } from "./fields";
@@ -43,7 +48,13 @@ export default function CallbackDrawer({
   } = useForm<CallbackInput, unknown, CallbackData>({
     resolver: zodResolver(callbackSchema),
     mode: "onTouched",
-    defaultValues: { source: "rappel", name: "", phone: "", requestType: "", consent: false as unknown as true },
+    defaultValues: {
+      source: "rappel",
+      name: "",
+      phone: "",
+      requestType: "",
+      consent: false as unknown as true,
+    },
   });
 
   useEffect(() => {
@@ -57,7 +68,11 @@ export default function CallbackDrawer({
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, website: honeypot.current?.value ?? "", startedAt: startedAt.current }),
+        body: JSON.stringify({
+          ...data,
+          website: honeypot.current?.value ?? "",
+          startedAt: startedAt.current,
+        }),
       });
       const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
       if (res.ok && body.ok) {
@@ -97,7 +112,9 @@ export default function CallbackDrawer({
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="eyebrow">Rappel</p>
-              <Dialog.Title className="mt-2 font-display text-h3 font-bold text-ink">Être rappelé</Dialog.Title>
+              <Dialog.Title className="mt-2 font-display text-h3 font-bold text-ink">
+                Être rappelé
+              </Dialog.Title>
             </div>
             <Dialog.Close className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border-[1.5px] border-line hover:border-ink">
               <Icon name="close" className="size-5" />
@@ -111,8 +128,12 @@ export default function CallbackDrawer({
           {status === "success" ? (
             <div role="status" className="mt-8">
               <CheckDraw />
-              <p className="mt-5 font-display text-h3 font-bold text-ink">Demande de rappel envoyée</p>
-              <p className="mt-2 text-ink-soft">Merci, nous vous rappelons dans les plus brefs délais.</p>
+              <p className="mt-5 font-display text-h3 font-bold text-ink">
+                Demande de rappel envoyée
+              </p>
+              <p className="mt-2 text-ink-soft">
+                Merci, nous vous rappelons dans les plus brefs délais.
+              </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <ButtonLink href={telHref(mainPhone)} icon="phone" iconPosition="start">
                   Appeler le {mainPhone.display}
@@ -123,22 +144,62 @@ export default function CallbackDrawer({
               </div>
             </div>
           ) : (
-            <form noValidate onSubmit={(e) => void handleSubmit(onValid)(e)} className="mt-7 space-y-5">
+            <form
+              noValidate
+              onSubmit={(e) => void handleSubmit(onValid)(e)}
+              className="mt-7 space-y-5"
+            >
               {serverError ? (
-                <div role="alert" className="flex animate-shake gap-3 rounded-md border-[1.5px] border-error/40 bg-error/5 p-4 text-error">
+                <div
+                  role="alert"
+                  className="flex animate-shake gap-3 rounded-md border-[1.5px] border-error/40 bg-error/5 p-4 text-error"
+                >
                   <Icon name="alert" className="mt-0.5 size-5 shrink-0" />
                   <p className="font-semibold">{serverError}</p>
                 </div>
               ) : null}
-              <Field label="Nom" required htmlFor={id("name")} error={errors.name?.message} errorId={err("name")}>
-                <input id={id("name")} type="text" autoComplete="name" className={inputClass} aria-invalid={errors.name ? true : undefined} aria-describedby={err("name")} {...register("name")} />
+              <Field
+                label="Nom"
+                required
+                htmlFor={id("name")}
+                error={errors.name?.message}
+                errorId={err("name")}
+              >
+                <input
+                  id={id("name")}
+                  type="text"
+                  autoComplete="name"
+                  className={inputClass}
+                  aria-invalid={errors.name ? true : undefined}
+                  aria-describedby={err("name")}
+                  {...register("name")}
+                />
               </Field>
-              <Field label="Téléphone" required htmlFor={id("phone")} error={errors.phone?.message} errorId={err("phone")}>
-                <input id={id("phone")} type="tel" inputMode="tel" autoComplete="tel" className={inputClass} aria-invalid={errors.phone ? true : undefined} aria-describedby={err("phone")} {...register("phone")} />
+              <Field
+                label="Téléphone"
+                required
+                htmlFor={id("phone")}
+                error={errors.phone?.message}
+                errorId={err("phone")}
+              >
+                <input
+                  id={id("phone")}
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  className={inputClass}
+                  aria-invalid={errors.phone ? true : undefined}
+                  aria-describedby={err("phone")}
+                  {...register("phone")}
+                />
               </Field>
               <Field label="Type de demande" htmlFor={id("requestType")}>
                 <div className="relative">
-                  <select id={id("requestType")} className={cn(inputClass, "appearance-none pr-12")} {...register("requestType")}>
+                  <select
+                    id={id("requestType")}
+                    className={cn(inputClass, "appearance-none pr-12")}
+                    {...register("requestType")}
+                  >
                     <option value="">Je ne sais pas encore</option>
                     {requestTypes.map((t) => (
                       <option key={t} value={t}>
@@ -146,23 +207,54 @@ export default function CallbackDrawer({
                       </option>
                     ))}
                   </select>
-                  <Icon name="chevronRight" className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 rotate-90 text-ink-soft" />
+                  <Icon
+                    name="chevronRight"
+                    className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 rotate-90 text-ink-soft"
+                  />
                 </div>
               </Field>
               <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
                 <label htmlFor={id("website")}>Ne pas remplir ce champ</label>
-                <input ref={honeypot} id={id("website")} name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
+                <input
+                  ref={honeypot}
+                  id={id("website")}
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  defaultValue=""
+                />
               </div>
               <div>
                 <div className="flex gap-3">
-                  <input id={id("consent")} type="checkbox" className={checkboxClass} aria-invalid={errors.consent ? true : undefined} aria-describedby={err("consent")} {...register("consent")} />
-                  <label htmlFor={id("consent")} className="cursor-pointer text-[0.875rem] leading-snug text-ink-soft">
-                    {contactPage.form.consent} <span aria-hidden="true" className="text-error">*</span>
+                  <input
+                    id={id("consent")}
+                    type="checkbox"
+                    className={checkboxClass}
+                    aria-invalid={errors.consent ? true : undefined}
+                    aria-describedby={err("consent")}
+                    {...register("consent")}
+                  />
+                  <label
+                    htmlFor={id("consent")}
+                    className="cursor-pointer text-[0.875rem] leading-snug text-ink-soft"
+                  >
+                    {contactPage.form.consent}{" "}
+                    <span aria-hidden="true" className="text-error">
+                      *
+                    </span>
                   </label>
                 </div>
-                {errors.consent?.message ? <ErrorText id={err("consent")!}>{errors.consent.message}</ErrorText> : null}
+                {errors.consent?.message ? (
+                  <ErrorText id={err("consent")!}>{errors.consent.message}</ErrorText>
+                ) : null}
               </div>
-              <Button type="submit" className="w-full" icon={status === "submitting" ? undefined : "arrowRight"} disabled={status === "submitting"}>
+              <Button
+                type="submit"
+                className="w-full"
+                icon={status === "submitting" ? undefined : "arrowRight"}
+                disabled={status === "submitting"}
+              >
                 {status === "submitting" ? (
                   <span className="inline-flex items-center gap-2">
                     <Icon name="loader" className="size-5 animate-spin" />

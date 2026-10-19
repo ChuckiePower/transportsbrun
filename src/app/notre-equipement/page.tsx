@@ -30,17 +30,26 @@ export default function EquipementPage() {
       </PageHero>
 
       {/* Navigation d'ancres en pastilles, collante sous l'en-tête */}
-      <nav aria-label="Catégories de véhicules" className="sticky top-[5.25rem] z-20 py-3 sm:top-[5.75rem]">
+      <nav
+        aria-label="Catégories de véhicules"
+        className="sticky top-[5.25rem] z-20 py-3 sm:top-[5.75rem]"
+      >
         <Container>
           <ul className="no-scrollbar flex gap-2 overflow-x-auto rounded-full border border-line bg-white/90 p-1.5 shadow-md backdrop-blur-md sm:inline-flex">
             <li>
-              <a href="#parc" className="inline-flex min-h-10 items-center rounded-full px-4 font-display text-[0.875rem] font-semibold whitespace-nowrap text-ink hover:bg-brand-soft hover:text-brand">
+              <a
+                href="#parc"
+                className="inline-flex min-h-10 items-center rounded-full px-4 font-display text-[0.875rem] font-semibold whitespace-nowrap text-ink hover:bg-brand-soft hover:text-brand"
+              >
                 Le parc
               </a>
             </li>
             {equipmentCategories.map((cat) => (
               <li key={cat.id}>
-                <a href={`#${cat.id}`} className="inline-flex min-h-10 items-center rounded-full px-4 font-display text-[0.875rem] font-semibold whitespace-nowrap text-ink hover:bg-brand-soft hover:text-brand">
+                <a
+                  href={`#${cat.id}`}
+                  className="inline-flex min-h-10 items-center rounded-full px-4 font-display text-[0.875rem] font-semibold whitespace-nowrap text-ink hover:bg-brand-soft hover:text-brand"
+                >
                   {cat.title}
                 </a>
               </li>
@@ -64,7 +73,10 @@ export default function EquipementPage() {
                   card.name === "Plateaux" && "sm:col-span-2 lg:col-span-1 lg:row-span-2",
                 )}
               >
-                <IconChip name={card.icon} className="group-hover:rotate-6 motion-reduce:rotate-0" />
+                <IconChip
+                  name={card.icon}
+                  className="group-hover:rotate-6 motion-reduce:rotate-0"
+                />
                 <h3 className="mt-5 text-h3 font-bold">{card.name}</h3>
                 {card.items ? (
                   <ul className="mt-4 flex flex-wrap gap-2">
@@ -87,7 +99,10 @@ export default function EquipementPage() {
                 ) : null}
               </li>
             ))}
-            <li data-reveal="" className="on-night rounded-lg bg-night p-7 text-white shadow-md sm:col-span-2 lg:col-span-1">
+            <li
+              data-reveal=""
+              className="on-night rounded-lg bg-night p-7 text-white shadow-md sm:col-span-2 lg:col-span-1"
+            >
               <IconChip name="shield" tone="night" />
               <h3 className="mt-5 text-h3 font-bold text-white">{fleetCapabilities.title}</h3>
               <ul className="mt-4 flex flex-wrap gap-2">
@@ -110,7 +125,13 @@ export default function EquipementPage() {
 
       {/* Photos par catégorie */}
       {equipmentCategories.map((cat, i) => (
-        <Section key={cat.id} id={cat.id} tone={i % 2 === 0 ? "cream-2" : "cream"} className="scroll-mt-40" aria-labelledby={`${cat.id}-titre`}>
+        <Section
+          key={cat.id}
+          id={cat.id}
+          tone={i % 2 === 0 ? "cream-2" : "cream"}
+          className="scroll-mt-40"
+          aria-labelledby={`${cat.id}-titre`}
+        >
           <Container>
             <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div data-reveal="">

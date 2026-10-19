@@ -35,7 +35,9 @@ export function MobileMenu() {
         <Icon name="menu" className="size-[18px]" />
         <span>Menu</span>
       </button>
-      {loaded ? <MobileMenuPanel open={open} onOpenChange={setOpen} returnFocusTo={button} /> : null}
+      {loaded ? (
+        <MobileMenuPanel open={open} onOpenChange={setOpen} returnFocusTo={button} />
+      ) : null}
     </>
   );
 }

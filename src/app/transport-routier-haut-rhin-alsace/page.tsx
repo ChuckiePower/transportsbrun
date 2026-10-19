@@ -33,7 +33,11 @@ export default function SavoirFairePage() {
       <Section tone="cream-2" aria-labelledby="intro-titre">
         <Container className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
           <div className="lg:col-span-6">
-            <SectionHeading id="intro-titre" eyebrow="Charges lourdes et pondéreuses" title={page.intro.title} />
+            <SectionHeading
+              id="intro-titre"
+              eyebrow="Charges lourdes et pondéreuses"
+              title={page.intro.title}
+            />
             <div data-reveal="" className="prose-route mt-6">
               {page.intro.paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
@@ -41,8 +45,16 @@ export default function SavoirFairePage() {
             </div>
           </div>
           <div className="lg:col-span-6">
-            <div data-reveal-photo="" className="relative aspect-[16/10] overflow-hidden rounded-xl bg-cream shadow-md">
-              <Photo id={page.intro.photo} fill sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" />
+            <div
+              data-reveal-photo=""
+              className="relative aspect-[16/10] overflow-hidden rounded-xl bg-cream shadow-md"
+            >
+              <Photo
+                id={page.intro.photo}
+                fill
+                sizes="(min-width: 1024px) 560px, 100vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </Container>
@@ -62,7 +74,12 @@ export default function SavoirFairePage() {
             </div>
             <ul className="grid content-center gap-4 lg:col-span-5">
               {page.ecology.levers.map((lever, i) => (
-                <li key={lever.title} data-reveal="" style={{ ["--i" as string]: i }} className="flex gap-4 rounded-lg bg-cream p-5">
+                <li
+                  key={lever.title}
+                  data-reveal=""
+                  style={{ ["--i" as string]: i }}
+                  className="flex gap-4 rounded-lg bg-cream p-5"
+                >
                   <IconChip name={leverIcons[i] ?? "leaf"} />
                   <span>
                     <span className="block font-display text-h3 font-bold">{lever.title}</span>
@@ -92,23 +109,43 @@ export default function SavoirFairePage() {
         <Container>
           <div className="on-night grid gap-10 overflow-hidden rounded-xl bg-night p-6 text-white shadow-lg sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-14 lg:p-14">
             <div className="lg:col-span-6">
-              <SectionHeading id="securite-titre" night eyebrow={page.safety.eyebrow} title={page.safety.title} />
+              <SectionHeading
+                id="securite-titre"
+                night
+                eyebrow={page.safety.eyebrow}
+                title={page.safety.title}
+              />
               <p data-reveal="" className="mt-6 text-lead text-night-muted">
                 {page.safety.text}
               </p>
               <ul className="mt-8 grid gap-4 sm:grid-cols-2">
                 {page.safety.points.map((pt, i) => (
-                  <li key={pt.title} data-reveal="" style={{ ["--i" as string]: i }} className="rounded-lg bg-night-2 p-5">
+                  <li
+                    key={pt.title}
+                    data-reveal=""
+                    style={{ ["--i" as string]: i }}
+                    className="rounded-lg bg-night-2 p-5"
+                  >
                     <IconChip name={i === 0 ? "shield" : "clipboard"} tone="night" />
-                    <span className="mt-4 block font-display text-[1.125rem] font-bold text-white">{pt.title}</span>
+                    <span className="mt-4 block font-display text-[1.125rem] font-bold text-white">
+                      {pt.title}
+                    </span>
                     <span className="mt-1 block text-night-muted">{pt.text}</span>
                   </li>
                 ))}
               </ul>
             </div>
             <div className="lg:col-span-6">
-              <div data-reveal-photo="" className="relative aspect-[4/3] overflow-hidden rounded-lg lg:aspect-square">
-                <Photo id={page.safety.photo} fill sizes="(min-width: 1024px) 520px, 100vw" className="object-cover" />
+              <div
+                data-reveal-photo=""
+                className="relative aspect-[4/3] overflow-hidden rounded-lg lg:aspect-square"
+              >
+                <Photo
+                  id={page.safety.photo}
+                  fill
+                  sizes="(min-width: 1024px) 520px, 100vw"
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
@@ -118,7 +155,10 @@ export default function SavoirFairePage() {
       {/* En résumé */}
       <Section tone="none" spacing="tight" aria-label="En résumé">
         <Container size="narrow">
-          <p data-reveal="" className="rounded-lg bg-brand-soft p-8 font-display text-[clamp(1.35rem,1.1rem+1vw,1.85rem)] leading-snug font-bold text-ink sm:p-10">
+          <p
+            data-reveal=""
+            className="rounded-lg bg-brand-soft p-8 font-display text-[clamp(1.35rem,1.1rem+1vw,1.85rem)] leading-snug font-bold text-ink sm:p-10"
+          >
             {page.closing}
           </p>
         </Container>

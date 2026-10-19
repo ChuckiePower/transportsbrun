@@ -6,7 +6,9 @@ import { Icon } from "@/components/ui/Icon";
 import { site } from "@/content/site";
 
 const { latitude: lat, longitude: lon } = site.geo;
-const bbox = [lon - 0.012, lat - 0.006, lon + 0.012, lat + 0.006].map((n) => n.toFixed(5)).join(",");
+const bbox = [lon - 0.012, lat - 0.006, lon + 0.012, lat + 0.006]
+  .map((n) => n.toFixed(5))
+  .join(",");
 const embedUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}`;
 
 /**
@@ -31,12 +33,23 @@ export function MapEmbed() {
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
             {/* Plan stylisé purement décoratif */}
-            <svg aria-hidden="true" viewBox="0 0 400 250" className="absolute inset-0 size-full text-line" preserveAspectRatio="xMidYMid slice">
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 400 250"
+              className="absolute inset-0 size-full text-line"
+              preserveAspectRatio="xMidYMid slice"
+            >
               <g fill="none" stroke="currentColor" strokeWidth="12" strokeLinecap="round">
                 <path d="M-20 190 C 80 160, 140 200, 220 150 S 360 90, 430 110" />
                 <path d="M120 -20 C 140 60, 170 120, 210 150 S 260 230, 250 280" />
               </g>
-              <g fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" opacity="0.7">
+              <g
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="4"
+                strokeLinecap="round"
+                opacity="0.7"
+              >
                 <path d="M-20 80 C 120 70, 260 50, 430 40" />
                 <path d="M300 -20 C 310 90, 320 180, 330 280" />
               </g>
@@ -49,7 +62,14 @@ export function MapEmbed() {
               <br />
               {site.address.postalCode} {site.address.cityDisplay}
             </p>
-            <Button variant="secondary" size="sm" icon="map" iconPosition="start" onClick={() => setShow(true)} className="relative">
+            <Button
+              variant="secondary"
+              size="sm"
+              icon="map"
+              iconPosition="start"
+              onClick={() => setShow(true)}
+              className="relative"
+            >
               Afficher la carte
             </Button>
             <p className="relative max-w-xs text-[0.8125rem] text-ink-soft">

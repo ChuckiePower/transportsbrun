@@ -55,7 +55,13 @@ export default function MobileMenuPanel({
             <ButtonLink href={quoteHref} icon="arrowRight" className="w-full" onClick={close}>
               Demander un devis
             </ButtonLink>
-            <ButtonLink href={telHref(mainPhone)} variant="secondary" icon="phone" iconPosition="start" className="w-full">
+            <ButtonLink
+              href={telHref(mainPhone)}
+              variant="secondary"
+              icon="phone"
+              iconPosition="start"
+              className="w-full"
+            >
               Appeler le {mainPhone.display}
             </ButtonLink>
             <p className="flex items-center justify-center gap-2 pt-2 text-[0.875rem] text-ink-soft">

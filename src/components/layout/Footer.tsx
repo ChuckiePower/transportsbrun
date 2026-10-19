@@ -17,7 +17,12 @@ export function Footer() {
             <LogoTile />
             <p className="mt-6 max-w-xs text-white">{site.tagline}</p>
             <address className="mt-5 not-italic">
-              <a href={site.googleMapsUrl} className={`inline-flex gap-2 ${link}`} rel="noopener noreferrer" target="_blank">
+              <a
+                href={site.googleMapsUrl}
+                className={`inline-flex gap-2 ${link}`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 <Icon name="pin" className="mt-1 size-4 shrink-0 text-brand-light" />
                 <span>
                   {site.address.street},
@@ -45,7 +50,10 @@ export function Footer() {
               {site.phones.map((p) => (
                 <li key={p.e164}>
                   <span className="block text-[0.875rem] text-night-muted">{p.label}</span>
-                  <a href={telHref(p)} className="font-display text-xl font-bold text-white tabular hover:text-brand-light">
+                  <a
+                    href={telHref(p)}
+                    className="tabular font-display text-xl font-bold text-white hover:text-brand-light"
+                  >
                     {p.display}
                   </a>
                 </li>
@@ -61,7 +69,10 @@ export function Footer() {
               {site.emails.map((e) => (
                 <li key={e.address}>
                   <span className="block text-[0.875rem] text-night-muted">{e.label}</span>
-                  <a href={mailtoHref(e)} className={`[overflow-wrap:anywhere] ${link} hover:underline`}>
+                  <a
+                    href={mailtoHref(e)}
+                    className={`[overflow-wrap:anywhere] ${link} hover:underline`}
+                  >
                     <EmailText address={e.address} />
                   </a>
                 </li>

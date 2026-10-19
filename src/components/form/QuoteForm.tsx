@@ -58,7 +58,15 @@ function useHydrated() {
  *   dans sessionStorage, envoi JSON, écran de succès.
  * - Sans JavaScript : un seul formulaire classique (POST) avec validation native du navigateur.
  */
-export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; consentText: string; submitLabel: string }) {
+export function QuoteForm({
+  intro,
+  consentText,
+  submitLabel,
+}: {
+  intro: string;
+  consentText: string;
+  submitLabel: string;
+}) {
   const enhanced = useHydrated();
   const [step, setStep] = useState<Step>(1);
   const [dir, setDir] = useState<"fwd" | "back" | null>(null);
@@ -96,10 +104,14 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
   useEffect(() => {
     startedAt.current = Date.now();
     try {
-      const saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? "null") as Partial<QuoteInput> | null;
+      const saved = JSON.parse(
+        sessionStorage.getItem(STORAGE_KEY) ?? "null",
+      ) as Partial<QuoteInput> | null;
       if (saved && typeof saved === "object") {
         const clean = Object.fromEntries(
-          Object.entries(saved).filter(([k, v]) => k in DEFAULTS && k !== "consent" && typeof v === "string"),
+          Object.entries(saved).filter(
+            ([k, v]) => k in DEFAULTS && k !== "consent" && typeof v === "string",
+          ),
         );
         reset({ ...DEFAULTS, ...clean });
       }
@@ -122,7 +134,9 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
           try {
             const { consent: _consent, ...rest } = values;
             void _consent;
-            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(rest));
+            // Rien de saisi (ex. remise à zéro après envoi) : on ne garde aucune trace
+            if (Object.values(rest).every((v) => !v)) sessionStorage.removeItem(STORAGE_KEY);
+            else sessionStorage.setItem(STORAGE_KEY, JSON.stringify(rest));
           } catch {
             /* ignoré */
           }
@@ -172,7 +186,11 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
     setStatus("submitting");
     setServerError(null);
     setErrorCount(0);
-    const payload: QuotePayload = { ...data, website: honeypot.current?.value ?? "", startedAt: startedAt.current };
+    const payload: QuotePayload = {
+      ...data,
+      website: honeypot.current?.value ?? "",
+      startedAt: startedAt.current,
+    };
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -230,7 +248,8 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
         <CheckDraw />
         <h3 className="mt-5 font-display text-h3 font-bold text-ink">Demande envoyée, merci !</h3>
         <p className="mt-3 text-lead text-ink">
-          Votre demande a bien été transmise à l&apos;équipe Transports Brun. Nous vous contacterons dans les plus brefs délais.
+          Votre demande a bien été transmise à l&apos;équipe Transports Brun. Nous vous contacterons
+          dans les plus brefs délais.
         </p>
         <p className="mt-2 text-ink-soft">{fr`Une urgence ? L'équipe est joignable ${site.hours.sentence}.`}</p>
         <div className="mt-6 flex flex-wrap gap-3">
@@ -297,7 +316,9 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
           <span className="text-brand" aria-live="polite">
             Étape {step} sur 2 · {step === 1 ? "Votre transport" : "Vos coordonnées"}
           </span>
-          <span className="hidden text-ink-soft sm:inline">{step === 1 ? "Plus qu'une étape ensuite" : "Dernière étape"}</span>
+          <span className="hidden text-ink-soft sm:inline">
+            {step === 1 ? "Plus qu'une étape ensuite" : "Dernière étape"}
+          </span>
         </div>
         <div
           className="mt-3 h-2 overflow-hidden rounded-full bg-cream-2"
@@ -316,7 +337,11 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
 
       <div aria-live="assertive" aria-atomic="true">
         {errorCount > 0 || serverError ? (
-          <div key={shakeKey} className="flex animate-shake gap-3 rounded-md border-[1.5px] border-error/40 bg-error/5 p-4 text-error" role="alert">
+          <div
+            key={shakeKey}
+            className="flex animate-shake gap-3 rounded-md border-[1.5px] border-error/40 bg-error/5 p-4 text-error"
+            role="alert"
+          >
             <Icon name="alert" className="mt-0.5 size-5 shrink-0" />
             <div>
               {errorCount > 0 ? (
@@ -326,7 +351,9 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
                     : `${errorCount} champs sont à compléter ou à corriger.`}
                 </p>
               ) : null}
-              {serverError ? <p className={errorCount > 0 ? "mt-1" : "font-semibold"}>{serverError}</p> : null}
+              {serverError ? (
+                <p className={errorCount > 0 ? "mt-1" : "font-semibold"}>{serverError}</p>
+              ) : null}
               {status === "error" && !errorCount ? (
                 <p className="mt-1">
                   Vous pouvez aussi nous appeler au{" "}
@@ -342,10 +369,19 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
       </div>
 
       {/* Étape 1 : votre transport */}
-      <fieldset data-active={step === 1 ? "" : undefined} className={cn("quote-step space-y-5", animClass)}>
+      <fieldset
+        data-active={step === 1 ? "" : undefined}
+        className={cn("quote-step space-y-5", animClass)}
+      >
         <legend className="sr-only">Votre transport</legend>
         {stepHeading(1, "Votre transport")}
-        <Field label="Type de demande" required htmlFor={id("requestType")} error={errors.requestType?.message} errorId={errorId("requestType")}>
+        <Field
+          label="Type de demande"
+          required
+          htmlFor={id("requestType")}
+          error={errors.requestType?.message}
+          errorId={errorId("requestType")}
+        >
           <div className="relative">
             <select
               id={id("requestType")}
@@ -362,18 +398,61 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
                 </option>
               ))}
             </select>
-            <Icon name="chevronRight" className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 rotate-90 text-ink-soft" />
+            <Icon
+              name="chevronRight"
+              className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 rotate-90 text-ink-soft"
+            />
           </div>
         </Field>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Lieu de chargement" htmlFor={id("pickup")} error={errors.pickup?.message} errorId={errorId("pickup")}>
-            <input id={id("pickup")} type="text" autoComplete="off" placeholder="Ville ou adresse" className={inputClass} aria-invalid={errors.pickup ? true : undefined} aria-describedby={describedBy("pickup")} {...register("pickup")} />
+          <Field
+            label="Lieu de chargement"
+            htmlFor={id("pickup")}
+            error={errors.pickup?.message}
+            errorId={errorId("pickup")}
+          >
+            <input
+              id={id("pickup")}
+              type="text"
+              autoComplete="off"
+              placeholder="Ville ou adresse"
+              className={inputClass}
+              aria-invalid={errors.pickup ? true : undefined}
+              aria-describedby={describedBy("pickup")}
+              {...register("pickup")}
+            />
           </Field>
-          <Field label="Lieu de livraison" htmlFor={id("delivery")} error={errors.delivery?.message} errorId={errorId("delivery")}>
-            <input id={id("delivery")} type="text" autoComplete="off" placeholder="Ville ou adresse" className={inputClass} aria-invalid={errors.delivery ? true : undefined} aria-describedby={describedBy("delivery")} {...register("delivery")} />
+          <Field
+            label="Lieu de livraison"
+            htmlFor={id("delivery")}
+            error={errors.delivery?.message}
+            errorId={errorId("delivery")}
+          >
+            <input
+              id={id("delivery")}
+              type="text"
+              autoComplete="off"
+              placeholder="Ville ou adresse"
+              className={inputClass}
+              aria-invalid={errors.delivery ? true : undefined}
+              aria-describedby={describedBy("delivery")}
+              {...register("delivery")}
+            />
           </Field>
-          <Field label="Date souhaitée" htmlFor={id("date")} error={errors.date?.message} errorId={errorId("date")}>
-            <input id={id("date")} type="date" className={inputClass} aria-invalid={errors.date ? true : undefined} aria-describedby={describedBy("date")} {...register("date")} />
+          <Field
+            label="Date souhaitée"
+            htmlFor={id("date")}
+            error={errors.date?.message}
+            errorId={errorId("date")}
+          >
+            <input
+              id={id("date")}
+              type="date"
+              className={inputClass}
+              aria-invalid={errors.date ? true : undefined}
+              aria-describedby={describedBy("date")}
+              {...register("date")}
+            />
           </Field>
           <Field
             label="Nature de la charge"
@@ -383,7 +462,16 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
             error={errors.cargo?.message}
             errorId={errorId("cargo")}
           >
-            <input id={id("cargo")} type="text" autoComplete="off" placeholder="Ex. : module 6 × 2,5 m, 4 t" className={inputClass} aria-invalid={errors.cargo ? true : undefined} aria-describedby={describedBy("cargo", true)} {...register("cargo")} />
+            <input
+              id={id("cargo")}
+              type="text"
+              autoComplete="off"
+              placeholder="Ex. : module 6 × 2,5 m, 4 t"
+              className={inputClass}
+              aria-invalid={errors.cargo ? true : undefined}
+              aria-describedby={describedBy("cargo", true)}
+              {...register("cargo")}
+            />
           </Field>
         </div>
         <div className="hidden pt-1 js:flex">
@@ -394,24 +482,93 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
       </fieldset>
 
       {/* Étape 2 : vos coordonnées */}
-      <fieldset data-active={step === 2 ? "" : undefined} className={cn("quote-step space-y-5", animClass)}>
+      <fieldset
+        data-active={step === 2 ? "" : undefined}
+        className={cn("quote-step space-y-5", animClass)}
+      >
         <legend className="sr-only">Vos coordonnées</legend>
         {stepHeading(2, "Vos coordonnées")}
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Nom" required htmlFor={id("name")} error={errors.name?.message} errorId={errorId("name")}>
-            <input id={id("name")} type="text" required autoComplete="name" className={inputClass} aria-invalid={errors.name ? true : undefined} aria-describedby={describedBy("name")} {...register("name")} />
+          <Field
+            label="Nom"
+            required
+            htmlFor={id("name")}
+            error={errors.name?.message}
+            errorId={errorId("name")}
+          >
+            <input
+              id={id("name")}
+              type="text"
+              required
+              autoComplete="name"
+              className={inputClass}
+              aria-invalid={errors.name ? true : undefined}
+              aria-describedby={describedBy("name")}
+              {...register("name")}
+            />
           </Field>
-          <Field label="Entreprise" htmlFor={id("company")} error={errors.company?.message} errorId={errorId("company")}>
-            <input id={id("company")} type="text" autoComplete="organization" className={inputClass} aria-invalid={errors.company ? true : undefined} aria-describedby={describedBy("company")} {...register("company")} />
+          <Field
+            label="Entreprise"
+            htmlFor={id("company")}
+            error={errors.company?.message}
+            errorId={errorId("company")}
+          >
+            <input
+              id={id("company")}
+              type="text"
+              autoComplete="organization"
+              className={inputClass}
+              aria-invalid={errors.company ? true : undefined}
+              aria-describedby={describedBy("company")}
+              {...register("company")}
+            />
           </Field>
-          <Field label="E-mail" required htmlFor={id("email")} error={errors.email?.message} errorId={errorId("email")}>
-            <input id={id("email")} type="email" required inputMode="email" autoComplete="email" className={inputClass} aria-invalid={errors.email ? true : undefined} aria-describedby={describedBy("email")} {...register("email")} />
+          <Field
+            label="E-mail"
+            required
+            htmlFor={id("email")}
+            error={errors.email?.message}
+            errorId={errorId("email")}
+          >
+            <input
+              id={id("email")}
+              type="email"
+              required
+              inputMode="email"
+              autoComplete="email"
+              className={inputClass}
+              aria-invalid={errors.email ? true : undefined}
+              aria-describedby={describedBy("email")}
+              {...register("email")}
+            />
           </Field>
-          <Field label="Téléphone" required htmlFor={id("phone")} error={errors.phone?.message} errorId={errorId("phone")}>
-            <input id={id("phone")} type="tel" required inputMode="tel" autoComplete="tel" className={inputClass} aria-invalid={errors.phone ? true : undefined} aria-describedby={describedBy("phone")} {...register("phone")} />
+          <Field
+            label="Téléphone"
+            required
+            htmlFor={id("phone")}
+            error={errors.phone?.message}
+            errorId={errorId("phone")}
+          >
+            <input
+              id={id("phone")}
+              type="tel"
+              required
+              inputMode="tel"
+              autoComplete="tel"
+              className={inputClass}
+              aria-invalid={errors.phone ? true : undefined}
+              aria-describedby={describedBy("phone")}
+              {...register("phone")}
+            />
           </Field>
         </div>
-        <Field label="Message" required htmlFor={id("message")} error={errors.message?.message} errorId={errorId("message")}>
+        <Field
+          label="Message"
+          required
+          htmlFor={id("message")}
+          error={errors.message?.message}
+          errorId={errorId("message")}
+        >
           <textarea
             id={id("message")}
             rows={5}
@@ -427,7 +584,15 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
         {/* Pot de miel : invisible pour les humains, rempli par les robots */}
         <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
           <label htmlFor={id("website")}>Ne pas remplir ce champ</label>
-          <input ref={honeypot} id={id("website")} name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
+          <input
+            ref={honeypot}
+            id={id("website")}
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            defaultValue=""
+          />
         </div>
 
         <div>
@@ -441,11 +606,19 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
               aria-describedby={describedBy("consent")}
               {...register("consent")}
             />
-            <label htmlFor={id("consent")} className="cursor-pointer text-[0.95rem] leading-snug text-ink-soft">
-              {consentText} <span aria-hidden="true" className="text-error">*</span>
+            <label
+              htmlFor={id("consent")}
+              className="cursor-pointer text-[0.95rem] leading-snug text-ink-soft"
+            >
+              {consentText}{" "}
+              <span aria-hidden="true" className="text-error">
+                *
+              </span>
             </label>
           </div>
-          {errors.consent?.message ? <ErrorText id={errorId("consent")!}>{errors.consent.message}</ErrorText> : null}
+          {errors.consent?.message ? (
+            <ErrorText id={errorId("consent")!}>{errors.consent.message}</ErrorText>
+          ) : null}
         </div>
 
         <div className="flex flex-wrap items-center gap-3 pt-1">
@@ -483,7 +656,10 @@ export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; 
           <Reassure icon="clock">{fr`L'équipe est joignable ${site.hours.sentence}.`}</Reassure>
           <Reassure icon="phone">
             {fr`Une question ?`}{" "}
-            <a href={telHref(mainPhone)} className="font-semibold text-ink underline hover:text-brand">
+            <a
+              href={telHref(mainPhone)}
+              className="font-semibold text-ink underline hover:text-brand"
+            >
               {mainPhone.display}
             </a>
           </Reassure>

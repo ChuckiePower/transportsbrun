@@ -9,13 +9,19 @@ export function TopBar() {
       <Container className="flex h-10 items-center justify-between gap-6">
         <ul className="flex items-center gap-5">
           <li>
-            <a href={telHref(mainPhone)} className="inline-flex items-center gap-1.5 font-medium text-ink hover:text-brand">
+            <a
+              href={telHref(mainPhone)}
+              className="inline-flex items-center gap-1.5 font-medium text-ink hover:text-brand"
+            >
               <Icon name="phone" className="size-3.5 text-brand" />
               {mainPhone.display}
             </a>
           </li>
           <li>
-            <a href={mailtoHref(mainEmail)} className="inline-flex items-center gap-1.5 hover:text-brand">
+            <a
+              href={mailtoHref(mainEmail)}
+              className="inline-flex items-center gap-1.5 hover:text-brand"
+            >
               <Icon name="mail" className="size-3.5" />
               {mainEmail.address}
             </a>

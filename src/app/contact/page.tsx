@@ -15,7 +15,12 @@ export const metadata = pageMetadata(page.meta, path);
 export default function ContactPage() {
   return (
     <>
-      <PageHero eyebrow={page.hero.eyebrow} title={page.hero.title} lead={page.hero.lead} crumbs={[{ name: "Contact", path }]}>
+      <PageHero
+        eyebrow={page.hero.eyebrow}
+        title={page.hero.title}
+        lead={page.hero.lead}
+        crumbs={[{ name: "Contact", path }]}
+      >
         <ButtonLink href={telHref(mainPhone)} variant="secondary" icon="phone" iconPosition="start">
           Appeler le {mainPhone.display}
         </ButtonLink>
@@ -33,11 +38,18 @@ export default function ContactPage() {
               {page.form.title}
             </h2>
             <div className="mt-6">
-              <QuoteForm intro={page.form.intro} consentText={page.form.consent} submitLabel={page.form.submit} />
+              <QuoteForm
+                intro={page.form.intro}
+                consentText={page.form.consent}
+                submitLabel={page.form.submit}
+              />
             </div>
           </section>
 
-          <aside className="flex flex-col gap-8 lg:sticky lg:top-28 lg:col-span-5" aria-label="Coordonnées">
+          <aside
+            className="flex flex-col gap-8 lg:sticky lg:top-28 lg:col-span-5"
+            aria-label="Coordonnées"
+          >
             <div className="on-night rounded-panel bg-night p-7 text-white shadow-md sm:p-9">
               <h2 className="font-display text-h3 font-bold text-white">Nous contacter</h2>
               <ContactDetails tone="night" stacked className="mt-7" />

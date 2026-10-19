@@ -13,7 +13,12 @@ const sizes = {
 };
 
 /** Conteneur : 1200 px max, gouttières 16 px (mobile) / 24 px */
-export function Container<T extends ElementType = "div">({ as, size = "default", className, ...rest }: Props<T>) {
+export function Container<T extends ElementType = "div">({
+  as,
+  size = "default",
+  className,
+  ...rest
+}: Props<T>) {
   const Tag = as ?? "div";
   return <Tag className={cn("mx-auto w-full px-4 sm:px-6", sizes[size], className)} {...rest} />;
 }

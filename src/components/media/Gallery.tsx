@@ -60,8 +60,14 @@ export function Gallery({
   }, [index]);
 
   const go = useCallback(
-    (delta: number) => setIndex((i) => (i === null ? i : (i + delta + items.length) % items.length)),
-    [items.length],
+    (delta: number) => {
+      if (index === null) return;
+      const n = (index + delta + items.length) % items.length;
+      setIndex(n);
+      // Photo encore repliée : on déplie la galerie pour pouvoir y rendre le focus à la fermeture
+      if (initial !== undefined && n >= initial) setExpanded(true);
+    },
+    [index, items.length, initial],
   );
 
   /** Ouverture : transition partagée (View Transitions API) si disponible, sinon fondu + zoom */
@@ -83,7 +89,14 @@ export function Gallery({
   return (
     <>
       <ul
-        className={isGrid ? cn("grid grid-cols-2 gap-3 sm:gap-4", items.length % 3 === 0 ? "lg:grid-cols-3" : "lg:grid-cols-4") : "masonry"}
+        className={
+          isGrid
+            ? cn(
+                "grid grid-cols-2 gap-3 sm:gap-4",
+                items.length % 3 === 0 ? "lg:grid-cols-3" : "lg:grid-cols-4",
+              )
+            : "masonry"
+        }
         aria-label={label}
         onPointerEnter={preloadLightbox}
         onFocus={preloadLightbox}

@@ -15,12 +15,18 @@ export function MobileCallBar() {
       aria-label="Actions rapides"
       className="mobile-bar fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 flex gap-1.5 rounded-full border border-line bg-white/90 p-1.5 shadow-lg backdrop-blur-md transition-transform duration-300 ease-out-soft md:hidden"
     >
-      <a href={telHref(mainPhone)} className={`${pill} border-[1.5px] border-line bg-surface text-ink`}>
+      <a
+        href={telHref(mainPhone)}
+        className={`${pill} border-[1.5px] border-line bg-surface text-ink`}
+      >
         <Icon name="phone" className="size-4" />
         <span>Appeler</span>
         <span className="sr-only"> le {mainPhone.display}</span>
       </a>
-      <CallbackTrigger variant="bar" className={`${pill} border-[1.5px] border-line bg-surface text-ink`} />
+      <CallbackTrigger
+        variant="bar"
+        className={`${pill} border-[1.5px] border-line bg-surface text-ink`}
+      />
       <Link href={quoteHref} className={`${pill} bg-sun text-ink shadow-sun`}>
         <span>Devis</span>
         <span className="sr-only"> : demander un devis</span>

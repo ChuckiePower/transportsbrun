@@ -21,8 +21,12 @@ export function TrustBand() {
             <li key={fact.label} className="flex items-start gap-3 xl:flex-col xl:gap-3">
               <IconChip name={icons[i] ?? "badge"} />
               <span>
-                <span className="block font-display text-[0.95rem] leading-snug font-bold text-ink">{fact.label}</span>
-                <span className="mt-0.5 block text-[0.875rem] leading-snug text-ink-soft">{fact.detail}</span>
+                <span className="block font-display text-[0.95rem] leading-snug font-bold text-ink">
+                  {fact.label}
+                </span>
+                <span className="mt-0.5 block text-[0.875rem] leading-snug text-ink-soft">
+                  {fact.detail}
+                </span>
               </span>
             </li>
           ))}

@@ -163,7 +163,9 @@ async function deliver(message: Message): Promise<void> {
   if (m === "file") {
     await appendFile(process.env.MAIL_OUTBOX_FILE!, `${info.message.toString()}\n`, "utf8");
   } else {
-    console.info("[contact] SMTP non configuré : e-mail NON envoyé (mode développement)\n" + message.text);
+    console.info(
+      "[contact] SMTP non configuré : e-mail NON envoyé (mode développement)\n" + message.text,
+    );
   }
 }
 

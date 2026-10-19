@@ -15,7 +15,10 @@ function QuoteButton({ href, label }: { href: string; label: string }) {
     >
       Demander un devis pour ce transport
       <span className="sr-only"> : {label}</span>
-      <Icon name="arrowRight" className="size-4 text-brand transition-transform duration-200 group-hover:translate-x-[3px]" />
+      <Icon
+        name="arrowRight"
+        className="size-4 text-brand transition-transform duration-200 group-hover:translate-x-[3px]"
+      />
     </Link>
   );
 }
@@ -42,7 +45,10 @@ export function TransportedCards() {
               </div>
               <div className="flex flex-1 flex-col px-4 pt-5 pb-4 sm:px-5">
                 <div className="flex items-center gap-3">
-                  <IconChip name={t.icon} className="group-hover:rotate-6 group-focus-within:rotate-6 motion-reduce:rotate-0" />
+                  <IconChip
+                    name={t.icon}
+                    className="group-focus-within:rotate-6 group-hover:rotate-6 motion-reduce:rotate-0"
+                  />
                   <h3 className="text-h3 font-bold">
                     <Link href={t.serviceHref} className="rounded-sm hover:text-brand">
                       {t.title}
@@ -57,9 +63,17 @@ export function TransportedCards() {
         ))}
       </ul>
       {without.map((t) => (
-        <article key={t.id} data-reveal="" className={`${cardBase} flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8`}>
+        <article
+          key={t.id}
+          data-reveal=""
+          className={`${cardBase} flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8`}
+        >
           <div className="flex flex-col items-start gap-4 sm:flex-row">
-            <IconChip name={t.icon} size="lg" className="group-hover:rotate-6 motion-reduce:rotate-0" />
+            <IconChip
+              name={t.icon}
+              size="lg"
+              className="group-hover:rotate-6 motion-reduce:rotate-0"
+            />
             <div>
               <h3 className="text-h3 font-bold">
                 <Link href={t.serviceHref} className="rounded-sm hover:text-brand">

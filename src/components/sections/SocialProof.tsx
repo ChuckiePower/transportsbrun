@@ -24,7 +24,11 @@ export function Testimonials() {
   return (
     <Section aria-labelledby="avis-titre">
       <Container>
-        <SectionHeading id="avis-titre" eyebrow="Ils nous font confiance" title="Ce que disent nos clients" />
+        <SectionHeading
+          id="avis-titre"
+          eyebrow="Ils nous font confiance"
+          title="Ce que disent nos clients"
+        />
         <ul className="mt-12 grid gap-5 md:grid-cols-3">
           {testimonials.map((t) => (
             <li key={t.author} className="rounded-lg border border-line bg-surface p-7 shadow-sm">
@@ -57,7 +61,12 @@ export function ClientLogos() {
 export function GoogleRating() {
   if (!googleRating) return null;
   return (
-    <a href={googleRating.url} className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 font-display font-semibold" rel="noopener noreferrer" target="_blank">
+    <a
+      href={googleRating.url}
+      className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 font-display font-semibold"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
       {googleRating.value.toLocaleString("fr-FR")} / 5 sur Google ({googleRating.count} avis)
     </a>
   );

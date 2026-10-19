@@ -9,8 +9,21 @@ import { cn } from "@/lib/cn";
  */
 export function Logo({ className }: { className?: string }) {
   return (
-    <Link href="/" className={cn("inline-flex shrink-0 items-center rounded-md", className)} aria-label="Transports Brun — accueil">
-      <Image src={logo} alt="" width={125} height={65} sizes="125px" className="h-auto w-[92px] sm:w-[104px]" />
+    <Link
+      href="/"
+      className={cn("inline-flex shrink-0 items-center rounded-md", className)}
+      aria-label="Transports Brun — accueil"
+    >
+      <Image
+        src={logo}
+        alt=""
+        width={125}
+        height={65}
+        sizes="125px"
+        // Toujours visible en haut de page : chargé tout de suite (souvent l'élément LCP sur mobile)
+        preload
+        className="h-auto w-[92px] sm:w-[104px]"
+      />
     </Link>
   );
 }

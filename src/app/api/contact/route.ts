@@ -23,7 +23,10 @@ function json(body: unknown, status = 200, headers: Record<string, string> = {})
 
 /** Redirection 303 (POST → GET) pour l'envoi sans JavaScript */
 function redirect(req: Request, path: string) {
-  return new Response(null, { status: 303, headers: { Location: new URL(path, req.url).pathname, "Cache-Control": "no-store" } });
+  return new Response(null, {
+    status: 303,
+    headers: { Location: new URL(path, req.url).pathname, "Cache-Control": "no-store" },
+  });
 }
 
 /** IP du visiteur transmise par le reverse proxy (Caddy / nginx) */
@@ -48,15 +51,27 @@ function originStatus(req: Request): "same" | "absent" | "foreign" {
 }
 
 export async function POST(req: Request) {
-  const isForm = (req.headers.get("content-type") ?? "").includes("application/x-www-form-urlencoded");
-  const fail = (status: number, error: string, extra: Record<string, unknown> = {}, headers: Record<string, string> = {}) =>
-    isForm ? redirect(req, "/contact/erreur") : json({ ok: false, error, ...extra }, status, headers);
+  const isForm = (req.headers.get("content-type") ?? "").includes(
+    "application/x-www-form-urlencoded",
+  );
+  const fail = (
+    status: number,
+    error: string,
+    extra: Record<string, unknown> = {},
+    headers: Record<string, string> = {},
+  ) =>
+    isForm
+      ? redirect(req, "/contact/erreur")
+      : json({ ok: false, error, ...extra }, status, headers);
   const invalid = (error: z.ZodError) =>
-    fail(422, "Certains champs sont invalides.", { fieldErrors: z.flattenError(error).fieldErrors });
+    fail(422, "Certains champs sont invalides.", {
+      fieldErrors: z.flattenError(error).fieldErrors,
+    });
 
   const origin = originStatus(req);
   // Sans JavaScript, le navigateur envoie toujours l'en-tête Origin : son absence trahit un robot
-  if (origin === "foreign" || (isForm && origin === "absent")) return fail(403, "Origine non autorisée.");
+  if (origin === "foreign" || (isForm && origin === "absent"))
+    return fail(403, "Origine non autorisée.");
 
   const limit = rateLimit(clientIp(req), { max: RATE_MAX, windowMs: RATE_WINDOW_MS });
   if (!limit.ok) {
@@ -68,7 +83,8 @@ export async function POST(req: Request) {
     );
   }
 
-  if (Number(req.headers.get("content-length") ?? 0) > MAX_BODY_BYTES) return fail(413, "Demande trop volumineuse.");
+  if (Number(req.headers.get("content-length") ?? 0) > MAX_BODY_BYTES)
+    return fail(413, "Demande trop volumineuse.");
 
   let body: Record<string, unknown>;
   try {
@@ -97,7 +113,13 @@ export async function POST(req: Request) {
     const startedAt = Number(body.startedAt);
     const elapsed = Date.now() - startedAt;
     if (!Number.isFinite(startedAt) || elapsed < MIN_FILL_MS || elapsed > 7 * 24 * 3600 * 1000) {
-      return json({ ok: false, error: "Envoi trop rapide. Patientez quelques secondes puis renvoyez le formulaire." }, 400);
+      return json(
+        {
+          ok: false,
+          error: "Envoi trop rapide. Patientez quelques secondes puis renvoyez le formulaire.",
+        },
+        400,
+      );
     }
   }
 
@@ -116,7 +138,10 @@ export async function POST(req: Request) {
   try {
     await send();
   } catch (err) {
-    console.error("[contact] échec de l'envoi :", err instanceof MailNotConfiguredError ? err.message : err);
+    console.error(
+      "[contact] échec de l'envoi :",
+      err instanceof MailNotConfiguredError ? err.message : err,
+    );
     return fail(
       err instanceof MailNotConfiguredError ? 503 : 502,
       `L'envoi n'a pas abouti. Réessayez plus tard ou appelez-nous au ${PHONE}.`,

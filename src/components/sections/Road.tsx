@@ -67,7 +67,7 @@ export function Road() {
     <div
       ref={wrap}
       aria-hidden="true"
-      className="pointer-events-none absolute top-[92vh] bottom-[28rem] right-[calc((100vw-75rem)/4-24px)] z-0 hidden w-12 min-[85rem]:block"
+      className="pointer-events-none absolute top-[92vh] right-[calc((100vw-75rem)/4-24px)] bottom-[28rem] z-0 hidden w-12 min-[85rem]:block"
     >
       <svg ref={svg} width="48" className="overflow-visible">
         <defs>
@@ -75,10 +75,26 @@ export function Road() {
             <path ref={mask} fill="none" stroke="#fff" strokeWidth="10" strokeLinecap="round" />
           </mask>
         </defs>
-        <path ref={dots} fill="none" stroke="var(--color-brand)" strokeOpacity="0.35" strokeWidth="4" strokeLinecap="round" strokeDasharray="0 14" mask="url(#road-mask)" />
+        <path
+          ref={dots}
+          fill="none"
+          stroke="var(--color-brand)"
+          strokeOpacity="0.35"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeDasharray="0 14"
+          mask="url(#road-mask)"
+        />
         <g ref={truck} style={{ opacity: 0, transition: "opacity .3s" }}>
           <circle r="16" fill="var(--color-surface)" stroke="var(--color-line)" />
-          <g transform="translate(-9 -9) scale(0.75)" fill="none" stroke="var(--color-brand)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <g
+            transform="translate(-9 -9) scale(0.75)"
+            fill="none"
+            stroke="var(--color-brand)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
             <path d="M15 18H9" />
             <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" />

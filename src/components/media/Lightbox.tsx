@@ -88,7 +88,10 @@ export default function Lightbox({
           className="on-night fixed inset-0 z-50 flex flex-col text-white outline-none"
         >
           <div className="flex items-center justify-between gap-4 px-4 py-4 sm:px-6">
-            <Dialog.Title className="rounded-full bg-white/10 px-4 py-2 font-display text-[0.875rem] font-semibold tabular backdrop-blur-md" aria-live="polite">
+            <Dialog.Title
+              className="tabular rounded-full bg-white/10 px-4 py-2 font-display text-[0.875rem] font-semibold backdrop-blur-md"
+              aria-live="polite"
+            >
               Photo {index + 1} / {items.length}
             </Dialog.Title>
             <Dialog.Close className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 font-display text-[0.9rem] font-semibold backdrop-blur-md hover:bg-white/20">
@@ -110,7 +113,11 @@ export default function Lightbox({
           >
             <div
               key={item.id}
-              className={dir === 1 ? "step-enter flex size-full items-center justify-center" : "step-enter-back flex size-full items-center justify-center"}
+              className={
+                dir === 1
+                  ? "step-enter flex size-full items-center justify-center"
+                  : "step-enter-back flex size-full items-center justify-center"
+              }
             >
               <div
                 className="flex size-full items-center justify-center"
@@ -119,29 +126,41 @@ export default function Lightbox({
                   transition: dragging ? "none" : "transform 0.3s cubic-bezier(.22,1,.36,1)",
                 }}
               >
-              <Image
-                data-lightbox-img=""
-                src={item.image}
-                alt={item.alt}
-                sizes="100vw"
-                quality={82}
-                draggable={false}
-                className="h-auto max-h-full w-auto max-w-full rounded-gallery object-contain shadow-lg"
-                style={{ viewTransitionName: LIGHTBOX_NAME, maxHeight: "calc(100dvh - 11rem)" }}
-              />
+                <Image
+                  data-lightbox-img=""
+                  src={item.image}
+                  alt={item.alt}
+                  sizes="100vw"
+                  quality={82}
+                  draggable={false}
+                  className="h-auto max-h-full w-auto max-w-full rounded-gallery object-contain shadow-lg"
+                  style={{ viewTransitionName: LIGHTBOX_NAME, maxHeight: "calc(100dvh - 11rem)" }}
+                />
               </div>
             </div>
-            <button type="button" onClick={prev} className={`${navBtn} absolute top-1/2 left-3 -translate-y-1/2 sm:left-6`}>
+            <button
+              type="button"
+              onClick={prev}
+              className={`${navBtn} absolute top-1/2 left-3 -translate-y-1/2 sm:left-6`}
+            >
               <Icon name="chevronLeft" className="size-6" />
               <span className="sr-only">Photo précédente</span>
             </button>
-            <button type="button" onClick={next} className={`${navBtn} absolute top-1/2 right-3 -translate-y-1/2 sm:right-6`}>
+            <button
+              type="button"
+              onClick={next}
+              className={`${navBtn} absolute top-1/2 right-3 -translate-y-1/2 sm:right-6`}
+            >
               <Icon name="chevronRight" className="size-6" />
               <span className="sr-only">Photo suivante</span>
             </button>
           </div>
 
-          <p id="lightbox-legende" aria-live="polite" className="mx-auto max-w-3xl px-4 pt-4 pb-6 text-center text-[0.95rem] text-night-muted">
+          <p
+            id="lightbox-legende"
+            aria-live="polite"
+            className="mx-auto max-w-3xl px-4 pt-4 pb-6 text-center text-[0.95rem] text-night-muted"
+          >
             {item.alt}
           </p>
         </Dialog.Content>

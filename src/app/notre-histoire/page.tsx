@@ -46,8 +46,16 @@ export default function NotreHistoirePage() {
             </div>
           </div>
           <div className="flex flex-col gap-6 lg:col-span-6">
-            <div data-reveal-photo="" className="relative aspect-[16/11] overflow-hidden rounded-xl bg-cream shadow-md">
-              <Photo id={page.values.photo} fill sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" />
+            <div
+              data-reveal-photo=""
+              className="relative aspect-[16/11] overflow-hidden rounded-xl bg-cream shadow-md"
+            >
+              <Photo
+                id={page.values.photo}
+                fill
+                sizes="(min-width: 1024px) 560px, 100vw"
+                className="object-cover"
+              />
             </div>
             <PullQuote>{page.values.quote}</PullQuote>
           </div>
@@ -59,12 +67,25 @@ export default function NotreHistoirePage() {
         <Container>
           <div className="on-night grid gap-10 overflow-hidden rounded-xl bg-night p-6 text-white shadow-lg sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-14 lg:p-14">
             <div className="lg:order-2 lg:col-span-6">
-              <div data-reveal-photo="" className="relative aspect-[3/2] overflow-hidden rounded-lg">
-                <Photo id={page.team.photo} fill sizes="(min-width: 1024px) 520px, 100vw" className="object-cover" />
+              <div
+                data-reveal-photo=""
+                className="relative aspect-[3/2] overflow-hidden rounded-lg"
+              >
+                <Photo
+                  id={page.team.photo}
+                  fill
+                  sizes="(min-width: 1024px) 520px, 100vw"
+                  className="object-cover"
+                />
               </div>
             </div>
             <div className="lg:order-1 lg:col-span-6">
-              <SectionHeading id="equipe-titre" night eyebrow="Nos chauffeurs" title={page.team.title} />
+              <SectionHeading
+                id="equipe-titre"
+                night
+                eyebrow="Nos chauffeurs"
+                title={page.team.title}
+              />
               <div data-reveal="" className="mt-6 space-y-4 text-lead text-night-muted">
                 {page.team.paragraphs.map((p, i) => (
                   <p key={i}>{p}</p>

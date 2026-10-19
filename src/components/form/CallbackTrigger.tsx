@@ -9,13 +9,21 @@ export const CALLBACK_EVENT = "tb:rappel";
  * Lien « Être rappelé » : ouvre le tiroir de rappel (JavaScript),
  * ou mène au formulaire de la page Contact sans JavaScript.
  */
-export function CallbackTrigger({ className, variant = "link" }: { className?: string; variant?: "link" | "bar" }) {
+export function CallbackTrigger({
+  className,
+  variant = "link",
+}: {
+  className?: string;
+  variant?: "link" | "bar";
+}) {
   return (
     <a
       href="/contact#devis"
       onClick={(e) => {
         e.preventDefault();
-        window.dispatchEvent(new CustomEvent(CALLBACK_EVENT, { detail: { from: e.currentTarget } }));
+        window.dispatchEvent(
+          new CustomEvent(CALLBACK_EVENT, { detail: { from: e.currentTarget } }),
+        );
       }}
       onPointerEnter={() => void import("./CallbackDrawer")}
       className={cn(

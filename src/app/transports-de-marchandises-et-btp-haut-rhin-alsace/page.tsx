@@ -24,7 +24,12 @@ export const metadata = pageMetadata(page.meta, path);
 export default function MarchandisesPage() {
   return (
     <>
-      <PageHero {...page.hero} crumbs={[{ name: "Transport de marchandises", path }]} focal="55% 55%" aside={<KeyPoints points={page.keyPoints} />}>
+      <PageHero
+        {...page.hero}
+        crumbs={[{ name: "Transport de marchandises", path }]}
+        focal="55% 55%"
+        aside={<KeyPoints points={page.keyPoints} />}
+      >
         <ButtonLink href={quoteLink("transport-marchandises")} icon="arrowRight">
           Demander un devis
         </ButtonLink>
@@ -36,7 +41,13 @@ export default function MarchandisesPage() {
       {/* Matériaux et chantiers */}
       <Section tone="cream-2" aria-labelledby="chantiers-titre">
         <Container>
-          <SectionHeading id="chantiers-titre" eyebrow="Fret interurbain · Tous types de route" title={page.intro.title} lead={`${page.intro.text} ${page.examples.lead}`} className="mb-12" />
+          <SectionHeading
+            id="chantiers-titre"
+            eyebrow="Fret interurbain · Tous types de route"
+            title={page.intro.title}
+            lead={`${page.intro.text} ${page.examples.lead}`}
+            className="mb-12"
+          />
           <TransportedCards />
         </Container>
       </Section>
@@ -44,7 +55,10 @@ export default function MarchandisesPage() {
       {/* ADR + note sur le prix */}
       <Section tone="none" aria-labelledby="adr-titre">
         <Container className="grid gap-6 lg:grid-cols-12">
-          <div data-reveal="" className="on-night rounded-xl bg-night p-8 text-white shadow-md sm:p-12 lg:col-span-7">
+          <div
+            data-reveal=""
+            className="on-night rounded-xl bg-night p-8 text-white shadow-md sm:p-12 lg:col-span-7"
+          >
             <IconChip name="flame" tone="night" />
             <p className="eyebrow mt-6">{page.adr.eyebrow}</p>
             <h2 id="adr-titre" className="mt-2 text-h2 font-extrabold text-white">
@@ -56,10 +70,16 @@ export default function MarchandisesPage() {
               </p>
             ))}
           </div>
-          <div data-reveal="" style={{ ["--i" as string]: 1 }} className="flex flex-col justify-between gap-8 rounded-xl border border-line bg-surface p-8 shadow-sm sm:p-10 lg:col-span-5">
+          <div
+            data-reveal=""
+            style={{ ["--i" as string]: 1 }}
+            className="flex flex-col justify-between gap-8 rounded-xl border border-line bg-surface p-8 shadow-sm sm:p-10 lg:col-span-5"
+          >
             <div>
               <IconChip name="clipboard" />
-              <h2 className="mt-6 font-display text-h3 font-bold">Comment le prix est-il établi&#8239;?</h2>
+              <h2 className="mt-6 font-display text-h3 font-bold">
+                Comment le prix est-il établi&#8239;?
+              </h2>
               <p className="mt-3 text-ink">{page.priceNote.text}</p>
               <ul className="mt-5 flex flex-wrap gap-2" aria-label="Facteurs de prix">
                 {page.priceNote.factors.map((f) => (
@@ -71,7 +91,11 @@ export default function MarchandisesPage() {
             </div>
             <div>
               <p className="font-display font-semibold text-ink">{page.collaborate}</p>
-              <ButtonLink href={quoteLink("transport-marchandises")} icon="arrowRight" className="mt-4">
+              <ButtonLink
+                href={quoteLink("transport-marchandises")}
+                icon="arrowRight"
+                className="mt-4"
+              >
                 Demander un devis
               </ButtonLink>
             </div>
@@ -82,8 +106,17 @@ export default function MarchandisesPage() {
       {/* Galerie */}
       <Section tone="cream-2" aria-labelledby="galerie-titre">
         <Container>
-          <SectionHeading id="galerie-titre" eyebrow={`${marchandisesGallery.length} photos`} title={page.gallery.title} className="mb-10" />
-          <PhotoGallery ids={marchandisesGallery} label="Galerie : transport de marchandises" initial={12} />
+          <SectionHeading
+            id="galerie-titre"
+            eyebrow={`${marchandisesGallery.length} photos`}
+            title={page.gallery.title}
+            className="mb-10"
+          />
+          <PhotoGallery
+            ids={marchandisesGallery}
+            label="Galerie : transport de marchandises"
+            initial={12}
+          />
         </Container>
       </Section>
 

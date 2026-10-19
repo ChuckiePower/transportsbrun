@@ -30,10 +30,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr" className={`${fontSans.variable} ${fontDisplay.variable}`} suppressHydrationWarning>
+    <html
+      lang="fr"
+      className={`${fontSans.variable} ${fontDisplay.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Active les animations « avant révélation » uniquement si JavaScript s'exécute */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
       </head>
       <body className="flex min-h-dvh flex-col">
         <a

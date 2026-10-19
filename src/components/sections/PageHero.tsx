@@ -36,25 +36,22 @@ export function PageHero({
         <Breadcrumbs items={crumbs} />
         <div className="mt-8 grid gap-8 lg:mt-10 lg:grid-cols-12 lg:items-end lg:gap-12">
           <div className={aside ? "lg:col-span-7" : "lg:col-span-9"}>
-            <Eyebrow className="hero-in mb-4" >
-              {eyebrow}
-            </Eyebrow>
-            <h1 className="hero-in text-h1 font-extrabold" style={{ ["--i" as string]: 1 }}>
-              {title}
-            </h1>
-            {lead ? (
-              <p className="hero-in mt-6 max-w-[40rem] text-lead text-ink" style={{ ["--i" as string]: 2 }}>
-                {lead}
-              </p>
-            ) : null}
+            {/* Eyebrow, titre et chapô s'affichent sans fondu : ce sont souvent les éléments
+                LCP sur mobile, un départ à opacité 0 retarderait leur affichage mesuré. */}
+            <Eyebrow className="mb-4">{eyebrow}</Eyebrow>
+            <h1 className="text-h1 font-extrabold">{title}</h1>
+            {lead ? <p className="mt-6 max-w-[40rem] text-lead text-ink">{lead}</p> : null}
             {children ? (
-              <div className="hero-in mt-8 flex flex-wrap items-center gap-3" style={{ ["--i" as string]: 3 }}>
+              <div
+                className="hero-in mt-8 flex flex-wrap items-center gap-3"
+                style={{ ["--i" as string]: 1 }}
+              >
                 {children}
               </div>
             ) : null}
           </div>
           {aside ? (
-            <div className="hero-in lg:col-span-5" style={{ ["--i" as string]: 3 }}>
+            <div className="hero-in lg:col-span-5" style={{ ["--i" as string]: 2 }}>
               {aside}
             </div>
           ) : null}

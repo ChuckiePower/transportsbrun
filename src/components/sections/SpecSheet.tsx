@@ -17,7 +17,7 @@ export function SpecSheet({ title }: { title: string }) {
               {unit.rows.map((row) => (
                 <div key={row.label} className="flex items-baseline justify-between gap-4">
                   <dt className="text-ink-soft">{row.label}</dt>
-                  <dd className="font-display text-[1.75rem] leading-none font-extrabold tabular">
+                  <dd className="tabular font-display text-[1.75rem] leading-none font-extrabold">
                     {row.value}
                     <span className="ml-1 text-base font-semibold text-ink-soft">{row.unit}</span>
                   </dd>

@@ -39,7 +39,14 @@ export function Faq({
                   aria-hidden="true"
                   className="relative inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand transition-transform duration-300 ease-out-soft group-open:rotate-45"
                 >
-                  <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth={2.25} strokeLinecap="round">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="size-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2.25}
+                    strokeLinecap="round"
+                  >
                     <path d="M12 5v14M5 12h14" />
                   </svg>
                 </span>

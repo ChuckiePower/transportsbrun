@@ -20,7 +20,10 @@ export function ContactDetails({
   className?: string;
 }) {
   const night = tone === "night";
-  const head = cn("flex items-center gap-3 font-display text-[1rem] font-bold", night ? "text-white" : "text-ink");
+  const head = cn(
+    "flex items-center gap-3 font-display text-[1rem] font-bold",
+    night ? "text-white" : "text-ink",
+  );
   const muted = night ? "text-night-muted" : "text-ink-soft";
   const strong = night ? "text-white" : "text-ink";
   const hover = night ? "hover:text-brand-light" : "hover:text-brand";
@@ -35,7 +38,10 @@ export function ContactDetails({
           {site.phones.map((p) => (
             <li key={p.e164} className="flex flex-wrap items-baseline justify-between gap-x-4">
               <span className={muted}>{p.label}</span>
-              <a href={telHref(p)} className={cn("font-display text-[1.375rem] font-bold tabular", strong, hover)}>
+              <a
+                href={telHref(p)}
+                className={cn("tabular font-display text-[1.375rem] font-bold", strong, hover)}
+              >
                 {p.display}
               </a>
             </li>
@@ -51,7 +57,14 @@ export function ContactDetails({
           {site.emails.map((e) => (
             <li key={e.address}>
               <span className={cn("block text-[0.875rem]", muted)}>{e.label}</span>
-              <a href={mailtoHref(e)} className={cn("font-medium [overflow-wrap:anywhere] underline-offset-4 hover:underline", strong, hover)}>
+              <a
+                href={mailtoHref(e)}
+                className={cn(
+                  "font-medium [overflow-wrap:anywhere] underline-offset-4 hover:underline",
+                  strong,
+                  hover,
+                )}
+              >
                 <EmailText address={e.address} />
               </a>
             </li>
@@ -79,7 +92,9 @@ export function ContactDetails({
           href={site.googleMapsUrl}
           className={cn(
             "mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-full border-[1.5px] px-4 font-display text-[0.875rem] font-semibold transition-colors",
-            night ? "border-white/30 text-white hover:border-white" : "border-line text-ink hover:border-ink",
+            night
+              ? "border-white/30 text-white hover:border-white"
+              : "border-line text-ink hover:border-ink",
           )}
           rel="noopener noreferrer"
           target="_blank"

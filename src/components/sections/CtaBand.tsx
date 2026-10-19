@@ -42,7 +42,12 @@ export function CtaBand({
               <ButtonLink href={quote} icon="arrowRight">
                 Demander un devis
               </ButtonLink>
-              <ButtonLink href={telHref(mainPhone)} variant="secondary" icon="phone" iconPosition="start">
+              <ButtonLink
+                href={telHref(mainPhone)}
+                variant="secondary"
+                icon="phone"
+                iconPosition="start"
+              >
                 {mainPhone.display}
               </ButtonLink>
             </div>
@@ -59,9 +64,18 @@ export function CtaBand({
           data-reveal=""
           className="on-night relative isolate overflow-hidden rounded-xl bg-night px-6 py-12 text-white shadow-lg sm:px-10 lg:px-14 lg:py-16"
         >
-          <div aria-hidden="true" className="absolute inset-y-0 right-0 -z-10 hidden w-[42%] lg:block">
+          <div
+            aria-hidden="true"
+            className="absolute inset-y-0 right-0 -z-10 hidden w-[42%] lg:block"
+          >
             <div className="absolute inset-4 overflow-hidden rounded-lg opacity-25">
-              <Photo id="grue/camion-grue-volvo-levage-module" fill decorative sizes="480px" className="object-cover" />
+              <Photo
+                id="grue/camion-grue-volvo-levage-module"
+                fill
+                decorative
+                sizes="480px"
+                className="object-cover"
+              />
             </div>
           </div>
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
@@ -75,7 +89,12 @@ export function CtaBand({
                 <ButtonLink href={quote} icon="arrowRight">
                   Demander un devis
                 </ButtonLink>
-                <ButtonLink href={telHref(mainPhone)} variant="on-night" icon="phone" iconPosition="start">
+                <ButtonLink
+                  href={telHref(mainPhone)}
+                  variant="on-night"
+                  icon="phone"
+                  iconPosition="start"
+                >
                   Appeler le {mainPhone.display}
                 </ButtonLink>
               </div>
@@ -89,7 +108,9 @@ export function CtaBand({
                     className="flex min-h-14 flex-col justify-center gap-0.5 rounded-md px-4 py-3 transition-colors hover:bg-white/5 xs:flex-row xs:items-center xs:justify-between xs:gap-4"
                   >
                     <span className="text-night-muted">{p.label}</span>
-                    <span className="font-display text-xl font-bold whitespace-nowrap text-white tabular">{p.display}</span>
+                    <span className="tabular font-display text-xl font-bold whitespace-nowrap text-white">
+                      {p.display}
+                    </span>
                   </a>
                 </li>
               ))}
