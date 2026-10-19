@@ -2,7 +2,7 @@ import "server-only";
 import { appendFile } from "node:fs/promises";
 import nodemailer, { type Transporter } from "nodemailer";
 import { mainEmail, site } from "@/content/site";
-import type { QuoteData } from "./quote-schema";
+import type { CallbackData, QuoteData } from "./quote-schema";
 
 /**
  * Envoi des demandes de devis par e-mail.
@@ -83,20 +83,20 @@ export function buildQuoteEmail(data: QuoteData, meta: { receivedAt: Date }) {
     "Répondre à cet e-mail écrit directement au demandeur.",
   ].join("\n");
 
-  const html = `<!doctype html><html lang="fr"><body style="font-family:Arial,sans-serif;color:#131417">
+  const html = `<!doctype html><html lang="fr"><body style="font-family:Arial,sans-serif;color:#14213d">
 <h1 style="font-size:20px">Nouvelle demande de devis</h1>
-<p style="color:#53565e">Reçue depuis ${escapeHtml(site.url)} le ${escapeHtml(when)}.</p>
+<p style="color:#4a5670">Reçue depuis ${escapeHtml(site.url)} le ${escapeHtml(when)}.</p>
 <table cellpadding="6" style="border-collapse:collapse">
 ${rows(data)
   .map(
     ([k, v]) =>
-      `<tr><th align="left" style="border-bottom:1px solid #d8d1c4;padding-right:16px">${escapeHtml(k)}</th><td style="border-bottom:1px solid #d8d1c4">${escapeHtml(v)}</td></tr>`,
+      `<tr><th align="left" style="border-bottom:1px solid #e6e0d3;padding-right:16px">${escapeHtml(k)}</th><td style="border-bottom:1px solid #e6e0d3">${escapeHtml(v)}</td></tr>`,
   )
   .join("\n")}
 </table>
 <h2 style="font-size:16px;margin-top:24px">Message</h2>
 <p style="white-space:pre-wrap">${escapeHtml(data.message)}</p>
-<p style="color:#53565e;font-size:13px">Le demandeur a accepté que ses données soient utilisées pour traiter sa demande. Répondre à cet e-mail écrit directement au demandeur.</p>
+<p style="color:#4a5670;font-size:13px">Le demandeur a accepté que ses données soient utilisées pour traiter sa demande. Répondre à cet e-mail écrit directement au demandeur.</p>
 </body></html>`;
 
   return {
@@ -110,8 +110,49 @@ ${rows(data)
   };
 }
 
-export async function sendQuoteEmail(data: QuoteData): Promise<void> {
-  const message = buildQuoteEmail(data, { receivedAt: new Date() });
+/** Demande de rappel : e-mail court, clairement titré */
+export function buildCallbackEmail(data: CallbackData, meta: { receivedAt: Date }) {
+  const subject = `Demande de rappel – ${data.name} – ${data.phone}`;
+  const when = meta.receivedAt.toLocaleString("fr-FR", { timeZone: "Europe/Paris" });
+  const rowsCb: [string, string][] = [
+    ["Nom", data.name],
+    ["Téléphone", data.phone],
+    ["Type de demande", data.requestType || "—"],
+  ];
+  const text = [
+    `DEMANDE DE RAPPEL reçue depuis le site ${site.url} le ${when}.`,
+    "Le visiteur souhaite être rappelé par téléphone.",
+    "",
+    ...rowsCb.map(([k, v]) => `${k} : ${v}`),
+    "",
+    "—",
+    "Le demandeur a accepté que ses données soient utilisées pour traiter sa demande.",
+  ].join("\n");
+  const html = `<!doctype html><html lang="fr"><body style="font-family:Arial,sans-serif;color:#14213d">
+<h1 style="font-size:20px">Demande de rappel</h1>
+<p style="color:#4a5670">Reçue depuis ${escapeHtml(site.url)} le ${escapeHtml(when)}. Le visiteur souhaite être rappelé par téléphone.</p>
+<table cellpadding="6" style="border-collapse:collapse">
+${rowsCb
+  .map(
+    ([k, v]) =>
+      `<tr><th align="left" style="border-bottom:1px solid #e6e0d3;padding-right:16px">${escapeHtml(k)}</th><td style="border-bottom:1px solid #e6e0d3">${escapeHtml(v)}</td></tr>`,
+  )
+  .join("\n")}
+</table>
+<p style="color:#4a5670;font-size:13px">Le demandeur a accepté que ses données soient utilisées pour traiter sa demande.</p>
+</body></html>`;
+  return {
+    from: process.env.CONTACT_FROM || process.env.SMTP_USER || mainEmail.address,
+    to: process.env.CONTACT_TO || mainEmail.address,
+    subject,
+    text,
+    html,
+  };
+}
+
+type Message = ReturnType<typeof buildQuoteEmail> | ReturnType<typeof buildCallbackEmail>;
+
+async function deliver(message: Message): Promise<void> {
   const m = mode();
   if (m === "smtp") {
     await smtpTransport().sendMail(message);
@@ -122,8 +163,14 @@ export async function sendQuoteEmail(data: QuoteData): Promise<void> {
   if (m === "file") {
     await appendFile(process.env.MAIL_OUTBOX_FILE!, `${info.message.toString()}\n`, "utf8");
   } else {
-    console.info(
-      "[contact] SMTP non configuré : e-mail NON envoyé (mode développement)\n" + message.text,
-    );
+    console.info("[contact] SMTP non configuré : e-mail NON envoyé (mode développement)\n" + message.text);
   }
+}
+
+export async function sendQuoteEmail(data: QuoteData): Promise<void> {
+  await deliver(buildQuoteEmail(data, { receivedAt: new Date() }));
+}
+
+export async function sendCallbackEmail(data: CallbackData): Promise<void> {
+  await deliver(buildCallbackEmail(data, { receivedAt: new Date() }));
 }

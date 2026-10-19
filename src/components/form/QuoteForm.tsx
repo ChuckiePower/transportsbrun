@@ -2,53 +2,75 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useForm, type FieldErrors } from "react-hook-form";
-import { Button } from "@/components/ui/Button";
+import { Button, ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
-import { mainPhone, telHref } from "@/content/site";
+import { mainPhone, site, telHref } from "@/content/site";
 import { cn } from "@/lib/cn";
 import {
+  natureSlugs,
   quoteSchema,
   requestTypes,
+  stepFields,
+  typeSlugs,
   type QuoteData,
   type QuoteInput,
   type QuotePayload,
 } from "@/lib/quote-schema";
+import { track } from "@/lib/track";
+import { fr } from "@/lib/typo";
+import { CheckDraw, checkboxClass, ErrorText, Field, inputClass } from "./fields";
 
 type Status = "idle" | "submitting" | "success" | "error";
+type Step = 1 | 2;
 
-const FIELD_ORDER: (keyof QuoteInput)[] = [
-  "name",
-  "company",
-  "email",
-  "phone",
-  "requestType",
-  "pickup",
-  "delivery",
-  "date",
-  "cargo",
-  "message",
-  "consent",
-];
+const STORAGE_KEY = "tb-devis";
+const FIELD_ORDER: (keyof QuoteInput)[] = [...stepFields[1], ...stepFields[2]];
 
-const inputBase =
-  "block w-full rounded-sm border-2 border-line bg-white px-3.5 py-3 text-[1.0625rem] text-ink shadow-[inset_0_1px_2px_rgb(19_20_23/0.06)] transition-colors placeholder:text-mist hover:border-mist focus:border-navy focus:outline-none focus-visible:outline-3 focus-visible:outline-offset-1 focus-visible:outline-navy aria-[invalid=true]:border-danger";
+const DEFAULTS: QuoteInput = {
+  name: "",
+  company: "",
+  email: "",
+  phone: "",
+  requestType: "" as QuoteInput["requestType"],
+  pickup: "",
+  delivery: "",
+  date: "",
+  cargo: "",
+  message: "",
+  consent: false as unknown as true,
+};
 
-export function QuoteForm({
-  intro,
-  consentText,
-  submitLabel,
-}: {
-  intro: string;
-  consentText: string;
-  submitLabel: string;
-}) {
+/** true une fois le composant hydraté (sans effet de bord ni rendu différent côté serveur) */
+const noop = () => () => {};
+function useHydrated() {
+  return useSyncExternalStore(
+    noop,
+    () => true,
+    () => false,
+  );
+}
+
+/**
+ * Formulaire de devis en 2 étapes (même schéma, même endpoint POST /api/contact).
+ * - Avec JavaScript : étapes, progression, validation au départ du champ, saisie conservée
+ *   dans sessionStorage, envoi JSON, écran de succès.
+ * - Sans JavaScript : un seul formulaire classique (POST) avec validation native du navigateur.
+ */
+export function QuoteForm({ intro, consentText, submitLabel }: { intro: string; consentText: string; submitLabel: string }) {
+  const enhanced = useHydrated();
+  const [step, setStep] = useState<Step>(1);
+  const [dir, setDir] = useState<"fwd" | "back" | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
   const [errorCount, setErrorCount] = useState(0);
+  const [shakeKey, setShakeKey] = useState(0);
   const startedAt = useRef<number>(0);
+  const honeypot = useRef<HTMLInputElement>(null);
+  const stepTitle = useRef<(HTMLHeadingElement | null)[]>([]);
   const successRef = useRef<HTMLDivElement>(null);
+  const firstRender = useRef(true);
   const uid = useId();
 
   const {
@@ -56,46 +78,101 @@ export function QuoteForm({
     handleSubmit,
     setError,
     setFocus,
+    setValue,
+    getValues,
+    getFieldState,
     reset,
+    trigger,
+    subscribe,
     formState: { errors },
   } = useForm<QuoteInput, unknown, QuoteData>({
     resolver: zodResolver(quoteSchema),
     mode: "onTouched",
     shouldFocusError: true,
-    defaultValues: {
-      name: "",
-      company: "",
-      email: "",
-      phone: "",
-      requestType: "" as QuoteInput["requestType"],
-      pickup: "",
-      delivery: "",
-      date: "",
-      cargo: "",
-      message: "",
-      consent: false as unknown as true,
-    },
+    defaultValues: DEFAULTS,
   });
 
+  // Restaure la saisie en cours puis applique la présélection de l'URL (?type=…&nature=…)
   useEffect(() => {
     startedAt.current = Date.now();
-  }, []);
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? "null") as Partial<QuoteInput> | null;
+      if (saved && typeof saved === "object") {
+        const clean = Object.fromEntries(
+          Object.entries(saved).filter(([k, v]) => k in DEFAULTS && k !== "consent" && typeof v === "string"),
+        );
+        reset({ ...DEFAULTS, ...clean });
+      }
+    } catch {
+      /* stockage indisponible : on continue sans */
+    }
+    const params = new URLSearchParams(window.location.search);
+    const type = typeSlugs[params.get("type") ?? ""];
+    if (type) setValue("requestType", type);
+    const nature = natureSlugs[params.get("nature") ?? ""];
+    if (nature && !getValues("cargo")) setValue("cargo", nature);
+  }, [reset, setValue, getValues]);
+
+  // Sauvegarde continue (hors consentement) pour ne rien perdre en changeant de page
+  useEffect(
+    () =>
+      subscribe({
+        formState: { values: true },
+        callback: ({ values }) => {
+          try {
+            const { consent: _consent, ...rest } = values;
+            void _consent;
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(rest));
+          } catch {
+            /* ignoré */
+          }
+        },
+      }),
+    [subscribe],
+  );
+
+  // Focus sur le titre de l'étape affichée (annoncé par les lecteurs d'écran)
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    stepTitle.current[step]?.focus();
+  }, [step]);
 
   useEffect(() => {
     if (status === "success") successRef.current?.focus();
   }, [status]);
 
-  const honeypot = useRef<HTMLInputElement>(null);
+  function flagErrors(count: number) {
+    setErrorCount(count);
+    setShakeKey((k) => k + 1);
+  }
+
+  async function next() {
+    const ok = await trigger([...stepFields[1]]);
+    if (!ok) {
+      const invalid = stepFields[1].filter((k) => getFieldState(k).invalid);
+      flagErrors(invalid.length || 1);
+      setFocus(invalid[0] ?? "requestType");
+      return;
+    }
+    setErrorCount(0);
+    setDir("fwd");
+    setStep(2);
+    track("form_step_2");
+  }
+
+  function back() {
+    setDir("back");
+    setStep(1);
+  }
 
   async function onValid(data: QuoteData) {
     setStatus("submitting");
     setServerError(null);
     setErrorCount(0);
-    const payload: QuotePayload = {
-      ...data,
-      website: honeypot.current?.value ?? "",
-      startedAt: startedAt.current,
-    };
+    const payload: QuotePayload = { ...data, website: honeypot.current?.value ?? "", startedAt: startedAt.current };
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -108,15 +185,24 @@ export function QuoteForm({
         fieldErrors?: Partial<Record<keyof QuoteInput, string[]>>;
       };
       if (res.ok && body.ok) {
+        try {
+          sessionStorage.removeItem(STORAGE_KEY);
+        } catch {
+          /* ignoré */
+        }
+        track("form_submit");
+        reset(DEFAULTS);
         setStatus("success");
-        reset();
         return;
       }
       if (body.fieldErrors) {
         const keys = FIELD_ORDER.filter((k) => body.fieldErrors?.[k]?.length);
         keys.forEach((k) => setError(k, { type: "server", message: body.fieldErrors![k]![0] }));
-        if (keys[0]) setFocus(keys[0]);
-        setErrorCount(keys.length);
+        if (keys[0]) {
+          if ((stepFields[1] as readonly string[]).includes(keys[0])) setStep(1);
+          setTimeout(() => setFocus(keys[0]!), 0);
+        }
+        flagErrors(keys.length);
       }
       setServerError(body.error ?? "L'envoi n'a pas abouti.");
       setStatus("error");
@@ -127,44 +213,41 @@ export function QuoteForm({
   }
 
   function onInvalid(errs: FieldErrors<QuoteInput>) {
-    setErrorCount(Object.keys(errs).length);
+    const keys = FIELD_ORDER.filter((k) => errs[k]);
+    if (keys[0] && (stepFields[1] as readonly string[]).includes(keys[0])) {
+      setDir("back");
+      setStep(1);
+      setTimeout(() => setFocus(keys[0]!), 0);
+    }
+    flagErrors(keys.length);
     setServerError(null);
     setStatus("idle");
   }
 
   if (status === "success") {
     return (
-      <div
-        ref={successRef}
-        tabIndex={-1}
-        role="status"
-        className="rounded-md border-2 border-success bg-white p-6 outline-none sm:p-8"
-      >
-        <p className="flex items-center gap-3 font-display text-2xl font-bold text-success uppercase">
-          <Icon name="check" className="size-7" />
-          Demande envoyée
+      <div ref={successRef} tabIndex={-1} role="status" className="py-4 outline-none">
+        <CheckDraw />
+        <h3 className="mt-5 font-display text-h3 font-bold text-ink">Demande envoyée, merci !</h3>
+        <p className="mt-3 text-lead text-ink">
+          Votre demande a bien été transmise à l&apos;équipe Transports Brun. Nous vous contacterons dans les plus brefs délais.
         </p>
-        <p className="mt-3 text-lead">
-          Merci, votre demande a bien été transmise à Transports Brun. Nous vous contacterons dans
-          les plus brefs délais.
-        </p>
-        <p className="mt-2 text-steel">
-          Pour une demande urgente, appelez-nous au{" "}
-          <a href={telHref(mainPhone)} className="font-semibold text-navy underline">
-            {mainPhone.display}
-          </a>
-          .
-        </p>
-        <Button
-          variant="outline"
-          className="mt-6"
-          onClick={() => {
-            startedAt.current = Date.now();
-            setStatus("idle");
-          }}
-        >
-          Envoyer une autre demande
-        </Button>
+        <p className="mt-2 text-ink-soft">{fr`Une urgence ? L'équipe est joignable ${site.hours.sentence}.`}</p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <ButtonLink href={telHref(mainPhone)} icon="phone" iconPosition="start">
+            Appeler le {mainPhone.display}
+          </ButtonLink>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              startedAt.current = Date.now();
+              setStep(1);
+              setStatus("idle");
+            }}
+          >
+            Envoyer une autre demande
+          </Button>
+        </div>
       </div>
     );
   }
@@ -173,40 +256,77 @@ export function QuoteForm({
   const errorId = (name: keyof QuoteInput) => (errors[name] ? `${id(name)}-erreur` : undefined);
   const describedBy = (name: keyof QuoteInput, hint?: boolean) =>
     [hint ? `${id(name)}-aide` : null, errorId(name)].filter(Boolean).join(" ") || undefined;
+  // Pas d'animation au premier affichage, seulement lors d'un changement d'étape
+  const animClass = dir === null ? undefined : dir === "fwd" ? "step-enter" : "step-enter-back";
+  const stepHeading = (n: Step, label: string) => (
+    <h3
+      ref={(el) => {
+        stepTitle.current[n] = el;
+      }}
+      tabIndex={-1}
+      className="font-display text-[1.125rem] font-bold text-ink outline-none"
+    >
+      <span className="js:hidden">{n}. </span>
+      {label}
+    </h3>
+  );
 
   return (
     <form
-      noValidate
-      onSubmit={(e) => void handleSubmit(onValid, onInvalid)(e)}
+      method="post"
+      action="/api/contact"
+      noValidate={enhanced}
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (step === 1) {
+          void next();
+          return;
+        }
+        void handleSubmit(onValid, onInvalid)(e);
+      }}
       aria-describedby={`${uid}-intro`}
-      className="space-y-6"
+      className="space-y-7"
     >
-      <p id={`${uid}-intro`} className="text-steel">
+      <p id={`${uid}-intro`} className="text-ink-soft">
         {intro}
       </p>
-      <p className="text-sm text-steel">
-        Les champs marqués d&apos;un astérisque (<span aria-hidden="true">*</span>
-        <span className="sr-only">astérisque</span>) sont obligatoires.
-      </p>
+
+      {/* Progression (avec JavaScript uniquement) */}
+      <div className="hidden js:block">
+        <div className="flex items-center justify-between font-display text-[0.875rem] font-semibold">
+          <span className="text-brand" aria-live="polite">
+            Étape {step} sur 2 · {step === 1 ? "Votre transport" : "Vos coordonnées"}
+          </span>
+          <span className="hidden text-ink-soft sm:inline">{step === 1 ? "Plus qu'une étape ensuite" : "Dernière étape"}</span>
+        </div>
+        <div
+          className="mt-3 h-2 overflow-hidden rounded-full bg-cream-2"
+          role="progressbar"
+          aria-label="Progression du formulaire"
+          aria-valuemin={1}
+          aria-valuemax={2}
+          aria-valuenow={step}
+        >
+          <div
+            className="h-full rounded-full bg-brand transition-[width] duration-500 ease-out-soft"
+            style={{ width: step === 1 ? "50%" : "100%" }}
+          />
+        </div>
+      </div>
 
       <div aria-live="assertive" aria-atomic="true">
         {errorCount > 0 || serverError ? (
-          <div
-            className="flex gap-3 rounded-sm border-2 border-danger bg-danger/5 p-4 text-danger"
-            role="alert"
-          >
+          <div key={shakeKey} className="flex animate-shake gap-3 rounded-md border-[1.5px] border-error/40 bg-error/5 p-4 text-error" role="alert">
             <Icon name="alert" className="mt-0.5 size-5 shrink-0" />
             <div>
               {errorCount > 0 ? (
                 <p className="font-semibold">
                   {errorCount === 1
-                    ? "Le formulaire contient une erreur : merci de la corriger."
-                    : `Le formulaire contient ${errorCount} erreurs : merci de les corriger.`}
+                    ? "Un champ est à compléter ou à corriger."
+                    : `${errorCount} champs sont à compléter ou à corriger.`}
                 </p>
               ) : null}
-              {serverError ? (
-                <p className={errorCount > 0 ? "mt-1" : "font-semibold"}>{serverError}</p>
-              ) : null}
+              {serverError ? <p className={errorCount > 0 ? "mt-1" : "font-semibold"}>{serverError}</p> : null}
               {status === "error" && !errorCount ? (
                 <p className="mt-1">
                   Vous pouvez aussi nous appeler au{" "}
@@ -221,98 +341,17 @@ export function QuoteForm({
         ) : null}
       </div>
 
-      <fieldset className="grid gap-5 sm:grid-cols-2">
-        <legend className="eyebrow mb-4 text-navy">Vos coordonnées</legend>
-        <Field
-          label="Nom"
-          required
-          htmlFor={id("name")}
-          error={errors.name?.message}
-          errorId={errorId("name")}
-        >
-          <input
-            id={id("name")}
-            type="text"
-            autoComplete="name"
-            className={inputBase}
-            aria-invalid={errors.name ? true : undefined}
-            aria-required="true"
-            aria-describedby={describedBy("name")}
-            {...register("name")}
-          />
-        </Field>
-        <Field
-          label="Entreprise"
-          htmlFor={id("company")}
-          error={errors.company?.message}
-          errorId={errorId("company")}
-        >
-          <input
-            id={id("company")}
-            type="text"
-            autoComplete="organization"
-            className={inputBase}
-            aria-invalid={errors.company ? true : undefined}
-            aria-describedby={describedBy("company")}
-            {...register("company")}
-          />
-        </Field>
-        <Field
-          label="E-mail"
-          required
-          htmlFor={id("email")}
-          error={errors.email?.message}
-          errorId={errorId("email")}
-        >
-          <input
-            id={id("email")}
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            className={inputBase}
-            aria-invalid={errors.email ? true : undefined}
-            aria-required="true"
-            aria-describedby={describedBy("email")}
-            {...register("email")}
-          />
-        </Field>
-        <Field
-          label="Téléphone"
-          required
-          htmlFor={id("phone")}
-          error={errors.phone?.message}
-          errorId={errorId("phone")}
-        >
-          <input
-            id={id("phone")}
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            className={inputBase}
-            aria-invalid={errors.phone ? true : undefined}
-            aria-required="true"
-            aria-describedby={describedBy("phone")}
-            {...register("phone")}
-          />
-        </Field>
-      </fieldset>
-
-      <fieldset className="grid gap-5 sm:grid-cols-2">
-        <legend className="eyebrow mb-4 text-navy">Votre transport</legend>
-        <Field
-          label="Type de demande"
-          required
-          htmlFor={id("requestType")}
-          error={errors.requestType?.message}
-          errorId={errorId("requestType")}
-          className="sm:col-span-2"
-        >
+      {/* Étape 1 : votre transport */}
+      <fieldset data-active={step === 1 ? "" : undefined} className={cn("quote-step space-y-5", animClass)}>
+        <legend className="sr-only">Votre transport</legend>
+        {stepHeading(1, "Votre transport")}
+        <Field label="Type de demande" required htmlFor={id("requestType")} error={errors.requestType?.message} errorId={errorId("requestType")}>
           <div className="relative">
             <select
               id={id("requestType")}
-              className={cn(inputBase, "appearance-none pr-11")}
+              required
+              className={cn(inputClass, "appearance-none pr-12")}
               aria-invalid={errors.requestType ? true : undefined}
-              aria-required="true"
               aria-describedby={describedBy("requestType")}
               {...register("requestType")}
             >
@@ -323,223 +362,142 @@ export function QuoteForm({
                 </option>
               ))}
             </select>
-            <Icon
-              name="chevronRight"
-              className="pointer-events-none absolute top-1/2 right-3.5 size-5 -translate-y-1/2 rotate-90 text-steel"
-            />
+            <Icon name="chevronRight" className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 rotate-90 text-ink-soft" />
           </div>
         </Field>
-        <Field
-          label="Lieu de chargement"
-          htmlFor={id("pickup")}
-          error={errors.pickup?.message}
-          errorId={errorId("pickup")}
-        >
-          <input
-            id={id("pickup")}
-            type="text"
-            autoComplete="off"
-            placeholder="Ville ou adresse"
-            className={inputBase}
-            aria-invalid={errors.pickup ? true : undefined}
-            aria-describedby={describedBy("pickup")}
-            {...register("pickup")}
-          />
-        </Field>
-        <Field
-          label="Lieu de livraison"
-          htmlFor={id("delivery")}
-          error={errors.delivery?.message}
-          errorId={errorId("delivery")}
-        >
-          <input
-            id={id("delivery")}
-            type="text"
-            autoComplete="off"
-            placeholder="Ville ou adresse"
-            className={inputBase}
-            aria-invalid={errors.delivery ? true : undefined}
-            aria-describedby={describedBy("delivery")}
-            {...register("delivery")}
-          />
-        </Field>
-        <Field
-          label="Date souhaitée"
-          htmlFor={id("date")}
-          error={errors.date?.message}
-          errorId={errorId("date")}
-        >
-          <input
-            id={id("date")}
-            type="date"
-            className={inputBase}
-            aria-invalid={errors.date ? true : undefined}
-            aria-describedby={describedBy("date")}
-            {...register("date")}
-          />
-        </Field>
-        <Field
-          label="Nature de la charge"
-          htmlFor={id("cargo")}
-          hint="Dimensions et poids approximatifs"
-          hintId={`${id("cargo")}-aide`}
-          error={errors.cargo?.message}
-          errorId={errorId("cargo")}
-        >
-          <input
-            id={id("cargo")}
-            type="text"
-            autoComplete="off"
-            placeholder="Ex. : module 6 × 2,5 m, 4 t"
-            className={inputBase}
-            aria-invalid={errors.cargo ? true : undefined}
-            aria-describedby={describedBy("cargo", true)}
-            {...register("cargo")}
-          />
-        </Field>
-        <Field
-          label="Message"
-          required
-          htmlFor={id("message")}
-          error={errors.message?.message}
-          errorId={errorId("message")}
-          className="sm:col-span-2"
-        >
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field label="Lieu de chargement" htmlFor={id("pickup")} error={errors.pickup?.message} errorId={errorId("pickup")}>
+            <input id={id("pickup")} type="text" autoComplete="off" placeholder="Ville ou adresse" className={inputClass} aria-invalid={errors.pickup ? true : undefined} aria-describedby={describedBy("pickup")} {...register("pickup")} />
+          </Field>
+          <Field label="Lieu de livraison" htmlFor={id("delivery")} error={errors.delivery?.message} errorId={errorId("delivery")}>
+            <input id={id("delivery")} type="text" autoComplete="off" placeholder="Ville ou adresse" className={inputClass} aria-invalid={errors.delivery ? true : undefined} aria-describedby={describedBy("delivery")} {...register("delivery")} />
+          </Field>
+          <Field label="Date souhaitée" htmlFor={id("date")} error={errors.date?.message} errorId={errorId("date")}>
+            <input id={id("date")} type="date" className={inputClass} aria-invalid={errors.date ? true : undefined} aria-describedby={describedBy("date")} {...register("date")} />
+          </Field>
+          <Field
+            label="Nature de la charge"
+            htmlFor={id("cargo")}
+            hint="Dimensions et poids approximatifs"
+            hintId={`${id("cargo")}-aide`}
+            error={errors.cargo?.message}
+            errorId={errorId("cargo")}
+          >
+            <input id={id("cargo")} type="text" autoComplete="off" placeholder="Ex. : module 6 × 2,5 m, 4 t" className={inputClass} aria-invalid={errors.cargo ? true : undefined} aria-describedby={describedBy("cargo", true)} {...register("cargo")} />
+          </Field>
+        </div>
+        <div className="hidden pt-1 js:flex">
+          <Button onClick={() => void next()} icon="arrowRight">
+            Suivant : vos coordonnées
+          </Button>
+        </div>
+      </fieldset>
+
+      {/* Étape 2 : vos coordonnées */}
+      <fieldset data-active={step === 2 ? "" : undefined} className={cn("quote-step space-y-5", animClass)}>
+        <legend className="sr-only">Vos coordonnées</legend>
+        {stepHeading(2, "Vos coordonnées")}
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field label="Nom" required htmlFor={id("name")} error={errors.name?.message} errorId={errorId("name")}>
+            <input id={id("name")} type="text" required autoComplete="name" className={inputClass} aria-invalid={errors.name ? true : undefined} aria-describedby={describedBy("name")} {...register("name")} />
+          </Field>
+          <Field label="Entreprise" htmlFor={id("company")} error={errors.company?.message} errorId={errorId("company")}>
+            <input id={id("company")} type="text" autoComplete="organization" className={inputClass} aria-invalid={errors.company ? true : undefined} aria-describedby={describedBy("company")} {...register("company")} />
+          </Field>
+          <Field label="E-mail" required htmlFor={id("email")} error={errors.email?.message} errorId={errorId("email")}>
+            <input id={id("email")} type="email" required inputMode="email" autoComplete="email" className={inputClass} aria-invalid={errors.email ? true : undefined} aria-describedby={describedBy("email")} {...register("email")} />
+          </Field>
+          <Field label="Téléphone" required htmlFor={id("phone")} error={errors.phone?.message} errorId={errorId("phone")}>
+            <input id={id("phone")} type="tel" required inputMode="tel" autoComplete="tel" className={inputClass} aria-invalid={errors.phone ? true : undefined} aria-describedby={describedBy("phone")} {...register("phone")} />
+          </Field>
+        </div>
+        <Field label="Message" required htmlFor={id("message")} error={errors.message?.message} errorId={errorId("message")}>
           <textarea
             id={id("message")}
-            rows={6}
-            className={cn(inputBase, "min-h-36 resize-y")}
+            rows={5}
+            required
+            minLength={10}
+            className={cn(inputClass, "min-h-36 resize-y")}
             aria-invalid={errors.message ? true : undefined}
-            aria-required="true"
             aria-describedby={describedBy("message")}
             {...register("message")}
           />
         </Field>
-      </fieldset>
 
-      {/* Pot de miel : invisible pour les humains, rempli par les robots */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor={id("website")}>Ne pas remplir ce champ</label>
-        <input
-          ref={honeypot}
-          id={id("website")}
-          name="website"
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          defaultValue=""
-        />
-      </div>
-
-      <div>
-        <div className="flex gap-3">
-          <input
-            id={id("consent")}
-            type="checkbox"
-            className="mt-1 size-6 shrink-0 cursor-pointer rounded-xs border-2 border-line accent-navy"
-            aria-invalid={errors.consent ? true : undefined}
-            aria-required="true"
-            aria-describedby={describedBy("consent")}
-            {...register("consent")}
-          />
-          <label
-            htmlFor={id("consent")}
-            className="cursor-pointer text-[0.98rem] leading-snug text-steel"
-          >
-            {consentText}{" "}
-            <span aria-hidden="true" className="text-danger">
-              *
-            </span>
-          </label>
+        {/* Pot de miel : invisible pour les humains, rempli par les robots */}
+        <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+          <label htmlFor={id("website")}>Ne pas remplir ce champ</label>
+          <input ref={honeypot} id={id("website")} name="website" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
         </div>
-        {errors.consent?.message ? (
-          <ErrorText id={errorId("consent")!}>{errors.consent.message}</ErrorText>
-        ) : null}
-      </div>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <Button
-          type="submit"
-          size="lg"
-          icon={status === "submitting" ? undefined : "arrowRight"}
-          disabled={status === "submitting"}
-          aria-disabled={status === "submitting"}
-          className="sm:min-w-56"
-        >
-          {status === "submitting" ? (
-            <span className="inline-flex items-center gap-2">
-              <Icon name="loader" className="size-5 animate-spin" />
-              Envoi en cours…
-            </span>
-          ) : (
-            submitLabel
-          )}
-        </Button>
-        <p className="text-sm text-steel">
-          Vos données servent uniquement à traiter votre demande (voir la{" "}
-          <Link href="/politiques-de-confidentialites" className="underline">
-            politique de confidentialité
-          </Link>
-          ).
-        </p>
-      </div>
+        <div>
+          <div className="flex gap-3">
+            <input
+              id={id("consent")}
+              type="checkbox"
+              required
+              className={checkboxClass}
+              aria-invalid={errors.consent ? true : undefined}
+              aria-describedby={describedBy("consent")}
+              {...register("consent")}
+            />
+            <label htmlFor={id("consent")} className="cursor-pointer text-[0.95rem] leading-snug text-ink-soft">
+              {consentText} <span aria-hidden="true" className="text-error">*</span>
+            </label>
+          </div>
+          {errors.consent?.message ? <ErrorText id={errorId("consent")!}>{errors.consent.message}</ErrorText> : null}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 pt-1">
+          <Button
+            type="submit"
+            icon={status === "submitting" ? undefined : "arrowRight"}
+            disabled={status === "submitting"}
+            className="min-w-48"
+          >
+            {status === "submitting" ? (
+              <span className="inline-flex items-center gap-2">
+                <Icon name="loader" className="size-5 animate-spin" />
+                Envoi en cours…
+              </span>
+            ) : (
+              submitLabel
+            )}
+          </Button>
+          <span className="hidden js:inline-flex">
+            <Button variant="secondary" onClick={back} icon="chevronLeft" iconPosition="start">
+              Retour
+            </Button>
+          </span>
+        </div>
+
+        {/* Réassurance au point de friction */}
+        <ul className="space-y-2 rounded-md bg-cream-2/70 p-4 text-[0.9rem] text-ink-soft">
+          <Reassure icon="shield">
+            Vos données servent uniquement à traiter votre demande (voir la{" "}
+            <Link href="/politiques-de-confidentialites" className="underline hover:text-brand">
+              politique de confidentialité
+            </Link>
+            ).
+          </Reassure>
+          <Reassure icon="clock">{fr`L'équipe est joignable ${site.hours.sentence}.`}</Reassure>
+          <Reassure icon="phone">
+            {fr`Une question ?`}{" "}
+            <a href={telHref(mainPhone)} className="font-semibold text-ink underline hover:text-brand">
+              {mainPhone.display}
+            </a>
+          </Reassure>
+        </ul>
+      </fieldset>
     </form>
   );
 }
 
-function Field({
-  label,
-  required,
-  htmlFor,
-  hint,
-  hintId,
-  error,
-  errorId,
-  className,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  htmlFor: string;
-  hint?: string;
-  hintId?: string;
-  error?: string;
-  errorId?: string;
-  className?: string;
-  children: ReactNode;
-}) {
+function Reassure({ icon, children }: { icon: "shield" | "clock" | "phone"; children: ReactNode }) {
   return (
-    <div className={className}>
-      <label htmlFor={htmlFor} className="mb-1.5 block font-semibold text-ink">
-        {label}
-        {required ? (
-          <>
-            {" "}
-            <span aria-hidden="true" className="text-danger">
-              *
-            </span>
-          </>
-        ) : null}
-      </label>
-      {hint ? (
-        <p id={hintId} className="-mt-1 mb-1.5 text-sm text-steel">
-          {hint}
-        </p>
-      ) : null}
-      {children}
-      {error && errorId ? <ErrorText id={errorId}>{error}</ErrorText> : null}
-    </div>
-  );
-}
-
-function ErrorText({ id, children }: { id: string; children: ReactNode }) {
-  return (
-    <p
-      id={id}
-      className="mt-1.5 flex items-center gap-1.5 text-[0.95rem] font-semibold text-danger"
-    >
-      <Icon name="alert" className="size-4 shrink-0" />
-      {children}
-    </p>
+    <li className="flex items-start gap-2.5">
+      <Icon name={icon} className="mt-0.5 size-4 shrink-0 text-brand" />
+      <span>{children}</span>
+    </li>
   );
 }

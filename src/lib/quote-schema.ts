@@ -35,23 +35,25 @@ function isValidFutureDate(value: string): boolean {
   return d.getTime() >= Date.now() - 36 * 3600 * 1000;
 }
 
+const nameField = singleLine(100, "100 caractères maximum.").min(2, "Indiquez votre nom.");
+const phoneField = singleLine(30, "Numéro trop long.")
+  .min(1, "Indiquez un numéro de téléphone.")
+  .refine(
+    (v) =>
+      /^\+?[\d\s().-]+$/.test(v) &&
+      (v.match(/\d/g)?.length ?? 0) >= 9 &&
+      (v.match(/\d/g)?.length ?? 0) <= 15,
+    { message: "Numéro de téléphone invalide (exemple : 06 12 34 56 78)." },
+  );
+const consentField = z.literal(true, { error: "Votre accord est nécessaire pour traiter la demande." });
+
 export const quoteSchema = z.object({
-  name: singleLine(100, "100 caractères maximum.").min(2, "Indiquez votre nom."),
+  name: nameField,
   company: optionalLine(120, "120 caractères maximum."),
   email: singleLine(254, "Adresse e-mail trop longue.")
     .min(1, "Indiquez votre adresse e-mail.")
     .pipe(z.email("Adresse e-mail invalide (exemple : nom@entreprise.fr).")),
-  phone: singleLine(30, "Numéro trop long.")
-    .min(1, "Indiquez un numéro de téléphone.")
-    .refine(
-      (v) =>
-        /^\+?[\d\s().-]+$/.test(v) &&
-        (v.match(/\d/g)?.length ?? 0) >= 9 &&
-        (v.match(/\d/g)?.length ?? 0) <= 15,
-      {
-        message: "Numéro de téléphone invalide (exemple : 06 12 34 56 78).",
-      },
-    ),
+  phone: phoneField,
   requestType: z.enum(requestTypes, { error: "Choisissez le type de demande." }),
   pickup: optionalLine(200, "200 caractères maximum."),
   delivery: optionalLine(200, "200 caractères maximum."),
@@ -66,8 +68,55 @@ export const quoteSchema = z.object({
     .trim()
     .min(10, "Décrivez votre demande (10 caractères minimum).")
     .max(5000, "5 000 caractères maximum."),
-  consent: z.literal(true, { error: "Votre accord est nécessaire pour traiter la demande." }),
+  consent: consentField,
 });
+
+/** Champs de chaque étape du formulaire de devis (même schéma, découpé pour l'affichage) */
+export const stepFields = {
+  1: ["requestType", "pickup", "delivery", "date", "cargo"],
+  2: ["name", "company", "email", "phone", "message", "consent"],
+} as const;
+
+/** Demande de rappel (« Être rappelé ») : schéma allégé, mêmes protections côté serveur */
+export const callbackSchema = z.object({
+  source: z.literal("rappel"),
+  name: nameField,
+  phone: phoneField,
+  requestType: z.enum(requestTypes).optional().or(z.literal("")),
+  consent: consentField,
+});
+
+export type CallbackInput = z.input<typeof callbackSchema>;
+export type CallbackData = z.output<typeof callbackSchema>;
+
+/**
+ * Présélection depuis l'URL (/contact?type=…&nature=…) : seules ces valeurs sont acceptées,
+ * jamais le texte brut du paramètre.
+ */
+export const typeSlugs: Record<string, (typeof requestTypes)[number]> = {
+  "transport-plateau": "Transport plateau",
+  "camion-grue": "Camion-grue",
+  "transport-marchandises": "Transport de marchandises",
+  "convoi-exceptionnel": "Convoi exceptionnel",
+  adr: "ADR",
+  autre: "Autre",
+};
+
+export const natureSlugs: Record<string, string> = {
+  "murs-prefabriques": "Murs préfabriqués",
+  "sable-gravier": "Sable et gravier",
+  modules: "Modules",
+  treillis: "Treillis",
+  "cuves-de-vendange": "Cuves de vendange",
+  "charges-hors-normes": "Charge hors normes",
+  "adr-colisage": "ADR de base et colisage",
+};
+
+export function quoteLink(type: keyof typeof typeSlugs, nature?: keyof typeof natureSlugs): string {
+  const q = new URLSearchParams({ type });
+  if (nature) q.set("nature", nature);
+  return `/contact?${q.toString()}#devis`;
+}
 
 export type QuoteInput = z.input<typeof quoteSchema>;
 export type QuoteData = z.output<typeof quoteSchema>;
@@ -80,5 +129,5 @@ export type QuotePayload = QuoteInput & {
   startedAt?: number;
 };
 
-/** Délai minimal entre l'affichage du formulaire et l'envoi */
+/** Délai minimal entre l'affichage du formulaire et l'envoi (envois JavaScript) */
 export const MIN_FILL_MS = 3000;
