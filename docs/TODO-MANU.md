@@ -148,3 +148,51 @@ le site actuel** tant qu'ils ne sont pas validés : rien n'a été réécrit de 
       (`plateau/porte-engins-man-gris.jpg`) : la garder, la recadrer ou la retirer ?
 - [ ] Les photos montrant des lieux identifiables (Arc de Triomphe, circuit avec passerelle Dunlop,
       bâtiment historique en rénovation) sont déjà publiées sur le site actuel : OK pour les conserver ?
+
+## 5. Refonte visuelle « Route douce » (v2) : à fournir ou à valider
+
+### Preuves sociales (rien n'est affiché tant que ce n'est pas fourni)
+
+- [ ] **Fournir 3-5 avis clients autorisés, logos clients autorisés, note et lien Google.**
+      Les emplacements sont prêts sur l'accueil (`src/components/sections/SocialProof.tsx`, `TODO(manu)`) ;
+      chaque avis : texte exact, prénom/nom ou fonction, entreprise, accord écrit du client.
+
+### Textes ajoutés pour la conversion (repris du site, à relire)
+
+- [ ] **« Comment ça marche »** (accueil, `src/content/pages/home.ts` → `steps`) :
+      1. *Vous décrivez votre transport* — « Type de charge, lieux de chargement et de livraison, date
+         souhaitée : décrivez votre besoin dans le formulaire de devis. »
+      2. *Nous vous répondons* — « Nous prenons connaissance de votre demande et vous contactons dans les
+         plus brefs délais. »
+      3. *Nous organisons le transport* — « Du quai d'expédition jusqu'au client, dans le respect des
+         législations et des réglementations en vigueur. »
+- [ ] **FAQ** (`src/content/faq.ts`) : 6 questions (types de charges, convois exceptionnels, intervention
+      hors d'Alsace, matières dangereuses, calcul du prix, adresse et horaires). Les réponses reprennent
+      les phrases du site ; vérifier qu'elles restent exactes.
+- [ ] **Points clés** des pages de service (`src/content/pages/plateau.ts`, `marchandises.ts` → `keyPoints`) :
+      plateau/grue — charges hors normes, convois exceptionnels cat. 1 et 2, zones à hauteur restreinte,
+      accès référencés en centrales nucléaires, ADR de base et colisage, membre actif du Groupement
+      France Plateau ; marchandises — fret interurbain sur tous types de route, matériaux livrés sur vos
+      chantiers, chauffeurs formés à l'ADR, rapport annuel d'un conseiller ADR.
+- [ ] **Bandeaux d'appel intermédiaires** : « Un transport plateau ou grue à prévoir ? », « Prêt à décrire
+      votre transport ? » (« Le formulaire de devis se remplit en deux étapes. »), « Un convoi exceptionnel
+      ou un levage à prévoir ? », « Un transport hors normes à organiser ? », « Un transport à organiser ? ».
+
+### Photos choisies pour « Ce que nous transportons » (`src/content/transported.ts`)
+
+Illustrations choisies dans la photothèque ; à confirmer ou à remplacer par une photo plus juste.
+
+| Carte | Photo | Point d'attention |
+|---|---|---|
+| Murs préfabriqués | `marchandises/murs-prefabriques-scania.jpg` | — |
+| Sable et gravier | `marchandises/benne-man-granulats.jpg` | — |
+| Modules | `plateau/module-sur-plateau.jpg` | — |
+| Treillis | `plateau/plateau-treillis-soudes.jpg` | — |
+| **Cuves de vendange** | `marchandises/cuve-levage-grue.jpg` | **À confirmer** : la photo montre une grande cuve levée par une grue ; s'agit-il bien d'une cuve de vendange ? |
+| Charges hors normes | `plateau/porte-engins-pelle-volvo.jpg` | — |
+| ADR de base et colisage | (pas de photo) | Aucune photo ne montre un transport ADR : en fournir une si vous le souhaitez |
+
+### « Être rappelé »
+
+- [ ] Les demandes de rappel arrivent à la même adresse que les devis (`CONTACT_TO`), avec l'objet
+      « Demande de rappel – nom – téléphone ». Confirmer que c'est la bonne boîte (ou en indiquer une autre).

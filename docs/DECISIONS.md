@@ -19,27 +19,32 @@ nécessitent un arbitrage métier sont dans `docs/TODO-MANU.md`.
 | TypeScript **6.0** (et non 7.0) | `typescript-eslint` (utilisé par `eslint-config-next`) ne prend pas encore en charge TS 7 |
 | ESLint **9** (et non 10) | `eslint-plugin-react` (inclus dans la config Next) n'est pas encore compatible ESLint 10 |
 | Tailwind CSS **4.3** (`@theme`) | Tokens en variables CSS dans `src/app/globals.css` |
-| Polices **Barlow Condensed 700** + **Source Sans 3** variable, fichiers woff2 dans `src/fonts/` via `next/font/local` | Auto-hébergées, aucune requête vers Google ; pas de dépendance réseau au build. Une seule graisse de Barlow (700) pour économiser une requête |
+| Polices **Plus Jakarta Sans** (titres, 200-800) + **Inter** (texte, 100-900), variables, woff2 latin dans `src/fonts/` via `next/font/local` (v2) | Auto-hébergées, aucune requête vers Google ; pas de dépendance réseau au build. Deux fichiers (27 + 48 Ko). Graisses statiques 600/800 de Jakarta dans `src/fonts/og/` pour les images Open Graph |
+| Icônes **lucide-react** (trait 1,75) (v2) | Jeu cohérent au trait fin, importé icône par icône (seules les icônes utilisées sont embarquées) |
 | Radix Dialog pour le menu mobile et la visionneuse | Piège de focus, Échap, `aria-*` fiables ; **chargés à la demande** (survol/focus/clic) pour ne pas alourdir le premier affichage |
-| Motion en version légère (`inView` + `motion/mini`, ~3 Ko) pour les révélations au défilement | La version React complète (`motion/react`, ~25 Ko) coûtait 2 à 4 points Lighthouse. Animations neutralisées si `prefers-reduced-motion` et sans JavaScript |
+| ~~Motion~~ **retiré en v2** : animations en CSS, un seul `IntersectionObserver` et un seul écouteur de défilement partagés (`src/lib/scroll-bus.ts`, `src/components/layout/Interactions.tsx`) | Le catalogue d'animations de la v2 se fait entièrement en CSS (+ animations pilotées par le défilement là où le navigateur les prend en charge) : la bibliothèque n'apportait plus rien |
 | `react-hook-form` + `zod` 4 (schéma partagé `src/lib/quote-schema.ts`) | Zod en mode **`jitless`** : sinon il tente un `new Function()` que la CSP bloque (signalé par Lighthouse) |
 | Nodemailer | SMTP en production ; transport JSON (console ou fichier) en développement/test |
 | pnpm 10, Node 22 LTS | Imposés |
 
-## Direction artistique
+## Direction artistique — « Route douce » (v2)
 
-- **Palette dérivée du logo** : bleu marine `#00007E`, graphite `#323232`, argent `#BCBCBC`, sur fond
-  **clair chaud** (`#F6F4EF`) et sections graphite foncé `#131417`.
-- **Couleur d'accent des CTA : jaune « signalisation » `#FFC21A`**, texte graphite. Le logo n'a pas de
-  couleur chaude ; le jaune reprend les panneaux « convoi exceptionnel » visibles sur les photos de la
-  flotte. Il reste lisible sur photo sombre comme sur fond clair (contraste ≈ 11:1 avec le texte).
-  Le bleu marine sert aux liens, aux étiquettes et au focus.
-- **Signature visuelle** : les trois bandes obliques du logo (filet sous les en-têtes, puces de section,
-  icône du site, images Open Graph).
-- Titres en grotesque condensée capitale (Barlow Condensed), texte courant très lisible (Source Sans 3).
-- Hiérarchie volontairement inégale (carte « Camion-grue » mise en avant, fiche technique, bordereau
-  « Ce que nous transportons ») pour éviter l'effet « cartes identiques ».
-- Mode sombre non réalisé (facultatif, et la palette sombre/clair alterne déjà par section).
+La v2 **remplace** la direction « industriel premium » de la v1 (grotesque condensée en capitales,
+angles vifs, bandes obliques, ombres dures). Principes :
+
+- **Palette** (`src/app/globals.css`, `@theme`, toutes les couleurs par défaut de Tailwind désactivées) :
+  crème `#F8F5EF` / crème 2 `#F1ECE2`, blanc `#FFFFFF`, encre `#14213D` et encre douce `#4A5670`,
+  bleu Brun `#2B3A9F` (+ bleu doux `#E8EBFA`, bleu clair `#A9B4F2` sur fond nuit), nuit `#14213D` /
+  `#1D2E57`. **Jaune `#FFC21A` réservé aux actions principales** (texte encre, contraste ≈ 11:1).
+- **Formes** : rayons généreux (cartes 24 px, champs 14 px, boutons et étiquettes en pilule), ombres
+  douces et diffuses (`--shadow-sm/md/lg`), aucune bordure épaisse, aucun angle vif, aucun biais.
+- **Typographie** : Plus Jakarta Sans pour les titres (casse normale, approche légèrement resserrée),
+  Inter pour le texte. **Seul l'eyebrow** (petit label au-dessus des titres) est en capitales.
+- **Mise en page** : en-tête flottant arrondi et translucide, sections espacées (112 px / 72 px en
+  mobile), grandes photos arrondies, cartes « nuit » pour les blocs forts (CTA, équipe, sécurité, contact,
+  pied de page).
+- Hiérarchie volontairement inégale conservée (carte « Camion-grue » mise en avant, fiche technique,
+  carte « Capacité convoi exceptionnel et ADR » en nuit).
 
 ## Contenu et typographie
 
@@ -54,9 +59,11 @@ nécessitent un arbitrage métier sont dans `docs/TODO-MANU.md`.
   (mots-clés plateau / grue / charges / Alsace ; « marchandises » et « Haut-Rhin » sont dans le texte et le title).
 - Le **bandeau de confiance** ne reprend que des faits de l'annexe A ; « Prévenu en avance en cas de
   livraison tardive » paraphrase « vous serez toujours prévenu en avance, car nos chauffeurs sont localisables ».
-- L'engagement écoresponsable est présenté en deux leviers (taux de remplissage, kilomètres inutiles), **sans chiffre**.
-- « Ce que nous transportons » est une liste typographique, **sans photo associée** : aucune photo ne
-  permet d'affirmer qu'il s'agit, par exemple, d'une cuve de vendange.
+- L'engagement écoresponsable est présenté en deux leviers (taux de remplissage, kilométrages inutiles), **sans chiffre**.
+- « Ce que nous transportons » (v2) : cartes illustrées **par la photo de la photothèque qui montre le
+  plus visiblement ce type de charge** (murs préfabriqués, benne de granulats, module, treillis soudés,
+  cuve, porte-engins). Ce sont des illustrations, pas des preuves d'un chantier précis ; la carte ADR
+  n'a **pas** de photo (aucune ne montre un transport ADR). Choix listés dans `docs/TODO-MANU.md` pour validation.
 - Libellés des e-mails (Contact, Comptabilité, Exploitation, Commercial) déduits des adresses. Le lien
   `exploitation@` pointe enfin vers `exploitation@` (il pointait vers `comptabilite@`).
 - Le lien « Camion-grue » mène à la section `#flotte` de la page plateau / grue (pas de page dédiée sur le site actuel).
@@ -95,8 +102,11 @@ Pages légales : `noindex, follow`, exclues du sitemap (comportement actuel cons
 - Hero de l'accueil : Volvo FM grue levant un module (2550 × 1434), l'une des 4 photos haute définition.
 - Aperçu flou : la miniature générée par Next.js est affichée en arrière-plan de l'image (au lieu du
   filtre SVG de `placeholder="blur"`, très coûteux en CPU sur une galerie de 40 photos : TBT ÷ 5).
-- Galeries : grille « justifiée » (rangées de hauteur fixe, ordre de lecture conservé, aucune déformation)
-  pour les grandes séries ; grille régulière pour les petites séries de la page Équipement.
+- Galeries (v2) : **maçonnerie** en colonnes (vignettes arrondies, proportions d'origine) pour les grandes
+  séries, limitées à **12 vignettes + bouton « Voir les N photos »** avec JavaScript (toutes visibles sans
+  JavaScript ; la visionneuse parcourt toujours la série complète) ; grille régulière pour les petites
+  séries de la page Équipement. Ouverture de la visionneuse en transition partagée (View Transitions)
+  quand le navigateur le permet.
 
 ## Formulaire de devis
 
@@ -138,8 +148,11 @@ Pages légales : `noindex, follow`, exclues du sitemap (comportement actuel cons
 ## Performance
 
 - Mesures et essais : `experimental.inlineCss` testé puis **rejeté** (Next duplique la CSS dans la charge
-  RSC : document HTML de 26 → 62 Ko compressés). Préchargement du logo retiré (il concurrençait la photo
-  du hero). Hero : `preload` + `fetchPriority="high"` + décodage synchrone.
+  RSC : document HTML de 26 → 62 Ko compressés). Hero : `preload` + `fetchPriority="high"` + décodage synchrone.
+- v2 : le **logo est de nouveau préchargé**. Sur mobile, la bannière photo des pages intérieures est
+  sous la ligne de flottaison et Lighthouse retenait le logo (chargé en différé) comme élément LCP.
+  Pour la même raison, l'eyebrow, le H1 et le chapô des pages intérieures s'affichent **sans fondu**
+  (un départ à opacité 0 retarde le LCP mesuré) ; seuls les boutons et les points clés apparaissent en douceur.
 - Lighthouse est mesuré sur l'image Docker **derrière Caddy en HTTP/2** (conditions de production) ;
   sur le serveur Node seul en HTTP/1.1, le modèle simulé de Lighthouse donne 2 à 4 points de moins
   (limite de 6 connexions). Résultats : `docs/lighthouse/scores.md`.
@@ -153,3 +166,43 @@ Pages légales : `noindex, follow`, exclues du sitemap (comportement actuel cons
   ont été tirées depuis le miroir officiel `mirror.gcr.io` **uniquement pour les tests locaux** ;
   le `Dockerfile` référence normalement `node:22-alpine`.
 - Exemples Caddy et nginx fournis, sans présupposer celui installé sur le VPS.
+
+## Refonte visuelle v2 — choix et écarts au cahier des charges
+
+- **Animations** : CSS d'abord, état final visible sans JavaScript (les états « avant révélation » ne
+  s'appliquent que sous la classe `js` posée sur `<html>` par un script en ligne, et seulement si
+  `prefers-reduced-motion: no-preference`). En mouvement réduit : aucun déplacement, bandeau défilant
+  statique, pas de parallaxe ni de transition de page. Interdits respectés : pas de Lenis, GSAP, three.js,
+  curseur personnalisé ni vidéo en lecture automatique.
+- **Titre du hero de l'accueil** : révélé **mot par mot** dans un masque (approximation de la révélation
+  ligne par ligne, impossible à calculer côté serveur sans connaître la largeur d'écran).
+- **Parallaxe** de la photo du hero : animation pilotée par le défilement (`animation-timeline: view()`),
+  **statique** sur les navigateurs qui ne la prennent pas en charge (pas de JavaScript de secours).
+- **« La route »** (tracé pointillé décoratif le long de la page d'accueil) : affichée à partir de
+  **1 360 px** de large (et non 1 024 px) pour ne jamais passer sous le contenu.
+- **Bandeau défilant** des savoir-faire : commande « Pause » accessible au clavier (critère WCAG 2.2.2).
+- **Champs de formulaire** : fond blanc et **contour gris `#828A9B` (≥ 3:1)** au lieu d'un fond crème
+  sans contour, pour que les champs et les cases à cocher restent identifiables (WCAG 1.4.11) ; texte
+  indicatif en encre douce (contraste 6:1).
+- **Formulaire de devis en 2 étapes** (même schéma, même endpoint, mêmes champs) : progression, bouton
+  Retour, saisie conservée dans `sessionStorage` (sans le consentement, effacée après l'envoi), focus sur
+  le titre de l'étape puis sur le premier champ en erreur, écran de succès avec le téléphone.
+  **Sans JavaScript** : un seul formulaire classique (POST) qui redirige vers `/contact/merci` ou
+  `/contact/erreur` (pages `noindex`) ; pour ce chemin, le délai minimal de saisie n'est pas contrôlé
+  (pas d'horodatage sans JavaScript) mais l'en-tête `Origin` est **exigé**.
+- **Présélection** `/contact?type=…&nature=…` : seules les valeurs d'une liste fermée sont acceptées
+  (`typeSlugs`, `natureSlugs` dans `src/lib/quote-schema.ts`), jamais le texte brut du paramètre.
+- **« Être rappelé »** (nouveauté) : tiroir avec nom, téléphone, type de demande facultatif et **case de
+  consentement** (ajoutée par cohérence RGPD avec le devis). Même endpoint (`source: "rappel"`), mêmes
+  protections, e-mail court intitulé « Demande de rappel – nom – téléphone ».
+- **FAQ** : 6 questions dont les réponses reprennent uniquement des phrases du site (accueil), 3 en
+  version courte sur les pages de service ; données structurées `FAQPage` sur chaque page qui l'affiche.
+- **Preuves sociales** (avis, logos clients, note Google) : composants prêts mais **masqués** tant
+  qu'aucune donnée réelle et autorisée n'est fournie (`src/components/sections/SocialProof.tsx`).
+- **CTA** : « Demander un devis » et « Appeler le 03 89 73 34 63 » partout, CTA intermédiaires entre
+  les sections, carte nuit en fin de page, pastille flottante sur ordinateur après 600 px (jamais sur
+  Contact ni au-dessus du pied de page), barre Appeler · Rappel · Devis sur mobile, masquée quand le
+  clavier est ouvert. Aucune fenêtre surgissante, aucun chatbot.
+- **Mesure d'audience** facultative : événements `click_call`, `click_quote`, `form_step_2`,
+  `form_submit`, `callback_submit` envoyés **uniquement** si Umami ou Plausible auto-hébergé est activé
+  (désactivé par défaut).

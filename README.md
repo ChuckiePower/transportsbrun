@@ -5,7 +5,9 @@ Saint-Hippolyte (Haut-Rhin), transport plateau / camion-grue, charges lourdes et
 interurbain, ADR. Objectif : générer des **demandes de devis** et des **appels**.
 
 - **Stack** : Next.js 16 (App Router, pages statiques, `output: "standalone"`), React 19, TypeScript strict,
-  Tailwind CSS 4, react-hook-form + zod, Nodemailer, Radix Dialog, Motion (version légère), Playwright.
+  Tailwind CSS 4, react-hook-form + zod, Nodemailer, Radix Dialog, icônes Lucide, Playwright.
+- **Design « Route douce »** (v2) : tons crème et bleu nuit, jaune réservé aux actions, formes arrondies,
+  Plus Jakarta Sans (titres) + Inter (texte), animations CSS discrètes (désactivées en mouvement réduit).
 - **Aucun cookie, aucun traceur**, polices auto-hébergées, photos réelles uniquement.
 - Déploiement : Docker derrière Caddy ou nginx → voir [`DEPLOY.md`](DEPLOY.md).
 
@@ -47,11 +49,11 @@ content/
 src/
   app/                  pages (une par URL du site actuel), API /api/contact, sitemap, robots, OG
   components/
-    layout/             en-tête, menu mobile, pied de page, barre d'appel mobile
-    sections/           hero, bandeau de confiance, cartes services, coordonnées, CTA…
+    layout/             en-tête, menu mobile, pied de page, barre d'appel mobile, CTA flottant, interactions
+    sections/           hero, bandeau de confiance, cartes services, FAQ, étapes, coordonnées, CTA…
     media/              Photo, galerie + visionneuse, carte
-    form/               formulaire de devis
-    ui/                 Button, Container, Section, Card, Badge, Reveal, icônes…
+    form/               formulaire de devis (2 étapes), tiroir « Être rappelé »
+    ui/                 Button, Container, Section, Card, IconChip, Tag, icônes…
     seo/                JSON-LD, mesure d'audience facultative
   content/              TOUS les textes et données (voir ci-dessous)
   lib/                  schéma du formulaire, envoi d'e-mail, limitation de débit, typographie, SEO
@@ -62,6 +64,14 @@ scripts/                contrôle du site, Lighthouse, icônes, serveur de test
 tests/                  Playwright
 source-site/            miroir de l'ancien site (référence, non déployé)
 ```
+
+## Design : couleurs, polices, rayons
+
+Tous les réglages visuels sont des variables CSS dans **`src/app/globals.css`** (bloc `@theme`) :
+couleurs (`--color-cream`, `--color-ink`, `--color-brand`, `--color-sun`, `--color-night`…), rayons
+(`--radius-*`), ombres (`--shadow-*`), tailles de titres (`--text-h1`…). Les couleurs par défaut de
+Tailwind sont désactivées : seules ces couleurs existent. Polices : `src/app/fonts.ts`
+(fichiers dans `src/fonts/`, licence OFL). Le jaune (`sun`) est réservé aux actions principales.
 
 ## Modifier le contenu
 
