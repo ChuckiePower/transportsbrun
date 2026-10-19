@@ -5,11 +5,7 @@ node_modules
 .playwright
 test-results
 playwright-report
-source-site
-images-manifest.json
-transports-brun-site.zip
 docs
-tools
 tests
 deploy
 *.md

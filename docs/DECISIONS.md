@@ -5,11 +5,14 @@ nécessitent un arbitrage métier sont dans `docs/TODO-MANU.md`.
 
 ## Sources
 
-- **Miroir local trouvé** dans `source-site/` (+ `images-manifest.json`) : c'est la seule source utilisée.
+- **Miroir local de l'ancien site** (`source-site/` + `images-manifest.json`) : c'est la seule source utilisée.
   Le site en ligne n'a pas été consulté. Le miroir et l'annexe A concordent ; écarts listés dans
   `docs/audit.md` §2 (le miroir fait foi : la phrase « Nous sommes impatients de travailler avec vous… »
   de l'introduction du formulaire est conservée).
-- Le travail antérieur du dépôt (outil de miroir `tools/mirror_site.py`, workflow GitHub) est conservé tel quel.
+- Le miroir, son outil (`tools/mirror_site.py`, `tools/curate_photos.py`) et son workflow GitHub ont été
+  **retirés du dépôt** à la demande (le dépôt ne contient plus que le site). Ils restent consultables dans
+  l'historique git (commit `4ae6300` pour le miroir) ; les chemins `sourceMiroir` de
+  `content/images-manifest.json` et de `docs/audit.md` y font référence.
 
 ## Pile technique
 

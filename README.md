@@ -9,7 +9,34 @@ interurbain, ADR. Objectif : générer des **demandes de devis** et des **appels
 - **Design « Route douce »** (v2) : tons crème et bleu nuit, jaune réservé aux actions, formes arrondies,
   Plus Jakarta Sans (titres) + Inter (texte), animations CSS discrètes (désactivées en mouvement réduit).
 - **Aucun cookie, aucun traceur**, polices auto-hébergées, photos réelles uniquement.
-- Déploiement : Docker derrière Caddy ou nginx → voir [`DEPLOY.md`](DEPLOY.md).
+- Déploiement : **Vercel** (voir plus bas) ou Docker derrière Caddy / nginx sur un VPS → [`DEPLOY.md`](DEPLOY.md).
+
+## Où est la page d'accueil ? (il n'y a pas de `index.html`)
+
+C'est normal : le site est une application **Next.js**. Les pages ne sont pas écrites en HTML à la main,
+elles sont **générées** au moment du build (`pnpm build`) puis servies par Next.js (ou par Vercel).
+
+| Je cherche… | Fichier |
+|---|---|
+| La page d'accueil | `src/app/page.tsx` (son texte : `src/content/pages/home.ts`) |
+| Une autre page | `src/app/<adresse-de-la-page>/page.tsx`, ex. `src/app/contact/page.tsx` |
+| Les textes de toutes les pages | `src/content/` (un fichier par page dans `src/content/pages/`) |
+| Téléphones, e-mails, adresse, horaires | `src/content/site.ts` |
+| Les photos | `content/photos/` |
+| Les couleurs et les polices | `src/app/globals.css`, `src/app/fonts.ts` |
+
+## Déployer sur Vercel
+
+1. Sur vercel.com : **Add New → Project**, importer le dépôt GitHub `transportsbrun`.
+2. Laisser les réglages proposés : *Framework Preset* **Next.js**, *Root Directory* vide (racine du dépôt),
+   commandes par défaut. Vercel détecte pnpm grâce à `pnpm-lock.yaml`.
+3. *Environment Variables* : `SITE_URL` (ex. `https://transports-brun.com`) et, pour que le formulaire
+   envoie de vrais e-mails, `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`,
+   `CONTACT_FROM`, `CONTACT_TO` (voir `.env.example`). Sans SMTP, le site s'affiche mais le formulaire
+   répond « envoi non configuré ».
+4. **Deploy**. Chaque mise à jour de la branche `main` redéploie le site.
+
+Autre option, sur un serveur à vous (VPS) avec Docker : voir [`DEPLOY.md`](DEPLOY.md).
 
 ## Démarrer en local
 
@@ -62,7 +89,6 @@ deploy/                 Caddyfile, nginx.conf
 docs/                   audit, décisions, à-faire, captures, scores Lighthouse
 scripts/                contrôle du site, Lighthouse, icônes, serveur de test
 tests/                  Playwright
-source-site/            miroir de l'ancien site (référence, non déployé)
 ```
 
 ## Design : couleurs, polices, rayons

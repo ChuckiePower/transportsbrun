@@ -1,5 +1,8 @@
 # Audit du site actuel (Phase 0)
 
+> Le miroir `source-site/` et `images-manifest.json` cités ici ont été retirés du dépôt (qui ne contient
+> plus que le site) ; ils restent dans l'historique git, commit `4ae6300`.
+
 Source : miroir local `source-site/` (9 pages HTML Joomla + ressources) et `images-manifest.json`,
 relevés le 19/10/2026. Le site en ligne n'a pas été consulté.
 

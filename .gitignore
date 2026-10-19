@@ -23,6 +23,4 @@ blob-report/
 # divers
 .DS_Store
 *.log
-transports-brun-site.zip
-__pycache__/
 .playwright/

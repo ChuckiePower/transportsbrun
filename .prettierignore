@@ -1,7 +1,4 @@
-source-site/
-images-manifest.json
 content/images-manifest.json
-tools/photo-curation.json
 pnpm-lock.yaml
 .next/
 node_modules/

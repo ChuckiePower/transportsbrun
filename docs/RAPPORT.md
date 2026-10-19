@@ -14,7 +14,7 @@
 | Conversion | Barre Appeler/Devis mobile | + « Être rappelé », CTA intermédiaires, pastille devis flottante (ordinateur), FAQ + données structurées, réassurance au bouton d'envoi |
 | Animations | Révélations (Motion) | CSS uniquement : révélations, compteur, parallaxe douce, transitions de page et de visionneuse ; aucune en mouvement réduit |
 
-Captures : v1 dans `docs/screenshots/`, v2 dans `docs/screenshots/v2/` (10 pages × 375 / 768 / 1440 px).
+Captures v2 dans `docs/screenshots/` (10 pages × 375 / 768 / 1440 px) ; celles de la v1 restent dans l'historique git.
 URL, textes existants, champs et endpoint du formulaire inchangés. Aucun chiffre, avis, délai ou prix inventé.
 
 ### Vérifications

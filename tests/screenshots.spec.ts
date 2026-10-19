@@ -3,13 +3,13 @@ import { test } from "@playwright/test";
 import { pages } from "./helpers";
 
 /**
- * Captures pleine page à 375, 768 et 1440 px dans docs/screenshots/v2/.
+ * Captures pleine page à 375, 768 et 1440 px dans docs/screenshots/.
  * Mouvement réduit : les contenus sont dans leur état final, sans attendre les animations.
  * Les éléments flottants (barre d'appel mobile, pastille devis) sont masqués pour ne pas
  * se superposer au contenu dans une capture pleine page.
  */
 const widths = [375, 768, 1440];
-const dir = "docs/screenshots/v2";
+const dir = "docs/screenshots";
 mkdirSync(dir, { recursive: true });
 
 for (const p of pages) {
