@@ -45,7 +45,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Serveur autonome pour l'image Docker ; sur Vercel (VERCEL=1 pendant le build),
+  // on laisse Vercel empaqueter le site à sa façon.
+  output: process.env.VERCEL ? undefined : "standalone",
   poweredByHeader: false,
   reactStrictMode: true,
   // Les redirections « slash final » sont gérées ci-dessous en 301 (au lieu du 308 par défaut).
