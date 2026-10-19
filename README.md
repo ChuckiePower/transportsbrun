@@ -36,6 +36,10 @@ elles sont **générées** au moment du build (`pnpm build`) puis servies par Ne
    répond « envoi non configuré ».
 4. **Deploy**. Chaque mise à jour de la branche `main` redéploie le site.
 
+Le fichier `vercel.json` impose le préréglage **Next.js**. Sans lui, un projet Vercel créé quand le
+dépôt ne contenait pas encore le site reste en préréglage « Other » : Vercel compile bien mais ne publie
+que le dossier `public/`, et toutes les pages répondent « 404: NOT_FOUND ».
+
 Autre option, sur un serveur à vous (VPS) avec Docker : voir [`DEPLOY.md`](DEPLOY.md).
 
 ## Démarrer en local
