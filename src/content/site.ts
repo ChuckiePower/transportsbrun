@@ -63,6 +63,8 @@ export const site = {
     display: fr`Lun-Ven : 8h-12h / 14h-18h`,
     days: fr`Lun-Ven`,
     slots: "8h-12h / 14h-18h",
+    /** En toutes lettres, pour les phrases */
+    sentence: "du lundi au vendredi, de 8h à 12h et de 14h à 18h",
     /** Pour le JSON-LD (openingHoursSpecification) */
     spec: [
       { opens: "08:00", closes: "12:00" },

@@ -32,7 +32,7 @@ export const savoirFairePage = {
     text: fr`De plus, notre entreprise, sensible à l'écologie et consciente de l'impact du transport routier sur les problèmes environnementaux actuels, participe à l'amélioration de son empreinte carbone par l'augmentation du taux de remplissage des camions et par la réduction de kilométrages inutiles. Un engagement écoresponsable qui nous tient à cœur.`,
     levers: [
       { title: fr`Taux de remplissage`, text: fr`Augmenter le taux de remplissage des camions.` },
-      { title: fr`Kilomètres à vide`, text: fr`Réduire les kilométrages inutiles.` },
+      { title: fr`Kilométrages inutiles`, text: fr`Réduire les kilométrages inutiles.` },
     ],
   },
 

@@ -14,8 +14,19 @@ export const plateauPage = {
     eyebrow: fr`Transport plateau / grue · Haut-Rhin (Alsace)`,
     title: fr`Transport plateau et camion-grue`,
     lead: fr`Le transport plateau est essentiel pour le déplacement sécurisé de marchandises industrielles de grandes dimensions, d'un site à un autre, que ce soit de chantier en chantier ou d'usine à usine.`,
-    photo: pid("grue/camion-grue-volvo-levage-module"),
+    photo: pid("plateau/plateau-daf-zone-stockage"),
+    focal: "62% 50%",
   },
+
+  /** Points clés en haut de page (scannables) */
+  keyPoints: [
+    fr`Charges hors normes : larges, longues ou très lourdes`,
+    fr`Convois exceptionnels, agréments catégorie 1 et 2`,
+    fr`Accès aux zones à hauteur restreinte`,
+    fr`Accès référencés au sein des centrales nucléaires`,
+    fr`ADR de base et colisage`,
+    fr`Membre actif du Groupement France Plateau`,
+  ],
 
   intro: fr`Chez Transports Brun, nous comprenons l'importance de la fiabilité et de la flexibilité pour le transport de vos biens.`,
 

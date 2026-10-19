@@ -3,9 +3,12 @@
 import dynamic from "next/dynamic";
 import Image, { type StaticImageData } from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
+import { buttonClasses } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 import { blurBackground } from "@/lib/placeholder";
+import { prefersReducedMotion } from "@/lib/scroll-bus";
 
 export type GalleryItem = { id: string; image: StaticImageData; alt: string };
 
@@ -14,24 +17,41 @@ const loadLightbox = () => import("./Lightbox");
 const Lightbox = dynamic(loadLightbox, { ssr: false });
 const preloadLightbox = () => void loadLightbox();
 
-/** Hauteurs de rangée de la grille justifiée (doivent suivre .gallery-justified dans globals.css) */
-const ROW = { sm: 150, md: 190, lg: 230 };
+export const LIGHTBOX_NAME = "photo-agrandie";
+
+/** Attend l'apparition d'un élément (visionneuse montée) avant de capturer la transition */
+function waitFor(selector: string, timeout = 600): Promise<void> {
+  return new Promise((resolve) => {
+    const start = performance.now();
+    const tick = () => {
+      if (document.querySelector(selector) || performance.now() - start > timeout) resolve();
+      else requestAnimationFrame(tick);
+    };
+    tick();
+  });
+}
 
 /**
- * Galerie justifiée (ordre de lecture conservé, aucune déformation) + visionneuse accessible :
- * clavier (← → Échap), balayage tactile, piège de focus, légende et compteur annoncés.
+ * Galerie en maçonnerie (vignettes arrondies, apparition en cascade) ou grille régulière
+ * pour les petites séries, + visionneuse accessible.
+ * `initial` : nombre de vignettes affichées avant « Voir les N photos » (avec JavaScript
+ * seulement ; sans JavaScript, toutes les vignettes restent visibles). La visionneuse
+ * parcourt toujours la série complète.
  */
 export function Gallery({
   items,
   label,
-  layout = "justified",
+  layout = "masonry",
+  initial,
 }: {
   items: GalleryItem[];
   label: string;
-  /** justified : rangées à hauteur fixe ; grid : vignettes égales (petites séries) */
-  layout?: "justified" | "grid";
+  layout?: "masonry" | "grid";
+  initial?: number;
 }) {
   const [index, setIndex] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState(false);
+  const collapsible = initial !== undefined && items.length > initial;
   const open = index !== null;
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const lastIndex = useRef(0);
@@ -40,77 +60,101 @@ export function Gallery({
   }, [index]);
 
   const go = useCallback(
-    (delta: number) =>
-      setIndex((i) => (i === null ? i : (i + delta + items.length) % items.length)),
+    (delta: number) => setIndex((i) => (i === null ? i : (i + delta + items.length) % items.length)),
     [items.length],
   );
 
+  /** Ouverture : transition partagée (View Transitions API) si disponible, sinon fondu + zoom */
+  function openAt(i: number) {
+    const thumb = buttons.current[i]?.querySelector("img");
+    if (!thumb || !("startViewTransition" in document) || prefersReducedMotion()) {
+      setIndex(i);
+      return;
+    }
+    thumb.style.viewTransitionName = LIGHTBOX_NAME;
+    document.startViewTransition(async () => {
+      thumb.style.viewTransitionName = "";
+      flushSync(() => setIndex(i));
+      await waitFor("[data-lightbox-img]");
+    });
+  }
+
+  const isGrid = layout === "grid";
   return (
     <>
       <ul
-        className={
-          layout === "justified"
-            ? "gallery-justified"
-            : cn(
-                "grid grid-cols-2 gap-2 sm:gap-3",
-                items.length % 3 === 0 ? "lg:grid-cols-3" : "lg:grid-cols-4",
-              )
-        }
+        className={isGrid ? cn("grid grid-cols-2 gap-3 sm:gap-4", items.length % 3 === 0 ? "lg:grid-cols-3" : "lg:grid-cols-4") : "masonry"}
         aria-label={label}
-        // précharge la visionneuse dès que le visiteur approche d'une vignette
         onPointerEnter={preloadLightbox}
         onFocus={preloadLightbox}
         onTouchStart={preloadLightbox}
       >
-        {items.map((item, i) => {
-          const ratio = item.image.width / item.image.height;
-          const sizes =
-            layout === "justified"
-              ? `(min-width: 64rem) ${Math.round(ratio * ROW.lg * 1.35)}px, (min-width: 40rem) ${Math.round(ratio * ROW.md * 1.35)}px, ${Math.round(ratio * ROW.sm * 1.5)}px`
-              : items.length % 3 === 0
-                ? "(min-width: 64rem) 30vw, 50vw"
-                : "(min-width: 64rem) 23vw, 50vw";
-          return (
-            <li
-              key={item.id}
-              style={
-                layout === "justified" ? { ["--ratio" as string]: ratio.toFixed(4) } : undefined
-              }
+        {items.map((item, i) => (
+          <li
+            key={item.id}
+            data-reveal=""
+            style={{ ["--i" as string]: i % 4 }}
+            className={collapsible && !expanded && i >= initial ? "js:hidden" : undefined}
+          >
+            <button
+              ref={(el) => {
+                buttons.current[i] = el;
+              }}
+              type="button"
+              onClick={() => openAt(i)}
+              className={cn(
+                "group relative block w-full cursor-zoom-in overflow-hidden rounded-gallery bg-cream-2 shadow-sm transition-shadow duration-300 hover:shadow-md",
+                isGrid && "aspect-[4/3]",
+              )}
             >
-              <button
-                ref={(el) => {
-                  buttons.current[i] = el;
-                }}
-                type="button"
-                onClick={() => setIndex(i)}
+              <Image
+                src={item.image}
+                alt={item.alt}
+                {...(isGrid ? { fill: true } : {})}
+                style={blurBackground(item.image)}
+                sizes={
+                  isGrid
+                    ? items.length % 3 === 0
+                      ? "(min-width: 1024px) 384px, 50vw"
+                      : "(min-width: 1024px) 288px, 50vw"
+                    : "(min-width: 1024px) 288px, (min-width: 640px) 33vw, 50vw"
+                }
                 className={cn(
-                  "group relative block w-full cursor-zoom-in overflow-hidden rounded-sm bg-sand",
-                  layout === "justified" ? "h-[var(--row-h)]" : "aspect-[4/3]",
+                  "transition-transform duration-500 ease-out-soft group-hover:scale-[1.03] motion-reduce:transform-none",
+                  isGrid ? "object-cover" : "h-auto w-full",
                 )}
+              />
+              <span
+                aria-hidden="true"
+                className="absolute right-2.5 bottom-2.5 inline-flex size-9 items-center justify-center rounded-full bg-white/85 text-ink opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
               >
-                <Image
-                  src={item.image}
-                  alt={item.alt}
-                  fill
-                  style={blurBackground(item.image)}
-                  sizes={sizes}
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                />
-                <span
-                  aria-hidden="true"
-                  className="absolute right-2 bottom-2 inline-flex size-9 items-center justify-center rounded-sm bg-ink/75 text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
-                >
-                  <Icon name="expand" className="size-4" />
-                </span>
-                <span className="sr-only">
-                  {" "}
-                  — agrandir la photo {i + 1} sur {items.length}
-                </span>
-              </button>
-            </li>
-          );
-        })}
+                <Icon name="expand" className="size-4" />
+              </span>
+              <span className="sr-only">
+                {" "}
+                — agrandir la photo {i + 1} sur {items.length}
+              </span>
+            </button>
+          </li>
+        ))}
       </ul>
+
+      {collapsible && !expanded ? (
+        <div className="mt-8 hidden justify-center js:flex">
+          <button
+            type="button"
+            onClick={() => {
+              setExpanded(true);
+              // Focus sur la première vignette révélée
+              requestAnimationFrame(() => buttons.current[initial]?.focus());
+            }}
+            className={buttonClasses("secondary")}
+          >
+            <Icon name="plus" className="size-[18px]" />
+            Voir les {items.length} photos
+          </button>
+        </div>
+      ) : null}
 
       {open ? (
         <Lightbox

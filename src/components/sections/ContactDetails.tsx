@@ -1,10 +1,12 @@
 import { Icon } from "@/components/ui/Icon";
+import { EmailText } from "@/components/ui/EmailText";
+import { IconChip } from "@/components/ui/IconChip";
 import { mailtoHref, site, telHref } from "@/content/site";
 import { cn } from "@/lib/cn";
 
 /**
- * Coordonnées complètes (3 téléphones libellés, 4 e-mails, horaires, adresse).
- * Toutes les valeurs proviennent de src/content/site.ts.
+ * Coordonnées complètes (3 téléphones libellés, 4 e-mails, horaires, adresse),
+ * toutes issues de src/content/site.ts. Version claire ou nuit.
  */
 export function ContactDetails({
   tone = "light",
@@ -12,38 +14,28 @@ export function ContactDetails({
   stacked = false,
   className,
 }: {
-  tone?: "light" | "dark";
+  tone?: "light" | "night";
   headingLevel?: "h2" | "h3";
-  /** Une seule colonne (colonne latérale) */
   stacked?: boolean;
   className?: string;
 }) {
-  const dark = tone === "dark";
-  const label = cn("eyebrow flex items-center gap-2", dark ? "text-signal" : "text-navy");
-  const muted = dark ? "text-silver" : "text-steel";
-  const strong = dark ? "text-white" : "text-ink";
-  const linkHover = dark ? "hover:text-signal" : "hover:text-navy";
+  const night = tone === "night";
+  const head = cn("flex items-center gap-3 font-display text-[1rem] font-bold", night ? "text-white" : "text-ink");
+  const muted = night ? "text-night-muted" : "text-ink-soft";
+  const strong = night ? "text-white" : "text-ink";
+  const hover = night ? "hover:text-brand-light" : "hover:text-brand";
   return (
     <div className={cn("grid gap-8", !stacked && "sm:grid-cols-2", className)}>
       <div>
-        <H className={label}>
-          <Icon name="phone" className="size-4" /> Téléphone
+        <H className={head}>
+          <IconChip name="phone" tone={night ? "night" : "light"} />
+          Téléphone
         </H>
-        <ul className="mt-3 space-y-2.5">
+        <ul className="mt-4 space-y-3">
           {site.phones.map((p) => (
-            <li key={p.e164} className="flex flex-wrap items-baseline gap-x-2">
-              <span className={cn("min-w-[8.5rem]", muted)}>
-                {p.label}
-                {" "}:
-              </span>
-              <a
-                href={telHref(p)}
-                className={cn(
-                  "tabular font-display text-[1.45rem] leading-tight font-bold",
-                  strong,
-                  linkHover,
-                )}
-              >
+            <li key={p.e164} className="flex flex-wrap items-baseline justify-between gap-x-4">
+              <span className={muted}>{p.label}</span>
+              <a href={telHref(p)} className={cn("font-display text-[1.375rem] font-bold tabular", strong, hover)}>
                 {p.display}
               </a>
             </li>
@@ -51,43 +43,34 @@ export function ContactDetails({
         </ul>
       </div>
       <div>
-        <H className={label}>
-          <Icon name="mail" className="size-4" /> E-mail
+        <H className={head}>
+          <IconChip name="mail" tone={night ? "night" : "light"} />
+          E-mail
         </H>
-        <ul className="mt-3 space-y-2.5">
+        <ul className="mt-4 space-y-3">
           {site.emails.map((e) => (
             <li key={e.address}>
-              <span className={cn("block text-sm", muted)}>{e.label}</span>
-              <a
-                href={mailtoHref(e)}
-                className={cn(
-                  "font-semibold break-all underline-offset-4 hover:underline",
-                  strong,
-                  linkHover,
-                )}
-              >
-                {e.address}
+              <span className={cn("block text-[0.875rem]", muted)}>{e.label}</span>
+              <a href={mailtoHref(e)} className={cn("font-medium [overflow-wrap:anywhere] underline-offset-4 hover:underline", strong, hover)}>
+                <EmailText address={e.address} />
               </a>
             </li>
           ))}
         </ul>
       </div>
       <div>
-        <H className={label}>
-          <Icon name="clock" className="size-4" /> Horaires
+        <H className={head}>
+          <IconChip name="clock" tone={night ? "night" : "light"} />
+          Horaires
         </H>
-        <p className={cn("mt-3", strong)}>
-          {site.hours.days}
-          {" "}:
-          <br />
-          {site.hours.slots}
-        </p>
+        <p className={cn("mt-4", strong)}>{site.hours.display}</p>
       </div>
       <div>
-        <H className={label}>
-          <Icon name="pin" className="size-4" /> Adresse
+        <H className={head}>
+          <IconChip name="pin" tone={night ? "night" : "light"} />
+          Adresse
         </H>
-        <address className={cn("mt-3 not-italic", strong)}>
+        <address className={cn("mt-4 not-italic", strong)}>
           {site.address.street},
           <br />
           {site.address.postalCode} {site.address.cityDisplay}
@@ -95,8 +78,8 @@ export function ContactDetails({
         <a
           href={site.googleMapsUrl}
           className={cn(
-            "mt-2 inline-flex min-h-11 items-center gap-1.5 font-semibold underline underline-offset-4",
-            dark ? "text-signal" : "text-navy",
+            "mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-full border-[1.5px] px-4 font-display text-[0.875rem] font-semibold transition-colors",
+            night ? "border-white/30 text-white hover:border-white" : "border-line text-ink hover:border-ink",
           )}
           rel="noopener noreferrer"
           target="_blank"

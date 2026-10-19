@@ -17,6 +17,14 @@ export const marchandisesPage = {
     photo: pid("marchandises/renault-tautliner-parking"),
   },
 
+  /** Points clés en haut de page (scannables) */
+  keyPoints: [
+    fr`Fret interurbain sur tous types de route`,
+    fr`Matériaux livrés sur vos chantiers`,
+    fr`Transport de produits dangereux : chauffeurs formés à l'ADR`,
+    fr`Rapport annuel d'un conseiller ADR`,
+  ],
+
   intro: {
     title: fr`Vous désirez faire transporter des matériaux vers vos chantiers ?`,
     text: fr`Transports Brun est l'entreprise idéale pour vous !`,

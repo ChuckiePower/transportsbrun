@@ -2,11 +2,13 @@ import type { ReactNode } from "react";
 import { Photo } from "@/components/media/Photo";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Stripes } from "@/components/ui/Stripes";
 import type { PhotoId } from "@/content/gallery";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
 
-/** En-tête des pages intérieures : grande photo réelle, voile sombre, H1 */
+/**
+ * En-tête des pages intérieures : fil d'Ariane, eyebrow, H1, chapô, actions,
+ * puis grande bannière photo arrondie (16/6 sur ordinateur, 4/3 sur mobile).
+ */
 export function PageHero({
   eyebrow,
   title,
@@ -14,65 +16,67 @@ export function PageHero({
   photo,
   crumbs,
   children,
-  objectPosition = "center",
+  focal = "50% 50%",
+  aside,
 }: {
   eyebrow: string;
   title: string;
   lead?: string;
-  /** Sans photo : en-tête compact sur fond graphite (contact, pages légales) */
   photo?: PhotoId;
   crumbs: Crumb[];
   children?: ReactNode;
-  objectPosition?: string;
+  /** Point focal de la photo (object-position), choisi pour garder camion et charge visibles */
+  focal?: string;
+  /** Contenu affiché à droite du titre sur grand écran (ex. points clés) */
+  aside?: ReactNode;
 }) {
   return (
-    <section className="on-dark relative isolate overflow-hidden bg-ink text-white">
-      {photo ? (
-        <>
-          <Photo
-            id={photo}
-            fill
-            preload
-            decoding="sync"
-            fetchPriority="high"
-            quality={70}
-            sizes="100vw"
-            className="-z-20 object-cover"
-            style={{ objectPosition }}
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgb(19_20_23/0.92)_0%,rgb(19_20_23/0.78)_45%,rgb(19_20_23/0.35)_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-gradient-to-t from-ink/70 to-transparent"
-          />
-        </>
-      ) : (
-        <Stripes
-          tone="dark"
-          className="absolute -right-10 -bottom-6 -z-10 h-64 opacity-[0.07] sm:h-80"
-        />
-      )}
-      <Container
-        className={
-          photo
-            ? "flex min-h-[26rem] flex-col justify-end gap-6 pt-10 pb-12 sm:min-h-[30rem] sm:pb-16 lg:min-h-[34rem] lg:pb-20"
-            : "flex flex-col gap-6 pt-8 pb-12 sm:pt-10 sm:pb-14 lg:pb-16"
-        }
-      >
+    <section className="pt-8 pb-14 lg:pt-12 lg:pb-20">
+      <Container>
         <Breadcrumbs items={crumbs} />
-        <div className="max-w-3xl">
-          <Eyebrow tone="dark" className="mb-4">
-            {eyebrow}
-          </Eyebrow>
-          <h1 className="text-h1 font-bold uppercase">{title}</h1>
-          {lead ? <p className="mt-5 max-w-2xl text-lead text-white/90">{lead}</p> : null}
-          {children ? <div className="mt-8 flex flex-wrap gap-3">{children}</div> : null}
+        <div className="mt-8 grid gap-8 lg:mt-10 lg:grid-cols-12 lg:items-end lg:gap-12">
+          <div className={aside ? "lg:col-span-7" : "lg:col-span-9"}>
+            <Eyebrow className="hero-in mb-4" >
+              {eyebrow}
+            </Eyebrow>
+            <h1 className="hero-in text-h1 font-extrabold" style={{ ["--i" as string]: 1 }}>
+              {title}
+            </h1>
+            {lead ? (
+              <p className="hero-in mt-6 max-w-[40rem] text-lead text-ink" style={{ ["--i" as string]: 2 }}>
+                {lead}
+              </p>
+            ) : null}
+            {children ? (
+              <div className="hero-in mt-8 flex flex-wrap items-center gap-3" style={{ ["--i" as string]: 3 }}>
+                {children}
+              </div>
+            ) : null}
+          </div>
+          {aside ? (
+            <div className="hero-in lg:col-span-5" style={{ ["--i" as string]: 3 }}>
+              {aside}
+            </div>
+          ) : null}
         </div>
+        {photo ? (
+          <div className="relative mt-10 aspect-[4/3] overflow-hidden rounded-xl bg-cream-2 shadow-md sm:aspect-[16/8] lg:mt-14 lg:aspect-[16/6]">
+            <div data-parallax="" className="absolute inset-0">
+              <Photo
+                id={photo}
+                fill
+                preload
+                decoding="sync"
+                fetchPriority="high"
+                quality={70}
+                sizes="(min-width: 1200px) 1152px, 100vw"
+                className="hero-zoom object-cover"
+                style={{ objectPosition: focal }}
+              />
+            </div>
+          </div>
+        ) : null}
       </Container>
-      <div className="rule-stripes" aria-hidden="true" />
     </section>
   );
 }

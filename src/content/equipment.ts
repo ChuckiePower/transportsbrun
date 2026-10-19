@@ -27,6 +27,33 @@ export const fleetInventory: { item: string; details?: string[] }[] = [
   { item: "Camion-grue avec remorque" },
 ];
 
+/** Parc présenté en cartes (mêmes éléments que l'inventaire, regroupés par type) */
+export const fleetCards: {
+  name: string;
+  icon: "truck" | "flatbed" | "container" | "layers" | "route" | "bricks" | "crane";
+  items?: string[];
+  anchor?: string;
+}[] = [
+  { name: "Tracteurs", icon: "truck" },
+  {
+    name: "Plateaux",
+    icon: "flatbed",
+    anchor: "plateaux",
+    items: [
+      "3 normaux",
+      fr`2 ranchers adaptables en porte-conteneur`,
+      "1 ridelles",
+      "1 ranchers",
+      fr`2 surbaissés (dont 1 à ranchers) adaptables aux conteneurs 20′`,
+    ],
+  },
+  { name: "Openbox", icon: "container", anchor: "openbox", items: [fr`dont une adaptable en porte-conteneur`] },
+  { name: "Tautliners", icon: "layers", anchor: "tautliner", items: ["Porte-bobine", "Avec hayon"] },
+  { name: "Remorque Trax", icon: "route", anchor: "remorque-trax" },
+  { name: fr`Remorques porte-béton`, icon: "bricks" },
+  { name: "Camion-grue avec remorque", icon: "crane", anchor: "camion-grue" },
+];
+
 export const fleetCapabilities = {
   title: fr`Capacité convoi exceptionnel et ADR`,
   text: fr`Capacité pour du convoi exceptionnel (catégorie 1 et 2) et ADR.`,

@@ -11,9 +11,14 @@ export type Service = {
   /** Titre court (vignettes) */
   short: string;
   summary: string;
+  /** Une phrase pour les cartes */
+  teaser: string;
+  icon: "crane" | "flatbed" | "truck";
   href: string;
   linkLabel: string;
   photo: PhotoId;
+  /** Point focal (object-position) pour les recadrages étroits */
+  focal?: string;
 };
 
 export const services: Service[] = [
@@ -22,6 +27,8 @@ export const services: Service[] = [
     title: "Camion-grue",
     short: "Camion-grue",
     summary: fr`Nos camions grues sont équipés pour répondre à tous vos besoins en matière de levage, garantissant un placement précis et sécurisé de vos charges, même dans les environnements les plus exigeants.`,
+    teaser: fr`Des camions grues équipés pour un placement précis et sécurisé de vos charges, même dans les environnements les plus exigeants.`,
+    icon: "crane",
     href: "/transport-plateaux-camion-grue-haut-rhin-alsace#flotte",
     linkLabel: "Le camion-grue",
     photo: "grue/camion-grue-vignoble",
@@ -31,18 +38,24 @@ export const services: Service[] = [
     title: "Transport plateaux",
     short: "Transport plateaux",
     summary: fr`Le transport plateau est essentiel pour le déplacement sécurisé de marchandises industrielles de grandes dimensions, d'un site à un autre, que ce soit de chantier en chantier ou d'usine à usine.`,
+    teaser: fr`Le déplacement sécurisé de marchandises industrielles de grandes dimensions, de chantier en chantier ou d'usine à usine.`,
+    icon: "flatbed",
     href: "/transport-plateaux-camion-grue-haut-rhin-alsace",
     linkLabel: "Le transport plateau",
     photo: "plateau/convoi-exceptionnel-man-conteneur",
+    focal: "25% 50%",
   },
   {
     id: "marchandises",
     title: "Transport de marchandises",
     short: "Transport de marchandises",
     summary: fr`La société Transports Brun est une société de fret interurbain qui réalise des transports sur tous types de route. Vous désirez faire transporter des matériaux ou des marchandises ? Transports Brun est l'entreprise idéale pour vous !`,
+    teaser: fr`Du fret interurbain sur tous types de route, pour vos matériaux et vos marchandises.`,
+    icon: "truck",
     href: "/transports-de-marchandises-et-btp-haut-rhin-alsace",
     linkLabel: "Le transport de marchandises",
-    photo: "marchandises/murs-prefabriques-scania",
+    photo: "marchandises/renault-tautliner-parking",
+    focal: "80% 50%",
   },
 ];
 

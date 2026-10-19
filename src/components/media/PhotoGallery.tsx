@@ -6,11 +6,13 @@ export function PhotoGallery({
   ids,
   label,
   layout,
+  initial,
 }: {
   ids: readonly PhotoId[];
   label: string;
-  layout?: "justified" | "grid";
+  layout?: "masonry" | "grid";
+  initial?: number;
 }) {
   const items = photos(ids).map((p) => ({ id: p.id, image: p.image, alt: p.alt }));
-  return <Gallery items={items} label={label} layout={layout} />;
+  return <Gallery items={items} label={label} layout={layout} initial={initial} />;
 }

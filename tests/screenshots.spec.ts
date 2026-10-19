@@ -2,9 +2,15 @@ import { mkdirSync } from "node:fs";
 import { test } from "@playwright/test";
 import { pages } from "./helpers";
 
-/** Captures pleine page à 375, 768 et 1440 px dans docs/screenshots/ */
+/**
+ * Captures pleine page à 375, 768 et 1440 px dans docs/screenshots/v2/.
+ * Mouvement réduit : les contenus sont dans leur état final, sans attendre les animations.
+ * Les éléments flottants (barre d'appel mobile, pastille devis) sont masqués pour ne pas
+ * se superposer au contenu dans une capture pleine page.
+ */
 const widths = [375, 768, 1440];
-mkdirSync("docs/screenshots", { recursive: true });
+const dir = "docs/screenshots/v2";
+mkdirSync(dir, { recursive: true });
 
 for (const p of pages) {
   for (const width of widths) {
@@ -25,9 +31,10 @@ for (const p of pages) {
           timeout: 30_000,
         })
         .catch(() => {});
+      await page.addStyleTag({ content: ".mobile-bar, .float-cta { display: none !important; }" });
       await page.waitForTimeout(300);
       await page.screenshot({
-        path: `docs/screenshots/${p.name}-${width}.jpg`,
+        path: `${dir}/${p.name}-${width}.jpg`,
         fullPage: true,
         type: "jpeg",
         quality: 62,

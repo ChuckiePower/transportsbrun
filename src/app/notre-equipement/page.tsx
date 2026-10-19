@@ -1,13 +1,17 @@
 import { PhotoGallery } from "@/components/media/PhotoGallery";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { PageHero } from "@/components/sections/PageHero";
-import { Badge } from "@/components/ui/Badge";
+import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
+import { IconChip } from "@/components/ui/IconChip";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { equipmentCategories, fleetCapabilities, fleetInventory } from "@/content/equipment";
+import { Tag } from "@/components/ui/Tag";
+import { equipmentCategories, fleetCapabilities, fleetCards } from "@/content/equipment";
 import { equipementPage as page } from "@/content/pages/equipement";
+import { mainPhone, quoteHref, telHref } from "@/content/site";
+import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/seo";
 
 const path = "/notre-equipement";
@@ -16,109 +20,111 @@ export const metadata = pageMetadata(page.meta, path);
 export default function EquipementPage() {
   return (
     <>
-      <PageHero {...page.hero} crumbs={[{ name: "Notre équipement", path }]} />
+      <PageHero {...page.hero} crumbs={[{ name: "Notre équipement", path }]} focal="50% 45%">
+        <ButtonLink href={quoteHref} icon="arrowRight">
+          Demander un devis
+        </ButtonLink>
+        <ButtonLink href={telHref(mainPhone)} variant="secondary" icon="phone" iconPosition="start">
+          {mainPhone.display}
+        </ButtonLink>
+      </PageHero>
 
-      {/* Inventaire du parc */}
-      <Section aria-labelledby="parc-titre">
-        <Container className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-4">
-            <SectionHeading id="parc-titre" eyebrow="Inventaire" title={page.inventory.title} />
-            <nav aria-label="Catégories de véhicules" className="mt-8">
-              <ul className="flex flex-wrap gap-2 lg:flex-col lg:items-start">
-                {equipmentCategories.map((cat) => (
-                  <li key={cat.id}>
-                    <a
-                      href={`#${cat.id}`}
-                      className="inline-flex min-h-11 items-center gap-2 rounded-xs border-2 border-ink px-3 font-display text-lg font-bold uppercase hover:bg-ink hover:text-white"
-                    >
-                      {cat.title}
-                      <Icon name="arrowRight" className="size-4 rotate-90" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-          <div className="lg:col-span-8">
-            <div className="overflow-hidden rounded-md border-2 border-ink bg-white shadow-card">
-              <div className="flex items-center justify-between gap-4 bg-ink px-5 py-3 text-white">
-                <p className="font-display text-xl font-bold tracking-wide uppercase">
-                  Parc de véhicules
-                </p>
-                <span
-                  aria-hidden="true"
-                  className="font-display text-sm font-bold tracking-[0.2em] text-signal uppercase"
-                >
-                  Transports Brun
-                </span>
-              </div>
-              <ul className="divide-y divide-line">
-                {fleetInventory.map((row) => (
-                  <li
-                    key={row.item}
-                    className="grid gap-1 px-5 py-4 sm:grid-cols-[13rem_1fr] sm:gap-6 sm:px-6"
+      {/* Navigation d'ancres en pastilles, collante sous l'en-tête */}
+      <nav aria-label="Catégories de véhicules" className="sticky top-[5.25rem] z-20 py-3 sm:top-[5.75rem]">
+        <Container>
+          <ul className="no-scrollbar flex gap-2 overflow-x-auto rounded-full border border-line bg-white/90 p-1.5 shadow-md backdrop-blur-md sm:inline-flex">
+            <li>
+              <a href="#parc" className="inline-flex min-h-10 items-center rounded-full px-4 font-display text-[0.875rem] font-semibold whitespace-nowrap text-ink hover:bg-brand-soft hover:text-brand">
+                Le parc
+              </a>
+            </li>
+            {equipmentCategories.map((cat) => (
+              <li key={cat.id}>
+                <a href={`#${cat.id}`} className="inline-flex min-h-10 items-center rounded-full px-4 font-display text-[0.875rem] font-semibold whitespace-nowrap text-ink hover:bg-brand-soft hover:text-brand">
+                  {cat.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </nav>
+
+      {/* Le parc en cartes */}
+      <Section tone="none" id="parc" className="scroll-mt-40" aria-labelledby="parc-titre">
+        <Container>
+          <SectionHeading id="parc-titre" eyebrow="Inventaire" title={page.inventory.title} />
+          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {fleetCards.map((card, i) => (
+              <li
+                key={card.name}
+                data-reveal=""
+                style={{ ["--i" as string]: i % 3 }}
+                className={cn(
+                  "group flex flex-col rounded-lg border border-line bg-surface p-7 shadow-sm",
+                  card.name === "Plateaux" && "sm:col-span-2 lg:col-span-1 lg:row-span-2",
+                )}
+              >
+                <IconChip name={card.icon} className="group-hover:rotate-6 motion-reduce:rotate-0" />
+                <h3 className="mt-5 text-h3 font-bold">{card.name}</h3>
+                {card.items ? (
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {card.items.map((it) => (
+                      <li key={it}>
+                        <Tag tone="neutral">{it}</Tag>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                {card.anchor ? (
+                  <a
+                    href={`#${card.anchor}`}
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-5 font-display text-[0.95rem] font-semibold text-brand hover:underline"
                   >
-                    <span className="font-display text-[1.45rem] leading-tight font-bold uppercase">
-                      {row.item}
-                    </span>
-                    {row.details ? (
-                      <ul className="space-y-1 text-steel">
-                        {row.details.map((d) => (
-                          <li key={d} className="flex gap-2">
-                            <span
-                              aria-hidden="true"
-                              className="mt-[0.7em] h-0.5 w-3 shrink-0 bg-navy"
-                            />
-                            <span>{d}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <span aria-hidden="true" />
-                    )}
-                  </li>
-                ))}
+                    Voir les photos
+                    <span className="sr-only"> : {card.name}</span>
+                    <Icon name="arrowRight" className="size-4 rotate-90" />
+                  </a>
+                ) : null}
+              </li>
+            ))}
+            <li data-reveal="" className="on-night rounded-lg bg-night p-7 text-white shadow-md sm:col-span-2 lg:col-span-1">
+              <IconChip name="shield" tone="night" />
+              <h3 className="mt-5 text-h3 font-bold text-white">{fleetCapabilities.title}</h3>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                <li>
+                  <Tag tone="night">Convoi exceptionnel cat. 1</Tag>
+                </li>
+                <li>
+                  <Tag tone="night">Convoi exceptionnel cat. 2</Tag>
+                </li>
+                <li>
+                  <Tag tone="night">ADR</Tag>
+                </li>
               </ul>
-              <div className="on-dark flex flex-col gap-3 bg-navy px-5 py-5 text-white sm:flex-row sm:items-center sm:justify-between sm:px-6">
-                <p className="font-display text-[1.45rem] leading-tight font-bold uppercase">
-                  {fleetCapabilities.title}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  <Badge tone="signal">Convoi exceptionnel cat. 1</Badge>
-                  <Badge tone="signal">Convoi exceptionnel cat. 2</Badge>
-                  <Badge tone="signal">ADR</Badge>
-                </div>
-              </div>
-            </div>
-          </div>
+            </li>
+          </ul>
         </Container>
       </Section>
 
-      {/* Catégories visuelles */}
+      <CtaBand variant="compact" />
+
+      {/* Photos par catégorie */}
       {equipmentCategories.map((cat, i) => (
-        <Section
-          key={cat.id}
-          id={cat.id}
-          tone={i % 2 === 0 ? "sand" : "paper"}
-          aria-labelledby={`${cat.id}-titre`}
-        >
+        <Section key={cat.id} id={cat.id} tone={i % 2 === 0 ? "cream-2" : "cream"} className="scroll-mt-40" aria-labelledby={`${cat.id}-titre`}>
           <Container>
             <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <p aria-hidden="true" className="tabular font-display text-xl font-bold text-navy">
-                  0{i + 1} / 0{equipmentCategories.length}
+              <div data-reveal="">
+                <p className="eyebrow">
+                  Catégorie {i + 1} sur {equipmentCategories.length}
                 </p>
-                <h2 id={`${cat.id}-titre`} className="mt-1 text-h2 font-bold uppercase">
+                <h2 id={`${cat.id}-titre`} className="mt-2 text-h2 font-extrabold">
                   {cat.title}
                 </h2>
               </div>
-              <ul className="flex flex-wrap gap-2 lg:max-w-[50%] lg:justify-end">
+              <ul data-reveal="" className="flex flex-wrap gap-2 lg:max-w-[55%] lg:justify-end">
                 {cat.composition.map((c) => (
-                  <li
-                    key={c}
-                    className="rounded-xs bg-white px-3 py-1.5 text-[0.95rem] font-semibold shadow-card"
-                  >
-                    {c}
+                  <li key={c}>
+                    <Tag>{c}</Tag>
                   </li>
                 ))}
               </ul>
