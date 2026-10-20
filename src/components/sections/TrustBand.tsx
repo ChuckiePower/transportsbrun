@@ -20,7 +20,7 @@ export function TrustBand() {
         <div className="hero-trust rounded-lg border border-line bg-surface p-6 shadow-lg sm:p-8 xl:p-7">
           <ul className="grid grid-cols-1 gap-x-6 gap-y-6 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 xl:gap-5">
             {trustFacts.map((fact) => (
-              <li key={fact.label} className="flex items-start gap-3 xl:flex-col">
+              <li key={fact.label} className="flex items-start gap-3 xs:flex-col">
                 <span className="flex h-11 shrink-0 items-center">
                   {fact.visual === "convoi" ? (
                     <ConvoiPanel size="sm" category={false} />

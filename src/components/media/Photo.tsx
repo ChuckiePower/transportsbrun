@@ -12,8 +12,9 @@ type Props = Omit<
 };
 
 /**
- * Photo de la photothèque : dimensions, flou de chargement et texte alternatif
- * viennent de src/content/gallery.ts.
+ * Photo de la photothèque : dimensions et texte alternatif viennent de src/content/gallery.ts.
+ * L'aperçu flou (data-URI, ~2,5 Ko répété dans le HTML et la charge RSC) est réservé aux photos
+ * préchargées du haut de page ; ailleurs, le fond crème du cadre sert d'attente (images en lazy).
  */
 export function Photo({
   id,
@@ -26,11 +27,12 @@ export function Photo({
   const p = photo(id);
   return (
     <Image
-      src={p.image}
+      // Sans blurDataURL : next/image est un composant client, ses props sont sérialisées
+      src={{ src: p.image.src, width: p.image.width, height: p.image.height }}
       alt={decorative ? "" : p.alt}
       sizes={sizes}
       quality={quality}
-      style={{ ...blurBackground(p.image), ...style }}
+      style={{ ...(rest.preload ? blurBackground(p.image) : undefined), ...style }}
       {...rest}
     />
   );

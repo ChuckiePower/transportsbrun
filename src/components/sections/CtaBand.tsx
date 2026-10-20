@@ -33,7 +33,7 @@ export function CtaBand({
         <Container>
           <div
             data-reveal=""
-            className="flex flex-col gap-5 rounded-lg border border-line bg-surface px-6 py-6 shadow-sm sm:px-8 md:flex-row md:items-center md:justify-between"
+            className="flex flex-col gap-5 rounded-lg border border-line bg-surface px-6 py-6 shadow-sm sm:px-8 lg:flex-row lg:items-center lg:justify-between"
           >
             <div>
               <p className="font-display text-[1.25rem] leading-snug font-bold text-ink">{title}</p>

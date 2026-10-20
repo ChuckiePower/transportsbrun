@@ -13,6 +13,11 @@ export function PhotoGallery({
   layout?: "masonry" | "grid";
   initial?: number;
 }) {
-  const items = photos(ids).map((p) => ({ id: p.id, image: p.image, alt: p.alt }));
+  // Sans l'aperçu flou : il serait sérialisé pour chaque vignette (≈ 2,5 Ko × 2 par photo)
+  const items = photos(ids).map((p) => ({
+    id: p.id,
+    image: { src: p.image.src, width: p.image.width, height: p.image.height },
+    alt: p.alt,
+  }));
   return <Gallery items={items} label={label} layout={layout} initial={initial} />;
 }

@@ -7,7 +7,6 @@ import { flushSync } from "react-dom";
 import { buttonClasses } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
-import { blurBackground } from "@/lib/placeholder";
 import { prefersReducedMotion } from "@/lib/scroll-bus";
 
 export type GalleryItem = { id: string; image: StaticImageData; alt: string };
@@ -124,7 +123,6 @@ export function Gallery({
                 src={item.image}
                 alt={item.alt}
                 {...(isGrid ? { fill: true } : {})}
-                style={blurBackground(item.image)}
                 sizes={
                   isGrid
                     ? items.length % 3 === 0

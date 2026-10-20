@@ -45,7 +45,7 @@ export default function EquipementPage() {
         className="sticky top-[5.25rem] z-20 py-3 sm:top-[5.75rem]"
       >
         <Container>
-          <ul className="no-scrollbar flex gap-2 overflow-x-auto rounded-full border border-line bg-white/90 p-1.5 shadow-md backdrop-blur-md sm:inline-flex">
+          <ul className="no-scrollbar flex max-w-full gap-2 overflow-x-auto rounded-full border border-line bg-white/90 p-1.5 shadow-md backdrop-blur-md sm:inline-flex">
             <li>
               <a
                 href="#parc"

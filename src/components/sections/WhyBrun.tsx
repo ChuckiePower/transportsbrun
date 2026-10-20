@@ -63,7 +63,9 @@ export function WhyBrun() {
             <li key={c.title} data-reveal="" style={{ ["--i" as string]: i }}>
               {i > 0 ? <RoadLine tone="marking-soft" className="my-7 opacity-50" /> : null}
               <div className="flex flex-col items-start gap-4 sm:flex-row sm:gap-5">
-                <span className="flex h-11 shrink-0 items-center sm:w-[5.5rem]">{visuals[i]}</span>
+                <span className="flex h-11 shrink-0 items-center sm:w-36 sm:justify-center">
+                  {visuals[i]}
+                </span>
                 <span>
                   <span className="block text-h3 font-bold text-white">{c.title}</span>
                   <span className="mt-2 block max-w-xl text-marking/80">{c.text}</span>

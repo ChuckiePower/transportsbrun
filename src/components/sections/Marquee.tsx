@@ -6,25 +6,22 @@ import { Container } from "@/components/ui/Container";
  * statique si mouvement réduit.
  */
 export function Marquee({ items, label }: { items: string[]; label: string }) {
-  const pill =
-    "shrink-0 rounded-full border border-line bg-surface px-5 py-2.5 font-display text-[0.95rem] font-semibold whitespace-nowrap text-ink shadow-sm";
+  // Style des pastilles porté par la liste (*:) : une fois par liste au lieu d'une fois par pastille
+  const pills =
+    "flex gap-3 *:shrink-0 *:rounded-full *:border *:border-line *:bg-surface *:px-5 *:py-2.5 *:font-display *:text-[0.95rem] *:font-semibold *:whitespace-nowrap *:text-ink *:shadow-sm";
   return (
     <section aria-label={label} className="marquee-wrap py-10 lg:py-14">
       <Container size="wide" className="flex items-center gap-3">
         <div className="marquee relative min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
           <div className="marquee-track flex w-max gap-3 py-1">
-            <ul className="flex gap-3">
+            <ul className={pills}>
               {items.map((it) => (
-                <li key={it} className={pill}>
-                  {it}
-                </li>
+                <li key={it}>{it}</li>
               ))}
             </ul>
-            <ul className="marquee-clone flex gap-3" aria-hidden="true">
+            <ul className={`marquee-clone ${pills}`} aria-hidden="true">
               {items.map((it) => (
-                <li key={it} className={pill}>
-                  {it}
-                </li>
+                <li key={it}>{it}</li>
               ))}
             </ul>
           </div>

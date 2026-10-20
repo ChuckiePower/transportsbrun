@@ -11,7 +11,7 @@ export const SITE_HOST = new URL(SITE_URL).host;
 /**
  * Le site est-il servi sur son domaine de production ?
  * Non pour les déploiements Vercel de prévisualisation (VERCEL_ENV ≠ production)
- * et pour tout hôte différent de SITE_URL (préproduction *.vercel.app, IP, localhost…).
+ * et pour tout hôte différent de SITE_URL (préproduction, IP, localhost…).
  */
 export function isProductionHost(host: string | null | undefined): boolean {
   const vercelEnv = process.env.VERCEL_ENV;

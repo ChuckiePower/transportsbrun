@@ -32,13 +32,11 @@ export function Odometer({
           className="relative inline-block h-[1.15em] w-[0.78em] overflow-hidden rounded-[0.16em] bg-asphalt-2 text-marking"
         >
           <span
-            className="odo-reel absolute inset-x-0 top-0 flex flex-col"
+            className="odo-reel absolute inset-x-0 top-0 flex flex-col *:flex *:h-[1.15em] *:items-center *:justify-center"
             style={{ ["--d" as string]: d, ["--i" as string]: i }}
           >
             {"0123456789".split("").map((n) => (
-              <span key={n} className="flex h-[1.15em] items-center justify-center">
-                {n}
-              </span>
+              <span key={n}>{n}</span>
             ))}
           </span>
         </span>

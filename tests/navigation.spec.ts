@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { pages } from "./helpers";
 
 test("lien d'évitement vers le contenu", async ({ page }) => {
   await page.goto("/");
@@ -298,4 +299,17 @@ test("page Contact : 3 téléphones et 4 e-mails cliquables dans le panneau, lie
     "href",
     /google\.com\/maps/,
   );
+});
+
+test("aucun défilement horizontal (375, 768, 1024 et 1440 px)", async ({ page }) => {
+  for (const width of [375, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const path of pages.map((p) => p.path)) {
+      await page.goto(path);
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
+      expect(overflow, `${path} @${width}`).toBeLessThanOrEqual(0);
+    }
+  }
 });
