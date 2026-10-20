@@ -402,7 +402,7 @@
   .js .hero-word {
     display: inline-block;
     animation: hero-word 0.75s var(--ease-out-soft) both;
-    animation-delay: calc(160ms + var(--w, 0) * 45ms);
+    animation-delay: calc(160ms + var(--l, 0) * 80ms);
   }
   .js .hero-trust {
     animation: hero-in 0.8s var(--ease-out-soft) both;
@@ -444,26 +444,116 @@
     }
   }
 
-  /* Étapes « Comment ça marche » : numéros puis trait de liaison */
-  .js [data-steps] [data-step-num] {
+  /* Convoi : les cartes d'une rangée arrivent l'une derrière l'autre,
+     même vitesse, même intervalle */
+  .js [data-convoy] > [data-reveal] {
+    transform: translateX(-28px);
+    transition-duration: 0.6s;
+    transition-delay: calc(var(--i, 0) * 120ms);
+  }
+  .js [data-convoy] > [data-reveal].is-in {
+    transform: none;
+  }
+
+  /* Compteur kilométrique : les rouleaux tournent jusqu'au chiffre final */
+  .js [data-odometer] .odo-reel {
+    transition: transform 1.4s var(--ease-out-soft);
+    transition-delay: calc(150ms + var(--i, 0) * 180ms);
+  }
+  .js [data-odometer]:not(.is-in) .odo-reel {
+    transform: translateY(0);
+  }
+
+  /* Itinéraire : les arrêts s'allument l'un après l'autre, la route se trace entre eux */
+  .js [data-itinerary] .route-stop {
     opacity: 0;
     transform: scale(0.6);
     transition:
-      opacity 0.5s var(--ease-out-soft),
+      opacity 0.4s var(--ease-out-soft),
       transform 0.5s var(--ease-out-soft);
-    transition-delay: calc(var(--i, 0) * 220ms);
+    transition-delay: calc(var(--i, 0) * 450ms);
   }
-  .js [data-steps] [data-step-line] {
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.9s var(--ease-out-soft) 0.25s;
+  .js [data-itinerary] .route-seg {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.6s var(--ease-out-soft);
+    transition-delay: calc(var(--i, 0) * 450ms + 200ms);
   }
-  .js [data-steps].is-in [data-step-num] {
+  .js [data-itinerary] .route-seg.road-y {
+    clip-path: inset(0 0 100% 0);
+  }
+  .js [data-itinerary].is-in .route-stop {
     opacity: 1;
     transform: none;
   }
-  .js [data-steps].is-in [data-step-line] {
-    transform: none;
+  .js [data-itinerary].is-in .route-seg {
+    clip-path: inset(0);
+  }
+
+  /* Carte des routes : elles partent de Saint-Hippolyte (cercle qui s'ouvre) */
+  .js [data-map] .map-routes {
+    clip-path: circle(0% at var(--sh-x) var(--sh-y));
+    transition: clip-path 1.6s var(--ease-out-soft) 0.2s;
+  }
+  .js [data-map].is-in .map-routes {
+    clip-path: circle(120% at var(--sh-x) var(--sh-y));
+  }
+  @supports (animation-timeline: view()) {
+    .js [data-map] .map-routes {
+      transition: none;
+      animation: map-routes linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 50%;
+    }
+  }
+  @keyframes map-routes {
+    from {
+      clip-path: circle(0% at var(--sh-x) var(--sh-y));
+    }
+    to {
+      clip-path: circle(120% at var(--sh-x) var(--sh-y));
+    }
+  }
+
+  /* Route de l'accueil : la partie parcourue se dessine jusqu'au camion (sticky à 55vh) */
+  @supports (animation-timeline: view()) {
+    .home-road-drawn {
+      animation: road-drawn linear both;
+      animation-timeline: view();
+      animation-range: cover 45vh cover calc(100% - 55vh);
+    }
+  }
+  @keyframes road-drawn {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0);
+    }
+  }
+
+  /* Avis : les étoiles se remplissent une fois, à l'arrivée de la carte */
+  .js [data-reviews] [data-reveal].is-in .stars-fill {
+    animation: stars-fill 0.9s var(--ease-out-soft) 0.25s both;
+  }
+  @keyframes stars-fill {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+  }
+
+  /* Bouton principal : pointillés de marquage qui défilent sous la flèche */
+  @media (hover: hover) {
+    .group\/btn:hover .btn-dashes {
+      opacity: 1;
+    }
+    .group\/btn:hover .btn-dashes > span {
+      animation: btn-dashes 0.5s linear infinite;
+    }
+  }
+  @keyframes btn-dashes {
+    to {
+      transform: translateX(-10px);
+    }
   }
 
   /* Coche de succès qui se trace */
@@ -480,7 +570,7 @@
 
   /* Camion qui démarre (succès) et progression du formulaire */
   .truck-go {
-    animation: truck-go 1.6s cubic-bezier(0.55, 0, 0.25, 1) 0.25s both;
+    animation: truck-go 1.6s cubic-bezier(0.55, 0, 0.25, 1) 0.7s both;
   }
   @keyframes truck-go {
     from {
@@ -527,10 +617,16 @@
   }
 }
 
-/* Transitions de page (View Transitions API) : fondu court */
-::view-transition-old(root),
-::view-transition-new(root) {
+/* Transitions de page (View Transitions API, via <ViewTransition>) : fondu court */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
   animation-duration: 200ms;
+}
+/* Agrandissement d'une photo : un peu plus long, la vignette devient la photo */
+::view-transition-group(photo-agrandie) {
+  animation-duration: 300ms;
+  animation-timing-function: var(--ease-out-soft);
 }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
@@ -600,6 +696,28 @@
 /* Bouton Pause du bandeau défilant */
 .marquee-wrap:has(#marquee-pause:checked) .marquee-track {
   animation-play-state: paused;
+}
+
+/* Pointillés sous la flèche des boutons principaux (visibles au survol) */
+.btn-dashes {
+  position: absolute;
+  inset-inline: 1px;
+  top: calc(100% + 3px);
+  height: 2px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-out-soft);
+}
+.btn-dashes > span {
+  display: block;
+  width: calc(100% + 10px);
+  height: 100%;
+  background-color: currentColor;
+  opacity: 0.5;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='2'%3E%3Crect width='5' height='2' rx='1'/%3E%3C/svg%3E")
+    left center / 10px 100% repeat-x;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='2'%3E%3Crect width='5' height='2' rx='1'/%3E%3C/svg%3E")
+    left center / 10px 100% repeat-x;
 }
 
 /* Positions finales (valables sans animation) : camion en route, progression du formulaire */

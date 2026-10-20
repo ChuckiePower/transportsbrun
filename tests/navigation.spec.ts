@@ -133,6 +133,69 @@ test("mouvement réduit : contenus immédiatement visibles, sans déplacement", 
     .locator(".marquee-track")
     .evaluate((el) => getComputedStyle(el).animationName);
   expect(marquee).toBe("none");
+
+  // Compteur, itinéraire, carte et route : état final direct, rien de masqué ni d'animé
+  const finals = await page.evaluate(() => {
+    const reels = [...document.querySelectorAll<HTMLElement>("[data-odometer] .odo-reel")];
+    const clipped = [
+      ...document.querySelectorAll<HTMLElement>(
+        "[data-itinerary] .route-seg, [data-itinerary] .route-stop, .map-routes, .home-road-drawn",
+      ),
+    ].filter((el) => {
+      const s = getComputedStyle(el);
+      return s.clipPath !== "none" || s.opacity !== "1" || s.animationName !== "none";
+    }).length;
+    return {
+      reelsAtValue: reels.every((r) => {
+        const d = Number(r.style.getPropertyValue("--d"));
+        const m = new DOMMatrix(getComputedStyle(r).transform);
+        return d === 0 || m.m42 < 0;
+      }),
+      reels: reels.length,
+      clipped,
+    };
+  });
+  expect(finals.reels).toBeGreaterThan(0);
+  expect(finals.reelsAtValue).toBe(true);
+  expect(finals.clipped).toBe(0);
+});
+
+test("animations : compteur, itinéraire et carte partent de leur état initial puis arrivent à l'état final", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const odo = page.locator("[data-odometer]").first();
+  // Avant l'entrée dans l'écran : rouleaux à zéro
+  expect(
+    await odo.evaluate((el) =>
+      [...el.querySelectorAll<HTMLElement>(".odo-reel")].every(
+        (r) => new DOMMatrix(getComputedStyle(r).transform).m42 === 0,
+      ),
+    ),
+  ).toBe(true);
+  await odo.scrollIntoViewIfNeeded();
+  await expect(odo).toHaveClass(/is-in/);
+  await page.waitForTimeout(2200);
+  expect(
+    await odo.evaluate((el) =>
+      [...el.querySelectorAll<HTMLElement>(".odo-reel")].every(
+        (r) => new DOMMatrix(getComputedStyle(r).transform).m42 < 0,
+      ),
+    ),
+  ).toBe(true);
+
+  const route = page.locator("[data-itinerary]").first();
+  await route.scrollIntoViewIfNeeded();
+  await expect(route).toHaveClass(/is-in/);
+  await page.waitForTimeout(1800);
+  expect(
+    await route.evaluate(
+      (el) =>
+        [...el.querySelectorAll<HTMLElement>(".route-stop")].filter(
+          (s) => getComputedStyle(s).opacity === "1",
+        ).length,
+    ),
+  ).toBe(3);
 });
 
 test("galerie repliée : « Voir les … photos » révèle la suite et y place le focus", async ({

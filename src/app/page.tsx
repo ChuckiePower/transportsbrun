@@ -32,22 +32,30 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata(page.meta, "/");
 
+/**
+ * Numérote les lignes du titre (--l sur chaque mot) avant le premier rendu, pour une révélation
+ * ligne par ligne quelle que soit la largeur. Sans ce script, toutes les lignes arrivent ensemble.
+ */
+const heroLinesScript =
+  "(function(h){if(!h)return;var y,l=-1;h.querySelectorAll('.hero-word').forEach(function(w){var t=w.parentNode.offsetTop;if(t!==y){y=t;l++}w.style.setProperty('--l',l)})})(document.currentScript&&document.currentScript.previousElementSibling)";
+
 /** Titre découpé en mots, révélés ligne par ligne derrière un masque (lisible sans JS) */
 function HeroTitle({ text }: { text: string }) {
   const words = text.split(" ");
   return (
-    <h1 data-lines="" className="text-h1 font-extrabold text-white">
-      {words.map((w, i) => (
-        <Fragment key={i}>
-          <span className="inline-block overflow-hidden pb-[0.08em] align-top">
-            <span className="hero-word" style={{ ["--w" as string]: i }}>
-              {w}
+    <>
+      <h1 data-lines="" className="text-h1 font-extrabold text-white">
+        {words.map((w, i) => (
+          <Fragment key={i}>
+            <span className="inline-block overflow-hidden pb-[0.08em] align-top">
+              <span className="hero-word">{w}</span>
             </span>
-          </span>
-          {i < words.length - 1 ? " " : null}
-        </Fragment>
-      ))}
-    </h1>
+            {i < words.length - 1 ? " " : null}
+          </Fragment>
+        ))}
+      </h1>
+      <script dangerouslySetInnerHTML={{ __html: heroLinesScript }} />
+    </>
   );
 }
 

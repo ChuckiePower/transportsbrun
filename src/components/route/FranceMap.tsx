@@ -28,90 +28,70 @@ const international = [
   `M${SH.x} ${SH.y} Q 230 330 176 418`,
 ];
 
+const VIEWBOX = "-40 -40 540 480";
+/** Position de Saint-Hippolyte en % de la carte (origine du cercle qui dévoile les routes) */
+const shPos = {
+  ["--sh-x" as string]: `${(((SH.x + 40) / 540) * 100).toFixed(1)}%`,
+  ["--sh-y" as string]: `${(((SH.y + 40) / 480) * 100).toFixed(1)}%`,
+};
+
 export function FranceMap({ className }: { className?: string }) {
   return (
     <figure className={cn("relative", className)}>
-      <svg
-        viewBox="-40 -40 540 480"
-        role="img"
-        aria-label="Carte de France : depuis Saint-Hippolyte (Haut-Rhin), des routes vers toute la France et au-delà des frontières"
-        data-map=""
-        className="h-auto w-full"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <defs>
-          {[...national, ...international].map((d, i) => (
-            <mask
-              key={i}
-              id={`map-route-${i}`}
-              maskUnits="userSpaceOnUse"
-              x="-40"
-              y="-40"
-              width="540"
-              height="480"
-            >
-              <path
-                d={d}
-                pathLength={100}
-                className="map-draw"
-                stroke="#fff"
-                strokeWidth="10"
-                style={{ ["--i" as string]: i }}
-              />
-            </mask>
+      {/* Trois calques alignés : le pays, les routes (dévoilées depuis Saint-Hippolyte), le repère */}
+      <div data-map="" className="relative">
+        <svg
+          viewBox={VIEWBOX}
+          role="img"
+          aria-label="Carte de France : depuis Saint-Hippolyte (Haut-Rhin), des routes vers toute la France et au-delà des frontières"
+          className="h-auto w-full"
+          fill="none"
+        >
+          <path d={FRANCE} className="fill-surface stroke-[#d8cfbd]" strokeWidth="2" />
+          <path d={CORSE} className="fill-surface stroke-[#d8cfbd]" strokeWidth="2" />
+          {/* Régional : cercle autour du point de départ */}
+          <circle
+            cx={SH.x}
+            cy={SH.y}
+            r="34"
+            className="fill-sun/15 stroke-sun"
+            strokeWidth="2.5"
+            strokeDasharray="6 7"
+          />
+        </svg>
+        <svg
+          viewBox={VIEWBOX}
+          aria-hidden="true"
+          className="map-routes absolute inset-0 size-full"
+          style={shPos}
+          fill="none"
+          strokeLinecap="round"
+          strokeWidth="3.5"
+          strokeDasharray="9 9"
+        >
+          {national.map((d) => (
+            <path key={d} d={d} className="stroke-brand" />
           ))}
-        </defs>
-        <path d={FRANCE} className="fill-surface stroke-[#d8cfbd]" strokeWidth="2" />
-        <path d={CORSE} className="fill-surface stroke-[#d8cfbd]" strokeWidth="2" />
-
-        {/* Régional : cercle autour du point de départ */}
-        <circle
-          cx={SH.x}
-          cy={SH.y}
-          r="34"
-          className="fill-sun/15 stroke-sun"
-          strokeWidth="2.5"
-          strokeDasharray="6 7"
-        />
-
-        {national.map((d, i) => (
-          <path
-            key={d}
-            d={d}
-            mask={`url(#map-route-${i})`}
-            className="stroke-brand"
-            strokeWidth="3.5"
-            strokeDasharray="9 9"
-          />
-        ))}
-        {international.map((d, i) => (
-          <path
-            key={d}
-            d={d}
-            mask={`url(#map-route-${national.length + i})`}
-            className="stroke-ink"
-            strokeWidth="3.5"
-            strokeDasharray="9 9"
-          />
-        ))}
-
-        {/* Saint-Hippolyte */}
-        <circle cx={SH.x} cy={SH.y} r="11" className="fill-ink" />
-        <circle cx={SH.x} cy={SH.y} r="4.5" className="fill-cream" />
-        <g transform={`translate(${SH.x + 18} ${SH.y - 26})`}>
-          <rect x="0" y="-15" width="122" height="26" rx="13" className="fill-ink" />
-          <text
-            x="61"
-            y="3"
-            textAnchor="middle"
-            className="fill-white font-sign text-[13px] font-bold"
-          >
-            Saint-Hippolyte
-          </text>
-        </g>
-      </svg>
+          {international.map((d) => (
+            <path key={d} d={d} className="stroke-ink" />
+          ))}
+        </svg>
+        <svg viewBox={VIEWBOX} aria-hidden="true" className="absolute inset-0 size-full">
+          <circle cx={SH.x} cy={SH.y} r="11" className="fill-ink" />
+          <circle cx={SH.x} cy={SH.y} r="4.5" className="fill-cream" />
+          <g transform={`translate(${SH.x + 18} ${SH.y - 26})`}>
+            <rect x="0" y="-15" width="122" height="26" rx="13" className="fill-ink" />
+            <text
+              x="61"
+              y="3"
+              textAnchor="middle"
+              className="fill-white font-sign text-[13px] font-bold"
+            >
+              Saint-Hippolyte
+            </text>
+          </g>
+        </svg>
+      </div>
       <figcaption className="mt-4 flex flex-wrap justify-center gap-2">
         <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 font-display text-[0.875rem] font-semibold text-ink">
           <span

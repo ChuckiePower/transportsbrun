@@ -77,7 +77,7 @@ export default function PlateauGruePage() {
             title={page.advantages.title}
             lead={page.intro}
           />
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul data-convoy="" className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {page.advantages.items.map((item, i) => (
               <li
                 key={item.title}

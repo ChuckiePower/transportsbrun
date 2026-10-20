@@ -8,8 +8,8 @@ import { watch } from "@/lib/visibility";
 
 /**
  * Moteur d'interactions du site, monté une seule fois :
- * - révélations au défilement ([data-reveal], [data-reveal-photo], [data-steps]) ;
- * - compteur animé ([data-count]) ;
+ * - révélations au défilement ([data-reveal], [data-reveal-photo]), compteur kilométrique
+ *   ([data-odometer]), itinéraires ([data-itinerary]) et carte des routes ([data-map]) ;
  * - barre d'appel mobile affichée une fois les boutons du hero ([data-hero-cta]) sortis de l'écran ;
  * - état de défilement (en-tête compact, pastille « Demander un devis » flottante) via le bus de défilement ;
  * Tous les éléments observés passent par le même IntersectionObserver (src/lib/visibility.ts).
@@ -24,14 +24,13 @@ export function Interactions() {
   // Révélations et compteurs : relancés à chaque page
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>(
-      "[data-reveal]:not(.is-in), [data-reveal-photo]:not(.is-in), [data-steps]:not(.is-in), [data-count]:not(.is-in)",
+      "[data-reveal]:not(.is-in), [data-reveal-photo]:not(.is-in), [data-odometer]:not(.is-in), [data-itinerary]:not(.is-in), [data-map]:not(.is-in)",
     );
     const offs: (() => void)[] = [];
     els.forEach((el) => {
       const off = watch(el, (entry) => {
         if (!entry.isIntersecting) return;
         el.classList.add("is-in");
-        if (el.dataset.count !== undefined) countUp(el);
         off();
       });
       offs.push(off);
@@ -133,20 +132,4 @@ export function Interactions() {
   }, []);
 
   return null;
-}
-
-/** Compteur 0 → valeur finale ; la valeur finale est déjà dans le HTML (sans JS) */
-function countUp(el: HTMLElement) {
-  const end = Number(el.dataset.count);
-  if (!Number.isFinite(end) || prefersReducedMotion()) return;
-  const start = performance.now();
-  const duration = 1400;
-  const step = (now: number) => {
-    const t = Math.min(1, (now - start) / duration);
-    const eased = 1 - Math.pow(1 - t, 3);
-    el.textContent = String(Math.round(end * eased));
-    if (t < 1) requestAnimationFrame(step);
-  };
-  el.textContent = "0";
-  requestAnimationFrame(step);
 }

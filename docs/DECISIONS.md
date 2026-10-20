@@ -249,3 +249,27 @@ Pages légales : `noindex, follow`, exclues du sitemap (comportement actuel cons
 - Page Contact : seul le panneau asphalte (téléphones, e-mails, horaires, adresse, « Itinéraire ») est collant, la carte passe sous le formulaire ; les 3 `tel:` et 4 `mailto:` sont vérifiés par un test.
 - Vocabulaire : « Près de 25 ans d'expérience » devient « Près de 25 ans de métier » (micro-texte). Conservés car factuels ou métadonnées : la valeur « Expérience » de la page Histoire, « Solutions fiables… » (paragraphe de conclusion du savoir-faire) et « Des solutions sur mesure » (meta description de la page marchandises).
 - Liens des cartes de services : « En savoir plus » remplacé par le nom du service (« Le camion-grue »…), plus explicite hors contexte.
+
+### Animations (lot 6)
+Tout en CSS (transitions, animations, `animation-timeline: view()`) avec un seul `IntersectionObserver` partagé (`src/lib/visibility.ts`) en repli ; ni Motion, ni GSAP, ni lissage du défilement. Seuls `transform`, `opacity` et `clip-path` sont animés. Les états « avant » n'existent qu'avec la classe `.js` et sans `prefers-reduced-motion` ; l'état final est toujours l'état par défaut du HTML.
+
+| # | Catalogue | Mise en œuvre |
+|---|---|---|
+| 1 | Entrée du hero | Photo visible d'emblée, zoom 1,06 → 1 ; titre révélé **ligne par ligne** (un petit script en ligne numérote les lignes `--l` avant le premier rendu, décalage 80 ms ; sans lui, les lignes arrivent ensemble) ; cascade eyebrow, sous-titre, boutons puis bandeau « en bref » (+24 px). |
+| 2 | Parallaxe | `[data-parallax]` piloté par le défilement (±4 %), ordinateur seulement ; sans support : photo fixe. |
+| 3 | Apparition au défilement | Fondu + 16 px une fois ; photos par masque arrondi `inset(8% round 32px)` → `inset(0 round 32px)` et zoom 1,05 → 1. |
+| 4 | Convoi | `[data-convoy]` : les cartes d'une rangée glissent de 28 px l'une derrière l'autre, même durée (600 ms), même intervalle (120 ms). |
+| 5 | Camion sur la route (accueil) | Camion `sticky` (sans JS) qui s'arrête au bandeau final ; la partie parcourue se dessine (`clip-path`) au fil du défilement là où `animation-timeline` existe, sinon la route est simplement tracée. |
+| 6 | Compteur kilométrique | Les rouleaux tournent de 0 au chiffre final, décalés de 180 ms. |
+| 7 | Itinéraire des étapes | Les arrêts s'allument l'un après l'autre (450 ms), la route se trace entre eux (`clip-path`). |
+| 8 | Carte des routes | Les routes sont dévoilées par un cercle qui s'ouvre depuis Saint-Hippolyte (`clip-path: circle()`), au défilement (repli : une fois à l'entrée). Choisi plutôt qu'un tracé `stroke-dashoffset`, hors des trois propriétés autorisées. |
+| 9 | Pastilles défilantes | 36 s, pause au survol, au focus et par bouton. |
+| 10 | Cartes | Montée de 3 px, ombre md, image 1,03, flèche qui glisse. |
+| 11 | Boutons principaux | Reflet, pointillés qui défilent sous la flèche au survol, effet magnétique ≤ 6 px (souris). |
+| 12 | En-tête | Réduction et ombre après 24 px, pastille active qui glisse. |
+| 13 | FAQ | Hauteur animée (`::details-content`, `interpolate-size`), « + » qui tourne en « × ». |
+| 14 | Galeries et visionneuse | Vignettes en cascade, ouverture par View Transitions (300 ms, repli fondu), balayage avec inertie, clavier. |
+| 15 | Formulaire | Glissement de 24 px entre étapes, progression en marquage au sol, tremblement en cas d'erreur, coche tracée puis camion qui démarre. |
+| 16 | Transitions de page | `<ViewTransition>` de React autour du contenu : fondu de 200 ms là où le navigateur le permet. |
+
+Avis : les étoiles se remplissent une fois à l'arrivée de la carte (rien en mouvement réduit).

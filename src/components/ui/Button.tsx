@@ -44,7 +44,7 @@ function Inner({
     <span
       aria-hidden="true"
       className={cn(
-        "inline-flex size-6 items-center justify-center rounded-full transition-transform duration-200 ease-out-soft group-hover/btn:translate-x-[3px]",
+        "relative inline-flex size-6 items-center justify-center rounded-full transition-transform duration-200 ease-out-soft group-hover/btn:translate-x-[3px]",
         variant === "primary"
           ? "bg-ink/10"
           : variant === "on-asphalt"
@@ -53,6 +53,11 @@ function Inner({
       )}
     >
       <Icon name="arrowRight" className="size-3.5" strokeWidth={2.25} />
+      {variant === "primary" ? (
+        <span className="btn-dashes">
+          <span />
+        </span>
+      ) : null}
     </span>
   ) : (
     <Icon name={icon} className="size-[18px] shrink-0" />

@@ -15,9 +15,14 @@ export function Team({ tone = "cream" }: { tone?: Tone }) {
           eyebrow="L'équipe"
           title="Les visages de Transports Brun"
         />
-        <ul className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-4">
-          {team.map((m) => (
-            <li key={m.name} data-reveal="" className="text-center">
+        <ul data-convoy="" className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-4">
+          {team.map((m, i) => (
+            <li
+              key={m.name}
+              data-reveal=""
+              style={{ ["--i" as string]: i % 4 }}
+              className="text-center"
+            >
               <div className="relative mx-auto aspect-square overflow-hidden rounded-lg bg-cream-2">
                 {m.photo ? (
                   <Image
