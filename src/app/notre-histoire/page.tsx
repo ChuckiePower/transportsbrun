@@ -1,8 +1,9 @@
 import { Photo } from "@/components/media/Photo";
-import { ContactSection } from "@/components/sections/ContactSection";
+import { CtaBand } from "@/components/sections/CtaBand";
 import { ExpertiseBlock } from "@/components/sections/ExpertiseBlock";
 import { PageHero } from "@/components/sections/PageHero";
 import { PullQuote } from "@/components/sections/PullQuote";
+import { Team } from "@/components/sections/Team";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
@@ -46,23 +47,40 @@ export default function NotreHistoirePage() {
             </div>
           </div>
           <div className="flex flex-col gap-6 lg:col-span-6">
-            <div
-              data-reveal-photo=""
-              className="relative aspect-[16/11] overflow-hidden rounded-xl bg-cream shadow-md"
-            >
-              <Photo
-                id={page.values.photo}
-                fill
-                sizes="(min-width: 1024px) 560px, 100vw"
-                className="object-cover"
-              />
+            {/* Mosaïque : la flotte familiale */}
+            <div className="grid grid-cols-5 gap-3 sm:gap-4">
+              {page.values.mosaic.map((id, i) => (
+                <div
+                  key={id}
+                  data-reveal-photo=""
+                  style={{ ["--i" as string]: i }}
+                  className={`relative overflow-hidden bg-cream shadow-sm ${
+                    i === 0
+                      ? "col-span-5 aspect-[16/9] rounded-xl"
+                      : i === 1
+                        ? "col-span-3 aspect-[4/3] rounded-lg"
+                        : "col-span-2 aspect-[3/4] rounded-[20px]"
+                  }`}
+                >
+                  <Photo
+                    id={id}
+                    fill
+                    sizes={
+                      i === 0
+                        ? "(min-width: 1024px) 560px, 100vw"
+                        : "(min-width: 1024px) 340px, 60vw"
+                    }
+                    className="object-cover"
+                  />
+                </div>
+              ))}
             </div>
             <PullQuote>{page.values.quote}</PullQuote>
           </div>
         </Container>
       </Section>
 
-      {/* Découvrez notre équipe : grande carte nuit */}
+      {/* Découvrez notre équipe : grande carte asphalte */}
       <section aria-labelledby="equipe-titre" className="py-[72px] lg:py-28">
         <Container>
           <div className="on-asphalt surface-asphalt grid gap-10 overflow-hidden rounded-xl p-6 text-white shadow-lg sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-14 lg:p-14">
@@ -99,8 +117,9 @@ export default function NotreHistoirePage() {
         </Container>
       </section>
 
+      <Team tone="cream-2" />
       <ExpertiseBlock tone="cream-2" />
-      <ContactSection />
+      <CtaBand />
     </>
   );
 }

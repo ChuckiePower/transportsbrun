@@ -11,6 +11,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { savoirFairePage as page } from "@/content/pages/savoir-faire";
 import { mainPhone, quoteHref, telHref } from "@/content/site";
 import { pageMetadata } from "@/lib/seo";
+import { AdrPlate } from "@/components/route/AdrPlate";
+import { RouteInline } from "@/components/route/Itinerary";
 
 const path = "/transport-routier-haut-rhin-alsace";
 export const metadata = pageMetadata(page.meta, path);
@@ -71,6 +73,14 @@ export default function SavoirFairePage() {
                 {page.ecology.title}
               </h2>
               <p className="prose-route mt-6">{page.ecology.text}</p>
+              {/* Illustration sans chiffre : des camions mieux remplis, moins de kilomètres inutiles */}
+              <RouteInline
+                className="mt-8 max-w-xl rounded-lg bg-cream p-4"
+                fromLabel="Départ"
+                from="Camions mieux remplis"
+                toLabel="Arrivée"
+                to="Moins de kilométrages inutiles"
+              />
             </div>
             <ul className="grid content-center gap-4 lg:col-span-5">
               {page.ecology.levers.map((lever, i) => (
@@ -104,7 +114,7 @@ export default function SavoirFairePage() {
         </Container>
       </Section>
 
-      {/* Sécurité : grande carte nuit */}
+      {/* Sécurité : encadré asphalte */}
       <section aria-labelledby="securite-titre" className="py-[72px] lg:py-28">
         <Container>
           <div className="on-asphalt surface-asphalt grid gap-10 overflow-hidden rounded-xl p-6 text-white shadow-lg sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-14 lg:p-14">
@@ -126,7 +136,7 @@ export default function SavoirFairePage() {
                     style={{ ["--i" as string]: i }}
                     className="rounded-lg bg-asphalt-2 p-5"
                   >
-                    <IconChip name={i === 0 ? "shield" : "clipboard"} tone="asphalt" />
+                    {i === 0 ? <IconChip name="shield" tone="asphalt" /> : <AdrPlate size="md" />}
                     <span className="mt-4 block font-display text-[1.125rem] font-bold text-white">
                       {pt.title}
                     </span>

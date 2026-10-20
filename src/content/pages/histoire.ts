@@ -31,7 +31,11 @@ export const histoirePage = {
       fr`L'entreprise Transports Brun, c'est avant tout de l'engagement. Un transport de marchandises réalisé dans les règles, où ponctualité et respect sont les maîtres mots. En cas de livraison tardive, vous serez toujours prévenu en avance, car nos chauffeurs sont localisables. De plus, notre société trouve des solutions simples et efficaces en cas de problème. Vous pourrez donc vous assurer d'un service irréprochable avec Transports Brun.`,
     ],
     quote: fr`Transports Brun, bien plus qu'un transporteur, des valeurs familiales enracinées`,
-    photo: pid("flotte/daf-xg-montagnes"),
+    mosaic: [
+      pid("flotte/daf-xg-montagnes"),
+      pid("flotte/trois-tracteurs-caisses-grillagees"),
+      pid("flotte/volvo-fh-crepuscule"),
+    ],
   },
 
   team: {

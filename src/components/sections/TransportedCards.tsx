@@ -25,9 +25,9 @@ function QuoteButton({ href, label }: { href: string; label: string }) {
 }
 
 /** « Ce que nous transportons » : cartes à photo, chacune avec un devis présélectionné */
-export function TransportedCards() {
+export function TransportedCards({ withAdr = true }: { withAdr?: boolean }) {
   const withPhoto = transported.filter((t) => t.photo);
-  const without = transported.filter((t) => !t.photo);
+  const without = withAdr ? transported.filter((t) => !t.photo) : [];
   return (
     <div className="space-y-5">
       <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

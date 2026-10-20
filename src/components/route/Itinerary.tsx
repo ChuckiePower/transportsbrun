@@ -132,16 +132,26 @@ export function RouteInline({
   return (
     <div className={cn("flex items-center gap-3", className)}>
       <StopMarker kind="start" dark={dark} className="size-8" />
-      <div className="min-w-0">
+      <div className="max-w-[40%] min-w-0">
         <p className={cn("eyebrow text-[0.6875rem]", dark && "text-sun")}>{fromLabel}</p>
-        <p className={cn("truncate font-display font-semibold", dark ? "text-white" : "text-ink")}>
+        <p
+          className={cn(
+            "line-clamp-2 font-display leading-snug font-semibold break-words",
+            dark ? "text-white" : "text-ink",
+          )}
+        >
           {from}
         </p>
       </div>
-      <RoadLine tone={dark ? "marking-soft" : "line"} className="min-w-8 flex-1" />
-      <div className="min-w-0 text-right">
+      <RoadLine tone={dark ? "marking-soft" : "line"} className="min-w-10 flex-1" />
+      <div className="max-w-[40%] min-w-0 text-right">
         <p className={cn("eyebrow text-[0.6875rem]", dark && "text-sun")}>{toLabel}</p>
-        <p className={cn("truncate font-display font-semibold", dark ? "text-white" : "text-ink")}>
+        <p
+          className={cn(
+            "line-clamp-2 font-display leading-snug font-semibold break-words",
+            dark ? "text-white" : "text-ink",
+          )}
+        >
           {to}
         </p>
       </div>

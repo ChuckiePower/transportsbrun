@@ -252,12 +252,16 @@ export function ReviewAside({
   data = defaultData,
   className,
 }: {
-  topic?: ReviewTopic;
+  /** Sujet(s) de la page : seul un avis qui en parle est affiché */
+  topic?: ReviewTopic | ReviewTopic[];
   data?: ReviewsData;
   className?: string;
 }) {
-  const review = topic ? data.reviews.find((r) => r.topics?.includes(topic)) : data.reviews[0];
-  if (!review && !(topic === undefined && hasRating(data))) return null;
+  const topics = topic === undefined ? null : Array.isArray(topic) ? topic : [topic];
+  const review = topics
+    ? data.reviews.find((r) => r.topics?.some((t) => topics.includes(t)))
+    : data.reviews[0];
+  if (!review && !(topics === null && hasRating(data))) return null;
   return (
     <aside
       aria-label="Avis client"

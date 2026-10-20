@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { RoadLine } from "@/components/route/RoadLine";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Icon } from "@/components/ui/Icon";
-import { mainNav, mainPhone, telHref } from "@/content/site";
+import { Icon, VehicleIcon } from "@/components/ui/Icon";
+import { mainNav, mainPhone, quoteHref, telHref } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Page introuvable",
@@ -13,41 +14,32 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <section className="py-10 lg:py-16">
-      <Container>
-        <div className="on-asphalt surface-asphalt relative isolate overflow-hidden rounded-xl px-6 py-14 text-white shadow-lg sm:px-10 sm:py-20 lg:px-16">
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 600 200"
-            fill="none"
-            className="absolute -right-10 -bottom-6 -z-10 hidden w-[36rem] max-w-none opacity-20 sm:block"
-          >
-            <path
-              d="M0 170 C 150 170, 200 40, 360 60 S 560 150, 600 40"
-              stroke="currentColor"
-              strokeWidth="26"
-              strokeLinecap="round"
-              className="text-asphalt-2"
-            />
-            <path
-              d="M0 170 C 150 170, 200 40, 360 60 S 560 150, 600 40"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeDasharray="16 18"
-              strokeLinecap="round"
-              className="text-sun"
-            />
-          </svg>
-          <Eyebrow className="mb-4 text-sun">Erreur 404</Eyebrow>
-          <h1 className="text-h1 font-extrabold text-white">Cette page a changé de route</h1>
+    <section className="px-3 py-6 sm:px-4 lg:py-10">
+      <div className="surface-asphalt on-asphalt relative mx-auto max-w-[87.5rem] overflow-hidden rounded-xl py-16 sm:py-24">
+        <Container>
+          <Eyebrow className="mb-4">Erreur 404</Eyebrow>
+          <h1 className="text-h1 font-extrabold text-white">Vous avez pris la mauvaise sortie</h1>
           <p className="mt-5 max-w-2xl text-lead text-marking/80">
             La page demandée n&apos;existe pas ou a été déplacée. Reprenez la route depuis
-            l&apos;accueil ou appelez-nous directement&#8239;: nous vous répondons du lundi au
-            vendredi.
+            l&apos;accueil, demandez votre devis ou appelez-nous directement&#8239;: nous vous
+            répondons du lundi au vendredi.
           </p>
-          <div data-hero-cta="" className="mt-9 flex flex-wrap gap-3">
+
+          {/* La route qui s'interrompt */}
+          <div aria-hidden="true" className="mt-10 flex items-center gap-4">
+            <VehicleIcon name="tracteur" className="size-12 shrink-0 text-marking" />
+            <RoadLine tone="marking-soft" className="w-2/5 max-w-sm" />
+            <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border-[1.5px] border-dashed border-marking/40 text-marking/60">
+              <Icon name="close" className="size-4" />
+            </span>
+          </div>
+
+          <div data-hero-cta="" className="mt-10 flex flex-wrap gap-3">
             <ButtonLink href="/" icon="arrowRight">
               Retour à l&apos;accueil
+            </ButtonLink>
+            <ButtonLink href={quoteHref} variant="on-asphalt" icon="arrowRight">
+              Demander un devis
             </ButtonLink>
             <ButtonLink
               href={telHref(mainPhone)}
@@ -58,7 +50,9 @@ export default function NotFound() {
               Appeler le {mainPhone.display}
             </ButtonLink>
           </div>
-          <nav aria-label="Pages du site" className="mt-14 border-t border-white/10 pt-8">
+
+          <nav aria-label="Pages du site" className="mt-14">
+            <RoadLine tone="marking-soft" className="mb-8 opacity-60" />
             <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
               {mainNav.map((item) => (
                 <li key={item.href}>
@@ -76,8 +70,8 @@ export default function NotFound() {
               ))}
             </ul>
           </nav>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }

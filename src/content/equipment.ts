@@ -4,6 +4,7 @@
  */
 import type { PhotoId } from "@/content/gallery";
 import { fr } from "@/lib/typo";
+import type { VehicleName } from "@/components/ui/Icon";
 
 /** Inventaire du parc, dans l'ordre du site actuel */
 export const fleetInventory: { item: string; details?: string[] }[] = [
@@ -30,14 +31,15 @@ export const fleetInventory: { item: string; details?: string[] }[] = [
 /** Parc présenté en cartes (mêmes éléments que l'inventaire, regroupés par type) */
 export const fleetCards: {
   name: string;
-  icon: "truck" | "flatbed" | "container" | "layers" | "route" | "bricks" | "crane";
+  /** Silhouette du véhicule */
+  vehicle: VehicleName;
   items?: string[];
   anchor?: string;
 }[] = [
-  { name: "Tracteurs", icon: "truck" },
+  { name: "Tracteurs", vehicle: "tracteur" },
   {
     name: "Plateaux",
-    icon: "flatbed",
+    vehicle: "plateau",
     anchor: "plateaux",
     items: [
       "3 normaux",
@@ -49,19 +51,19 @@ export const fleetCards: {
   },
   {
     name: "Openbox",
-    icon: "container",
+    vehicle: "openbox",
     anchor: "openbox",
     items: [fr`dont une adaptable en porte-conteneur`],
   },
   {
     name: "Tautliners",
-    icon: "layers",
+    vehicle: "tautliner",
     anchor: "tautliner",
     items: ["Porte-bobine", "Avec hayon"],
   },
-  { name: "Remorque Trax", icon: "route", anchor: "remorque-trax" },
-  { name: fr`Remorques porte-béton`, icon: "bricks" },
-  { name: "Camion-grue avec remorque", icon: "crane", anchor: "camion-grue" },
+  { name: "Remorque Trax", vehicle: "trax", anchor: "remorque-trax" },
+  { name: fr`Remorques porte-béton`, vehicle: "porte-beton" },
+  { name: "Camion-grue avec remorque", vehicle: "camion-grue", anchor: "camion-grue" },
 ];
 
 export const fleetCapabilities = {

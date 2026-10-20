@@ -37,7 +37,7 @@ export function DimensionDrawing({ unit }: { unit: "Porteur" | "Remorque" }) {
         </span>
       </figcaption>
       <svg
-        viewBox="0 0 430 200"
+        viewBox="0 56 430 148"
         role="img"
         aria-label={label}
         className="mt-4 h-auto w-full"
@@ -83,17 +83,25 @@ export function DimensionDrawing({ unit }: { unit: "Porteur" | "Remorque" }) {
             <circle cx={x1 - 50} cy={wheelY} r={wheelR} />
           </g>
         )}
-        {/* cote de longueur (au-dessus du plateau) */}
+        {/* cote de longueur (sous le véhicule, pour ne pas croiser la grue) */}
         <g className="stroke-brand" strokeWidth="1.5">
-          <path d={`M${x0} ${deckTop - 6}V${deckTop - 32}`} strokeDasharray="3 3" />
-          <path d={`M${x1} ${deckTop - 6}V${deckTop - 32}`} strokeDasharray="3 3" />
-          <path d={`M${x0 + 2} ${deckTop - 26}H${x1 - 2}`} />
-          <path d={`m${x0 + 9} ${deckTop - 31}-7 5 7 5`} />
-          <path d={`m${x1 - 9} ${deckTop - 31} 7 5-7 5`} />
+          <path d={`M${x0} ${deckTop + 12}V${GROUND + 24}`} strokeDasharray="3 3" />
+          <path d={`M${x1} ${deckTop + 12}V${GROUND + 24}`} strokeDasharray="3 3" />
+          <path d={`M${x0 + 2} ${GROUND + 18}H${x1 - 2}`} />
+          <path d={`m${x0 + 9} ${GROUND + 13}-7 5 7 5`} />
+          <path d={`m${x1 - 9} ${GROUND + 13} 7 5-7 5`} />
         </g>
+        <rect
+          x={(x0 + x1) / 2 - 30}
+          y={GROUND + 8}
+          width="60"
+          height="20"
+          rx="10"
+          className="fill-surface"
+        />
         <text
           x={(x0 + x1) / 2}
-          y={deckTop - 34}
+          y={GROUND + 23}
           textAnchor="middle"
           className="fill-brand font-sign text-[15px] font-bold"
         >

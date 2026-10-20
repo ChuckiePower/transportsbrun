@@ -18,16 +18,6 @@ export const plateauPage = {
     focal: "62% 50%",
   },
 
-  /** Points clés en haut de page (scannables) */
-  keyPoints: [
-    fr`Charges hors normes : larges, longues ou très lourdes`,
-    fr`Convois exceptionnels, agréments catégorie 1 et 2`,
-    fr`Accès aux zones à hauteur restreinte`,
-    fr`Accès référencés au sein des centrales nucléaires`,
-    fr`ADR de base et colisage`,
-    fr`Membre actif du Groupement France Plateau`,
-  ],
-
   intro: fr`Chez Transports Brun, nous comprenons l'importance de la fiabilité et de la flexibilité pour le transport de vos biens.`,
 
   advantages: {

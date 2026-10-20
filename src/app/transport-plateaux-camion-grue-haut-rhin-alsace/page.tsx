@@ -2,17 +2,17 @@ import Image from "next/image";
 import francePlateau from "@brand/logo-france-plateaux.png";
 import { Photo } from "@/components/media/Photo";
 import { PhotoGallery } from "@/components/media/PhotoGallery";
+import { AdrPlate } from "@/components/route/AdrPlate";
+import { ConvoiPanel } from "@/components/route/ConvoiPanel";
+import { DimensionDrawing } from "@/components/route/DimensionDrawing";
 import { CtaBand } from "@/components/sections/CtaBand";
-import { Faq } from "@/components/sections/Faq";
-import { KeyPoints } from "@/components/sections/KeyPoints";
 import { PageHero } from "@/components/sections/PageHero";
 import { PullQuote } from "@/components/sections/PullQuote";
-import { SpecSheet } from "@/components/sections/SpecSheet";
+import { ServiceFooter } from "@/components/sections/ServiceFooter";
 import { JsonLd, serviceJsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import type { IconName } from "@/components/ui/Icon";
-import { IconChip } from "@/components/ui/IconChip";
+import { Icon, VehicleIcon } from "@/components/ui/Icon";
 import { renderRich } from "@/components/ui/RichText";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -26,30 +26,54 @@ import { pageMetadata } from "@/lib/seo";
 const path = "/transport-plateaux-camion-grue-haut-rhin-alsace";
 export const metadata = pageMetadata(page.meta, path);
 
-const advantageIcons: IconName[] = ["ruler", "route", "warehouse", "shield", "flame"];
+/** Repère visuel de chaque avantage : plateau, panneau convoi, hauteur, centrale, plaque ADR */
+function advantageVisual(i: number) {
+  const chip =
+    "inline-flex size-12 items-center justify-center rounded-full bg-brand-soft text-brand";
+  switch (i) {
+    case 0:
+      return (
+        <span className={`${chip} w-16`}>
+          <VehicleIcon name="plateau" className="size-10" />
+        </span>
+      );
+    case 1:
+      return <ConvoiPanel size="md" />;
+    case 2:
+      return (
+        <span className={chip}>
+          <Icon name="height" className="size-6" />
+        </span>
+      );
+    case 3:
+      return (
+        <span className={chip}>
+          <Icon name="plant" className="size-6" />
+        </span>
+      );
+    default:
+      return <AdrPlate size="md" />;
+  }
+}
 
 export default function PlateauGruePage() {
   return (
     <>
-      <PageHero
-        {...page.hero}
-        crumbs={[{ name: "Transport plateau / grue", path }]}
-        aside={<KeyPoints points={page.keyPoints} />}
-      >
+      <PageHero {...page.hero} crumbs={[{ name: "Transport plateau / grue", path }]}>
         <ButtonLink href={quoteLink("transport-plateau")} icon="arrowRight">
           Demander un devis
         </ButtonLink>
         <ButtonLink href={telHref(mainPhone)} variant="secondary" icon="phone" iconPosition="start">
-          {mainPhone.display}
+          Appeler le {mainPhone.display}
         </ButtonLink>
       </PageHero>
 
-      {/* Avantages */}
+      {/* Points clés : les 5 avantages, chacun avec son repère métier */}
       <Section tone="cream-2" aria-labelledby="avantages-titre">
         <Container>
           <SectionHeading
             id="avantages-titre"
-            eyebrow="Hors normes · Convois exceptionnels · ADR"
+            eyebrow="Points clés"
             title={page.advantages.title}
             lead={page.intro}
           />
@@ -65,10 +89,7 @@ export default function PlateauGruePage() {
                     : "group rounded-lg border border-line bg-surface p-7 shadow-sm"
                 }
               >
-                <IconChip
-                  name={advantageIcons[i] ?? "badge"}
-                  className="group-hover:rotate-6 motion-reduce:rotate-0"
-                />
+                <span className="flex h-12 items-center">{advantageVisual(i)}</span>
                 <h3 className="mt-5 text-h3 font-bold">{item.title}</h3>
                 {"subtitle" in item && item.subtitle ? (
                   <p className="mt-1 text-[0.875rem] font-medium text-ink-soft">{item.subtitle}</p>
@@ -132,7 +153,14 @@ export default function PlateauGruePage() {
               />
             </div>
             <div data-reveal="">
-              <SpecSheet title={page.fleet.specsTitle} />
+              <h3 className="flex items-center gap-3 text-h3 font-bold">
+                <VehicleIcon name="camion-grue" className="size-10 text-brand" />
+                {page.fleet.specsTitle}
+              </h3>
+              <div className="mt-5 grid gap-4">
+                <DimensionDrawing unit="Porteur" />
+                <DimensionDrawing unit="Remorque" />
+              </div>
             </div>
           </div>
         </Container>
@@ -199,9 +227,11 @@ export default function PlateauGruePage() {
           />
         </Container>
       </Section>
-
-      <Faq items={pickFaqs(faqFor.plateau)} tone="cream-2" />
-      <CtaBand quote={quoteLink("transport-plateau")} />
+      <ServiceFooter
+        topics={["plateau", "grue", "convoi"]}
+        faqs={pickFaqs(faqFor.plateau)}
+        quote={quoteLink("transport-plateau")}
+      />
       <JsonLd
         data={serviceJsonLd({
           name: "Transport plateau et camion-grue",

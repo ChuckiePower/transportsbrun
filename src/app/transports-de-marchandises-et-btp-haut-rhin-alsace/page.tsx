@@ -1,8 +1,8 @@
 import { PhotoGallery } from "@/components/media/PhotoGallery";
-import { CtaBand } from "@/components/sections/CtaBand";
-import { Faq } from "@/components/sections/Faq";
+import { AdrPlate } from "@/components/route/AdrPlate";
 import { KeyPoints } from "@/components/sections/KeyPoints";
 import { PageHero } from "@/components/sections/PageHero";
+import { ServiceFooter } from "@/components/sections/ServiceFooter";
 import { TransportedCards } from "@/components/sections/TransportedCards";
 import { JsonLd, serviceJsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/Button";
@@ -34,7 +34,7 @@ export default function MarchandisesPage() {
           Demander un devis
         </ButtonLink>
         <ButtonLink href={telHref(mainPhone)} variant="secondary" icon="phone" iconPosition="start">
-          {mainPhone.display}
+          Appeler le {mainPhone.display}
         </ButtonLink>
       </PageHero>
 
@@ -48,7 +48,7 @@ export default function MarchandisesPage() {
             lead={`${page.intro.text} ${page.examples.lead}`}
             className="mb-12"
           />
-          <TransportedCards />
+          <TransportedCards withAdr={false} />
         </Container>
       </Section>
 
@@ -59,7 +59,7 @@ export default function MarchandisesPage() {
             data-reveal=""
             className="on-asphalt surface-asphalt rounded-xl p-8 text-white shadow-md sm:p-12 lg:col-span-7"
           >
-            <IconChip name="flame" tone="asphalt" />
+            <AdrPlate size="lg" />
             <p className="eyebrow mt-6">{page.adr.eyebrow}</p>
             <h2 id="adr-titre" className="mt-2 text-h2 font-extrabold text-white">
               {page.adr.title}
@@ -77,7 +77,7 @@ export default function MarchandisesPage() {
           >
             <div>
               <IconChip name="clipboard" />
-              <h2 className="mt-6 font-display text-h3 font-bold">
+              <h2 className="mt-6 font-display text-h2 font-extrabold">
                 Comment le prix est-il établi&#8239;?
               </h2>
               <p className="mt-3 text-ink">{page.priceNote.text}</p>
@@ -119,9 +119,11 @@ export default function MarchandisesPage() {
           />
         </Container>
       </Section>
-
-      <Faq items={pickFaqs(faqFor.marchandises)} tone="none" />
-      <CtaBand quote={quoteLink("transport-marchandises")} />
+      <ServiceFooter
+        topics={["marchandises", "adr"]}
+        faqs={pickFaqs(faqFor.marchandises)}
+        quote={quoteLink("transport-marchandises")}
+      />
       <JsonLd
         data={serviceJsonLd({
           name: "Transport de marchandises",
