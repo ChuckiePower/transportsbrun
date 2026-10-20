@@ -299,3 +299,10 @@ Avis : les étoiles se remplissent une fois à l'arrivée de la carte (rien en m
      CLS 0,05 mesuré en 4G simulée). La police des titres passe en `font-display: optional` :
      préchargée, elle est presque toujours là au premier rendu ; sinon la police de repli reste pour
      cette page (la suivante, en cache, l'affiche). Inter et Overpass restent en `swap`.
+- **Polices allégées** : sous l'étranglement simulé, la photo du hero (élément LCP) partageait la bande
+  passante avec Inter (48 Ko), Plus Jakarta (27 Ko) et Overpass (26 Ko, ajoutée au lot 2) : LCP simulé
+  2,5 à 2,8 s. Inter et Plus Jakarta sont réduites comme Overpass : caractères du français (dont
+  « ′ », « × », « € », guillemets et espaces fines), graisses utilisées (Inter 400–700, Jakarta 500–800),
+  fonctions OpenType utiles (crénage, ligatures, chiffres tabulaires). Inter 48 → 26 Ko, Jakarta 27 →
+  18 Ko. Un caractère hors sous-ensemble (nom saisi dans le formulaire, par exemple) s'affiche dans la
+  police de repli.

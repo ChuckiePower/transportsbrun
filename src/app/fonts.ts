@@ -2,13 +2,15 @@ import localFont from "next/font/local";
 
 /**
  * Titres, navigation, boutons : Plus Jakarta Sans variable (OFL), auto-hébergée.
+ * Comme Inter et Overpass : sous-ensemble latin français, axe de graisse réduit aux graisses
+ * utilisées, fonctions OpenType utiles seulement (Inter 48 → 26 Ko, Jakarta 27 → 18 Ko).
  * Préchargée et en « optional » : utilisée dès qu'elle est là au premier rendu (cas courant),
  * sinon la police de repli reste affichée pour cette page, sans échange. Avec « swap »,
  * l'échange tardif refaisait la césure du grand titre du hero (un mot passait à la ligne).
  */
 export const fontDisplay = localFont({
-  src: "../fonts/plus-jakarta-sans-latin-wght-normal.woff2",
-  weight: "200 800",
+  src: "../fonts/plus-jakarta-sans-latin-fr-500-800.woff2",
+  weight: "500 800",
   style: "normal",
   variable: "--font-jakarta",
   display: "optional",
@@ -18,8 +20,8 @@ export const fontDisplay = localFont({
 
 /** Texte courant : Inter variable (OFL), auto-hébergée */
 export const fontSans = localFont({
-  src: "../fonts/inter-latin-wght-normal.woff2",
-  weight: "100 900",
+  src: "../fonts/inter-latin-fr-400-700.woff2",
+  weight: "400 700",
   style: "normal",
   variable: "--font-inter",
   display: "swap",
