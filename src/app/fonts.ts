@@ -1,12 +1,17 @@
 import localFont from "next/font/local";
 
-/** Titres, navigation, boutons : Plus Jakarta Sans variable (OFL), auto-hébergée */
+/**
+ * Titres, navigation, boutons : Plus Jakarta Sans variable (OFL), auto-hébergée.
+ * Préchargée et en « optional » : utilisée dès qu'elle est là au premier rendu (cas courant),
+ * sinon la police de repli reste affichée pour cette page, sans échange. Avec « swap »,
+ * l'échange tardif refaisait la césure du grand titre du hero et décalait tout le bloc (CLS 0,19).
+ */
 export const fontDisplay = localFont({
   src: "../fonts/plus-jakarta-sans-latin-wght-normal.woff2",
   weight: "200 800",
   style: "normal",
   variable: "--font-jakarta",
-  display: "swap",
+  display: "optional",
   fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "Roboto", "sans-serif"],
   adjustFontFallback: "Arial",
 });

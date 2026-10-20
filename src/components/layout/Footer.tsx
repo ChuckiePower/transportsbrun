@@ -84,7 +84,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <nav aria-label="Plan du site" className="lg:col-span-2">
+          <nav id="plan-du-site" aria-label="Plan du site" className="scroll-mt-28 lg:col-span-2">
             <h2 className={heading}>Le site</h2>
             <ul className="mt-4 space-y-2">
               {[{ href: "/", label: "Accueil" }, ...mainNav].map((item) => (

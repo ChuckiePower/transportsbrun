@@ -7,5 +7,9 @@
 
 localhost:8443 {
 	encode zstd gzip
-	reverse_proxy web:3000
+	reverse_proxy web:3000 {
+		# Présente le domaine final à l'application : sinon, l'hôte « localhost » est traité
+		# comme une préproduction (noindex) et l'audit SEO de Lighthouse échoue.
+		header_up X-Forwarded-Host transports-brun.com
+	}
 }

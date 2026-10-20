@@ -4,6 +4,34 @@ Rien de ce qui suit ne bloque la mise en ligne technique, mais chaque point doit
 avant (ou juste après) la bascule. Les textes concernés sont affichés **tels qu'ils figurent sur
 le site actuel** tant qu'ils ne sont pas validés : rien n'a été réécrit de ma propre initiative.
 
+## 0. L'essentiel (liste consolidée)
+
+Tout ce qui manque reste **hors de l'interface** : les sections concernées sont masquées tant que les
+données ne sont pas fournies (avis, équipe, logos clients). Détails dans les sections suivantes.
+
+- [ ] **Photos originales en haute définition** (sur l'hébergement actuel) : voir §2.
+- [ ] **Logo en vectoriel** (SVG, PDF ou AI) : voir §2.
+- [ ] **Photo d'une remorque porte-béton** : la carte « Remorques porte-béton » de la page Équipement
+      est la seule sans photo.
+- [ ] **Photos de l'équipe et des chauffeurs**, avec l'accord écrit des personnes : à renseigner dans
+      `src/content/team.ts` (nom ou prénom, rôle, photo). La section « Notre équipe » reste masquée
+      tant que le fichier est vide.
+- [ ] **Avis Google** à recopier dans `src/content/reviews.ts` (voir §5) : note globale et nombre
+      d'avis, date de mise à jour, lien de la fiche, lien « Laisser un avis », puis 3 à 6 avis choisis
+      sur la fiche (texte exact, prénom + initiale du nom, note, date). Rien ne s'affiche tant que le
+      fichier est vide.
+- [ ] (Facultatif) **Logos de clients**, avec leur accord : `src/content/client-logos.ts`.
+- [ ] **Confirmer que ces mentions sont toujours à jour** : « accès référencés en centrales nucléaires »,
+      « membre actif du Groupement France Plateau », « agréments de catégorie 1 et 2 » (convois
+      exceptionnels). Elles apparaissent dans le bandeau « en bref », les panneaux et les pages de service.
+- [ ] **Valider la formulation des 3 étapes** (« Votre transport en trois étapes », accueil) et le
+      parcours **« Être rappelé »** (voir §5).
+- [ ] **Textes légaux** à valider : hébergeur, agence web, crédit Shutterstock, horaires (13h30 ou 14h),
+      cookies, données personnelles, directeur de la publication (voir §1).
+- [ ] **Adresse commerciale en Gmail** (`commercialtransportsbrun@gmail.com`) à remplacer par une adresse
+      du domaine (par exemple `commercial@transports-brun.com`) : une seule ligne dans `src/content/site.ts`.
+- [ ] **Identifiants SMTP et `CONTACT_TO`** pour la production (voir §3), à saisir dans `.env` sur le VPS.
+
 ## 1. Textes légaux (`src/content/legal.ts`, commentaires `TODO(manu): à valider`)
 
 | # | Point | Où | Ce qu'il faut décider |
@@ -27,8 +55,9 @@ le site actuel** tant qu'ils ne sont pas validés : rien n'a été réécrit de 
       dans `content/photos/…` puis reconstruisez : dimensions et aperçus flous se mettent à jour seuls.
       La colonne de droite donne le chemin du fichier d'origine sur l'hébergement actuel
       (à récupérer par FTP/gestionnaire de fichiers IONOS, dossier `images/`).
-- [ ] (Facultatif) **Photos d'équipe** : la section « Découvrez notre équipe » est illustrée par une
-      photo de camion faute de photo des chauffeurs.
+- [ ] (Facultatif) **Photos d'équipe** : la section « Découvrez notre équipe » de la page Histoire est
+      illustrée par une photo de camion faute de photo des chauffeurs ; la section « Notre équipe »
+      (`src/content/team.ts`) reste masquée tant qu'elle est vide.
 
 | Fichier dans `content/photos/` | Taille actuelle | Original sur l'hébergement |
 |---|---|---|
@@ -136,9 +165,11 @@ le site actuel** tant qu'ils ne sont pas validés : rien n'a été réécrit de 
 - [ ] **H1 de l'accueil** : « Transport plateau, camion-grue et charges hors normes en Alsace »
       (remplace « Transport plateau grue et plateau »).
 - [ ] **Titres et descriptions** des pages (onglet du navigateur / Google) : listés dans `docs/DECISIONS.md`.
-- [ ] **Bandeau de confiance** de l'accueil : Entreprise familiale (créée le 2 mars 2018) · Près de 25 ans
-      d'expérience · Convois exceptionnels cat. 1 et 2 · ADR de base et colisage · Accès référencés en
-      centrales nucléaires · Membre du Groupement France Plateau · Chauffeurs localisables.
+- [ ] **Bandeau « en bref »** de l'accueil : Entreprise familiale (créée le 2 mars 2018) · Près de 25 ans
+      de métier dans le domaine du transport · Convois exceptionnels (agréments catégorie 1 et 2) · ADR de
+      base et colisage · Centrales nucléaires (accès référencés) · Groupement France Plateau (membre actif).
+      « Chauffeurs localisables » figure dans les micro-preuves du hero tant que la note Google n'est pas
+      renseignée, puis dans la liste « Pourquoi Transports Brun ».
 - [ ] **Libellés des e-mails** : Contact / Comptabilité / Exploitation / Commercial (déduits des adresses).
 - [ ] **Catégorie « Plateaux »** de la page Équipement : illustrée par 4 photos de semi-remorques plateau
       choisies dans la galerie plateau (le site actuel n'avait pas de galerie dédiée).
@@ -151,11 +182,23 @@ le site actuel** tant qu'ils ne sont pas validés : rien n'a été réécrit de 
 
 ## 5. Refonte visuelle « Route douce » (v2) : à fournir ou à valider
 
-### Preuves sociales (rien n'est affiché tant que ce n'est pas fourni)
+### Avis Google (rien n'est affiché tant que ce n'est pas fourni)
 
-- [ ] **Fournir 3-5 avis clients autorisés, logos clients autorisés, note et lien Google.**
-      Les emplacements sont prêts sur l'accueil (`src/components/sections/SocialProof.tsx`, `TODO(manu)`) ;
-      chaque avis : texte exact, prénom/nom ou fonction, entreprise, accord écrit du client.
+- [ ] Remplir **`src/content/reviews.ts`** à partir de la fiche Google de l'entreprise (aucun widget ni
+      script Google : les avis sont recopiés à la main).
+      - `rating` (ex. `4.8`), `count` (nombre d'avis), `updatedAt` (date du relevé, `AAAA-MM-JJ`) ;
+      - `profileUrl` (lien de la fiche) et `writeReviewUrl` (lien « Laisser un avis ») ;
+      - `reviews` : 3 à 6 avis, chacun avec `author` (prénom + initiale du nom), `rating`, `date`,
+        `text` (**texte exact**, toute coupe signalée par « […] »), `url` facultative, et `topics`
+        facultatifs (`plateau`, `grue`, `convoi`, `marchandises`, `adr`, `equipement`) pour l'afficher aussi en bas de
+        la page de service correspondante.
+- Où ils apparaissent : section « Ce que disent nos clients » (accueil, après « Pourquoi Transports
+  Brun »), note dans le bandeau « en bref » et les micro-preuves du hero, note et avis court à côté du
+  formulaire de contact, avis du même sujet en bas des pages de service.
+- Les données de démonstration de `tests/fixtures/reviews.ts` ne servent qu'aux tests et à la capture
+  `docs/screenshots/final/avis-donnees-de-test-1440.jpg` ; elles ne sont jamais publiées.
+- Les avis ne sont pas balisés en JSON-LD (`Review`, `aggregateRating`) : Google l'interdit pour des
+  avis repris d'une autre plateforme.
 
 ### Textes ajoutés pour la conversion (repris du site, à relire)
 
@@ -169,14 +212,17 @@ le site actuel** tant qu'ils ne sont pas validés : rien n'a été réécrit de 
 - [ ] **FAQ** (`src/content/faq.ts`) : 6 questions (types de charges, convois exceptionnels, intervention
       hors d'Alsace, matières dangereuses, calcul du prix, adresse et horaires). Les réponses reprennent
       les phrases du site ; vérifier qu'elles restent exactes.
-- [ ] **Points clés** des pages de service (`src/content/pages/plateau.ts`, `marchandises.ts` → `keyPoints`) :
-      plateau/grue — charges hors normes, convois exceptionnels cat. 1 et 2, zones à hauteur restreinte,
-      accès référencés en centrales nucléaires, ADR de base et colisage, membre actif du Groupement
-      France Plateau ; marchandises — fret interurbain sur tous types de route, matériaux livrés sur vos
-      chantiers, chauffeurs formés à l'ADR, rapport annuel d'un conseiller ADR.
-- [ ] **Bandeaux d'appel intermédiaires** : « Un transport plateau ou grue à prévoir ? », « Prêt à décrire
-      votre transport ? » (« Le formulaire de devis se remplit en deux étapes. »), « Un convoi exceptionnel
-      ou un levage à prévoir ? », « Un transport hors normes à organiser ? », « Un transport à organiser ? ».
+- [ ] **Points clés** des pages de service : plateau/grue — les 5 avantages du site actuel, illustrés
+      (charges hors normes, convois exceptionnels, zones réglementées, centrales nucléaires, ADR) ;
+      marchandises (`src/content/pages/marchandises.ts` → `keyPoints`) — fret interurbain sur tous types
+      de route, matériaux livrés sur vos chantiers, chauffeurs formés à l'ADR, rapport annuel d'un
+      conseiller ADR.
+- [ ] **Bandeaux d'appel intermédiaires** : « Un transport plateau ou un levage à prévoir ? », « Prêt à
+      décrire votre transport ? » (« Le formulaire de devis se remplit en deux étapes. »), « Un convoi
+      exceptionnel ou un levage à prévoir ? », « Un transport hors normes à organiser ? », « Un transport
+      à organiser ? ».
+- [ ] **Formulaire de devis** : récapitulatif « Bon de transport » avant l'envoi et libellé « Envoyer ma
+      demande de devis » ; écran final « Demande bien reçue, merci ! ».
 
 ### Photos choisies pour « Ce que nous transportons » (`src/content/transported.ts`)
 
@@ -196,3 +242,6 @@ Illustrations choisies dans la photothèque ; à confirmer ou à remplacer par u
 
 - [ ] Les demandes de rappel arrivent à la même adresse que les devis (`CONTACT_TO`), avec l'objet
       « Demande de rappel – nom – téléphone ». Confirmer que c'est la bonne boîte (ou en indiquer une autre).
+- [ ] Parcours à valider : bouton « Être rappelé » (hero, bandeau final, page Contact) → tiroir avec nom,
+      téléphone et type de demande facultatif. Sans JavaScript, le lien mène au mini-formulaire
+      « Être rappelé » de la page Contact.

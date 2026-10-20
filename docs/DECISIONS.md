@@ -273,3 +273,26 @@ Tout en CSS (transitions, animations, `animation-timeline: view()`) avec un seul
 | 16 | Transitions de page | `<ViewTransition>` de React autour du contenu : fondu de 200 ms là où le navigateur le permet. |
 
 Avis : les étoiles se remplissent une fois à l'arrivée de la carte (rien en mouvement réduit).
+
+### Qualité (lot 7)
+- **Poids du HTML** : l'aperçu flou (data-URI d'environ 2,5 Ko) était sérialisé deux fois par photo
+  (HTML et charge RSC, `next/image` étant un composant client). Il est désormais réservé aux photos
+  préchargées du haut de page ; ailleurs, le fond crème du cadre sert d'attente. Pastilles du bandeau
+  défilant et rouleaux du compteur stylés par leur liste (`*:`) plutôt qu'élément par élément.
+  Accueil : 346 → 288 Ko brut, 42 → 39 Ko compressé. Le reste est surtout la charge RSC
+  inhérente à Next.js (le texte de la page y figure une seconde fois).
+- **Tablette (768 px)** : débordement horizontal de la navigation par ancres (Équipement), texte coupé à
+  côté du panneau convoi (bandeau « en bref »), panneau convoi qui chevauchait son titre (« Pourquoi »),
+  bandeau d'appel compact trop étroit : corrigés, et un test vérifie l'absence de défilement horizontal
+  sur toutes les pages à 375, 768, 1024 et 1440 px.
+- **Sans JavaScript** : le bouton « Menu » (mobile) devient un lien vers le plan du site du pied de page.
+- **Mesure Lighthouse** : `deploy/Caddyfile.local` transmet `X-Forwarded-Host: transports-brun.com`,
+  sinon `localhost` est traité comme une préproduction (`noindex`) et l'audit SEO échoue.
+- **Avis de démonstration** : `REVIEWS_FIXTURE=1 pnpm build` substitue `tests/fixtures/reviews.ts` (alias
+  `@reviews-data`) pour les tests et la capture `avis-donnees-de-test-*.jpg` ; jamais en production.
+- **Police des titres en `font-display: optional`** : mesurée derrière Caddy, l'accueil avait un CLS de
+  0,19 — l'arrivée tardive de Plus Jakarta refaisait la césure du grand titre du hero (un mot passait à
+  la ligne) et, le bloc étant aligné en bas de la photo, tout le texte du hero bougeait. Préchargée,
+  la police est presque toujours là au premier rendu ; sinon la police de repli reste pour cette page
+  (la suivante, déjà en cache, l'affiche). Inter (texte courant) reste en `swap`, Overpass aussi
+  (textes courts, sans effet mesuré). CLS de l'accueil après correction : 0,0002.

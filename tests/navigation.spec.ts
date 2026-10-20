@@ -313,3 +313,21 @@ test("aucun défilement horizontal (375, 768, 1024 et 1440 px)", async ({ page }
     }
   }
 });
+
+test("sans JavaScript, sur mobile : « Menu » mène au plan du site du pied de page", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 375, height: 812 },
+  });
+  const page = await context.newPage();
+  await page.goto("/notre-histoire");
+  const menu = page.getByRole("link", { name: "Menu" });
+  await expect(menu).toBeVisible();
+  await menu.click();
+  await expect(page).toHaveURL(/#plan-du-site$/);
+  const plan = page.getByRole("navigation", { name: "Plan du site" });
+  await expect(plan.getByRole("link", { name: "Notre équipement" })).toBeInViewport();
+  await context.close();
+});

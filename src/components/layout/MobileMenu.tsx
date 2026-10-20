@@ -15,8 +15,15 @@ export function MobileMenu() {
   const button = useRef<HTMLButtonElement>(null);
   const preload = () => setLoaded(true);
 
+  const look =
+    "min-h-11 items-center gap-2 rounded-full border-[1.5px] border-line bg-surface px-4 font-display text-[0.9rem] font-semibold text-ink transition-colors hover:border-ink";
   return (
-    <>
+    <span className="contents xl:hidden">
+      {/* Sans JavaScript : le bouton mène au plan du site du pied de page */}
+      <a href="#plan-du-site" className={`inline-flex js:hidden ${look}`}>
+        <Icon name="menu" className="size-[18px]" />
+        <span>Menu</span>
+      </a>
       <button
         ref={button}
         type="button"
@@ -30,7 +37,7 @@ export function MobileMenu() {
           setLoaded(true);
           setOpen(true);
         }}
-        className="inline-flex min-h-11 items-center gap-2 rounded-full border-[1.5px] border-line bg-surface px-4 font-display text-[0.9rem] font-semibold text-ink transition-colors hover:border-ink xl:hidden"
+        className={`hidden js:inline-flex ${look}`}
       >
         <Icon name="menu" className="size-[18px]" />
         <span>Menu</span>
@@ -38,6 +45,6 @@ export function MobileMenu() {
       {loaded ? (
         <MobileMenuPanel open={open} onOpenChange={setOpen} returnFocusTo={button} />
       ) : null}
-    </>
+    </span>
   );
 }
