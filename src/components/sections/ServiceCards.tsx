@@ -65,8 +65,7 @@ export function ServiceCards({ headingLevel: H = "h3" }: { headingLevel?: "h2" |
                   href={s.href}
                   className="mt-5 inline-flex min-h-11 items-center gap-2 self-start rounded-full font-display text-[0.95rem] font-semibold text-brand after:absolute after:inset-0 after:rounded-lg after:content-['']"
                 >
-                  En savoir plus
-                  <span className="sr-only"> : {s.title}</span>
+                  {s.linkLabel}
                   <Icon
                     name="arrowRight"
                     className="size-4 transition-transform duration-200 group-hover:translate-x-[3px]"

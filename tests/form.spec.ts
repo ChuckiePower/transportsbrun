@@ -45,7 +45,7 @@ test.describe("Formulaire de devis en deux étapes", () => {
     await expect(page.locator("#devis").getByLabel("Type de demande")).toBeHidden();
 
     // Étape 2 vide : erreurs et focus sur le Nom
-    await page.getByRole("button", { name: "Envoyer" }).click();
+    await page.getByRole("button", { name: "Envoyer ma demande de devis" }).click();
     const name = page.locator("#devis").getByLabel(/^Nom/);
     await expect(name).toBeFocused();
     await expect(page.getByText("Indiquez votre nom.")).toBeVisible();
@@ -59,22 +59,46 @@ test.describe("Formulaire de devis en deux étapes", () => {
     await expect(page.locator("#devis").getByLabel("Lieu de chargement")).toHaveValue("Sélestat");
   });
 
-  test("parcours complet : présélection par l'URL → 2 étapes → succès (e-mail simulé)", async ({
+  test("parcours complet : accueil → « Demander un devis pour ce transport » → 2 étapes → bon de transport → succès (e-mail simulé)", async ({
     page,
   }) => {
     const before = outbox().length;
     await page.setExtraHTTPHeaders({ "x-forwarded-for": freshIp() });
-    await page.goto("/contact?type=camion-grue&nature=modules#devis");
+    await page.goto("/");
+    await page.getByRole("link", { name: /Demander un devis pour ce transport : Modules/ }).click();
+    await expect(page).toHaveURL(/\/contact\?type=transport-marchandises&nature=modules#devis$/);
 
-    await expect(page.locator("#devis").getByLabel("Type de demande")).toHaveValue("Camion-grue");
-    await expect(page.locator("#devis").getByLabel("Nature de la charge")).toHaveValue("Modules");
+    const form = page.locator("#devis");
+    await expect(form.getByLabel("Type de demande")).toHaveValue("Transport de marchandises");
+    await expect(form.getByLabel("Nature de la charge")).toHaveValue("Modules");
+
+    // Itinéraire en direct (texte seul) au-dessus des lieux
     await fillStep1(page);
+    await form.getByLabel("Date souhaitée").fill("2031-03-14");
+    const route = form.locator("[aria-hidden='true']").filter({ hasText: "Chargement" }).first();
+    await expect(route).toContainText("Sélestat");
+    await expect(route).toContainText("Strasbourg");
+
     await page.getByRole("button", { name: /Suivant/ }).click();
     await fillStep2(page);
-    await page.waitForTimeout(MIN_FILL_WAIT);
-    await page.getByRole("button", { name: "Envoyer" }).click();
 
-    const status = page.getByRole("status").filter({ hasText: "Demande envoyée" });
+    // Bon de transport avant l'envoi
+    const slip = form.getByRole("region", { name: "Bon de transport" });
+    await expect(slip).toContainText("Camion-grue");
+    await expect(slip).toContainText("Sélestat");
+    await expect(slip).toContainText("Strasbourg");
+    await expect(slip).toContainText("14 mars 2031");
+    await expect(slip).toContainText("Poutres, 12 m, 8 t");
+    // « Modifier » ramène à l'étape 1 sans rien perdre
+    await slip.getByRole("button", { name: /Modifier/ }).click();
+    await expect(page.getByText("Étape 1 sur 2")).toBeVisible();
+    await expect(form.getByLabel("Lieu de livraison")).toHaveValue("Strasbourg");
+    await page.getByRole("button", { name: /Suivant/ }).click();
+
+    await page.waitForTimeout(MIN_FILL_WAIT);
+    await page.getByRole("button", { name: "Envoyer ma demande de devis" }).click();
+
+    const status = page.getByRole("status").filter({ hasText: "Demande bien reçue" });
     await expect(status).toBeVisible();
     await expect(status).toBeFocused();
     await expect(status.getByRole("link", { name: /Appeler le 03 89 73 34 63/ })).toBeVisible();
@@ -127,7 +151,7 @@ test.describe("Formulaire de devis en deux étapes", () => {
 
     await fillStep1(page);
     await fillStep2(page);
-    await page.getByRole("button", { name: "Envoyer" }).click();
+    await page.getByRole("button", { name: "Envoyer ma demande de devis" }).click();
     await expect(page).toHaveURL(/\/contact\/merci$/);
     await expect(page.getByRole("heading", { name: /Demande bien reçue/ })).toBeVisible();
     expect(outbox().length).toBe(before + 1);

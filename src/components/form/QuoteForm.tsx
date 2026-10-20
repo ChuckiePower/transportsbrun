@@ -3,9 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
-import { useForm, type FieldErrors } from "react-hook-form";
+import { useForm, useWatch, type FieldErrors } from "react-hook-form";
+import { RouteInline } from "@/components/route/Itinerary";
+import { RoadLine } from "@/components/route/RoadLine";
+import { TruckGo } from "@/components/route/TruckGo";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { Icon } from "@/components/ui/Icon";
+import { Icon, VehicleIcon } from "@/components/ui/Icon";
 import { mainPhone, site, telHref } from "@/content/site";
 import { cn } from "@/lib/cn";
 import {
@@ -20,7 +23,8 @@ import {
 } from "@/lib/quote-schema";
 import { track } from "@/lib/track";
 import { fr } from "@/lib/typo";
-import { CheckDraw, checkboxClass, ErrorText, Field, inputClass } from "./fields";
+import { checkboxClass, ErrorText, Field, inputClass } from "./fields";
+import { TransportSlip } from "./TransportSlip";
 
 type Status = "idle" | "submitting" | "success" | "error";
 type Step = 1 | 2;
@@ -92,12 +96,19 @@ export function QuoteForm({
     reset,
     trigger,
     subscribe,
+    control,
     formState: { errors },
   } = useForm<QuoteInput, unknown, QuoteData>({
     resolver: zodResolver(quoteSchema),
     mode: "onTouched",
     shouldFocusError: true,
     defaultValues: DEFAULTS,
+  });
+
+  // Itinéraire et bon de transport affichés en direct (texte seul : ni carte ni géocodage)
+  const [requestType, pickup, delivery, date, cargo] = useWatch({
+    control,
+    name: ["requestType", "pickup", "delivery", "date", "cargo"],
   });
 
   // Restaure la saisie en cours puis applique la présélection de l'URL (?type=…&nature=…)
@@ -245,8 +256,10 @@ export function QuoteForm({
   if (status === "success") {
     return (
       <div ref={successRef} tabIndex={-1} role="status" className="py-4 outline-none">
-        <CheckDraw />
-        <h3 className="mt-5 font-display text-h3 font-bold text-ink">Demande envoyée, merci !</h3>
+        <TruckGo className="max-w-sm" />
+        <h3 className="mt-5 font-display text-h3 font-bold text-ink">
+          Demande bien reçue, merci !
+        </h3>
         <p className="mt-3 text-lead text-ink">
           Votre demande a bien été transmise à l&apos;équipe Transports Brun. Nous vous contacterons
           dans les plus brefs délais.
@@ -320,18 +333,24 @@ export function QuoteForm({
             {step === 1 ? "Plus qu'une étape ensuite" : "Dernière étape"}
           </span>
         </div>
+        {/* Progression en marquage au sol : le camion avance d'une étape à l'autre */}
         <div
-          className="mt-3 h-2 overflow-hidden rounded-full bg-cream-2"
+          className="relative mt-2 h-8 overflow-hidden"
           role="progressbar"
           aria-label="Progression du formulaire"
           aria-valuemin={1}
           aria-valuemax={2}
           aria-valuenow={step}
+          aria-valuetext={`Étape ${step} sur 2`}
+          style={{ ["--p" as string]: step === 1 ? "50%" : "100%" }}
         >
-          <div
-            className="h-full rounded-full bg-brand transition-[width] duration-500 ease-out-soft"
-            style={{ width: step === 1 ? "50%" : "100%" }}
-          />
+          <RoadLine className="absolute inset-x-0 bottom-0.5" />
+          <span className="form-progress-fill absolute inset-x-0 bottom-0.5 block">
+            <RoadLine tone="brand" />
+          </span>
+          <span className="form-progress-truck absolute inset-x-0 top-0 flex justify-end">
+            <VehicleIcon name="tracteur" className="size-8 text-brand" />
+          </span>
         </div>
       </div>
 
@@ -404,6 +423,13 @@ export function QuoteForm({
             />
           </div>
         </Field>
+        <div aria-hidden="true" className="hidden js:block">
+          <RouteInline
+            className="rounded-lg bg-cream p-4"
+            from={pickup?.trim() || "À préciser"}
+            to={delivery?.trim() || "À préciser"}
+          />
+        </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <Field
             label="Lieu de chargement"
@@ -594,6 +620,15 @@ export function QuoteForm({
             defaultValue=""
           />
         </div>
+
+        <TransportSlip
+          requestType={requestType}
+          pickup={pickup}
+          delivery={delivery}
+          date={date}
+          cargo={cargo}
+          onEdit={back}
+        />
 
         <div>
           <div className="flex gap-3">

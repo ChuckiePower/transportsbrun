@@ -478,6 +478,22 @@
     }
   }
 
+  /* Camion qui démarre (succès) et progression du formulaire */
+  .truck-go {
+    animation: truck-go 1.6s cubic-bezier(0.55, 0, 0.25, 1) 0.25s both;
+  }
+  @keyframes truck-go {
+    from {
+      transform: translateX(0);
+    }
+  }
+  .form-progress-fill {
+    transition: clip-path 0.6s var(--ease-out-soft);
+  }
+  .form-progress-truck {
+    transition: transform 0.6s var(--ease-out-soft);
+  }
+
   /* Étapes du formulaire */
   .step-enter {
     animation: step-enter 0.35s var(--ease-out-soft) both;
@@ -584,6 +600,17 @@
 /* Bouton Pause du bandeau défilant */
 .marquee-wrap:has(#marquee-pause:checked) .marquee-track {
   animation-play-state: paused;
+}
+
+/* Positions finales (valables sans animation) : camion en route, progression du formulaire */
+.truck-go {
+  transform: translateX(55%);
+}
+.form-progress-fill {
+  clip-path: inset(0 calc(100% - var(--p, 50%)) 0 0);
+}
+.form-progress-truck {
+  transform: translateX(calc(var(--p, 50%) - 100%));
 }
 
 /* Formulaire en deux étapes : avec JavaScript, seule l'étape active est affichée.

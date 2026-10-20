@@ -209,3 +209,43 @@ Pages légales : `noindex, follow`, exclues du sitemap (comportement actuel cons
 - **Mesure d'audience** facultative : événements `click_call`, `click_quote`, `form_step_2`,
   `form_submit`, `callback_submit` envoyés **uniquement** si Umami ou Plausible auto-hébergé est activé
   (désactivé par défaut).
+
+## Mission « amélioration complète » — robuste, chaleureux, en mouvement
+
+### Audit des points [À VÉRIFIER]
+
+| # | Point | Verdict | Suite donnée |
+|---|---|---|---|
+| 1 | Préproduction indexable | Confirmé | `src/proxy.ts` : hors domaine `SITE_URL` (ou `VERCEL_ENV` ≠ production), `X-Robots-Tag: noindex, nofollow` et `robots.txt` en `Disallow: /`. Testé dans `tests/seo.spec.ts`. |
+| 2 | Barre d'appel mobile au premier écran | Confirmé (3 actions visibles avec les boutons du hero, 375 px) | 2 actions (Appeler, Devis), affichée seulement après les boutons du hero (`data-hero-cta`), observateur partagé `src/lib/visibility.ts`, masquée pendant la saisie. |
+| 3 | Eyebrow du hero illisible sur le ciel | Confirmé (#A9B4F2 sur ciel clair) | Pastille sombre translucide, texte blanc ; contraste médian mesuré 12:1 (375 et 1440 px). |
+| 4 | Compteur « 25 » lu plusieurs fois | Confirmé (3 lectures) | Compteur `role="img"` avec un seul `aria-label`, phrase en double retirée. |
+| 5 | Numéros d'étapes 1-2-3 | Non reproduit visuellement | Chiffre décoratif en `aria-hidden` (la liste `<ol>` numérote déjà). |
+| 6 | Photo de la carte camion-grue | Confirmé (flèche de grue et vignes) | Remplacée par `grue/camion-grue-chantier-structure` (levage sur chantier). |
+| 7 | « Être rappelé » sans JavaScript | Confirmé (renvoyait vers le devis) | Lien `/contact#rappel`, mini-formulaire POST sans JS (masqué avec JS), l'API accepte `source=rappel` en formulaire classique, ouverture automatique du tiroir sur `#rappel`. |
+| 8 | Page équipement | Confirmé (« Catégorie X sur 5 » ×5, galerie Openbox mélangée) | Mentions retirées ; poutres béton, cuve, chargement mixte et conteneur reclassés en Plateaux ; Openbox garde les caisses grillagées (Volvo FH) et les deux MAN, issues de l'ancienne galerie Openbox. |
+| 9 | Carte ADR | Non cassée (pleine largeur sous la grille) | Refaite en carte large asphalte avec la plaque `AdrPlate`. |
+| 10 | Répétitions | Confirmé (« 2 mars 2018 » ×3 sur l'accueil) | Retiré de la carte « Pourquoi » ; Facebook : 2 liens (barre du haut, pied de page), conforme. |
+
+### Lot 0 — mesures « avant »
+- HTML de l'accueil : 338 Ko brut / 42 Ko gzip (charge RSC 179 Ko, classes 46 Ko, SVG en ligne 30 Ko, aperçus flous en data-URI ~52 Ko au total, JSON-LD 4 Ko).
+- Lighthouse « avant » = série v2 (Docker + Caddy, HTTP/2) : `/` 98, `/contact` 94, `/notre-equipement` 96, page plateau 98 ; accessibilité, bonnes pratiques et SEO à 100.
+
+### Système visuel
+- Overpass (signalétique) : sous-ensemble latin FR, axe 600–800, 26 Ko (39 Ko d'origine), non préchargée. Licence OFL jointe (`src/fonts/OFL-Overpass.txt`).
+- Icônes : sprite SVG unique (`public/icons.svg`, généré par `pnpm icons`) utilisé par `<use>`, silhouettes de véhicules dessinées sur une grille de 48. `lucide-react` passe en dépendance de développement (source des tracés).
+- `SITE_URL` : valeur par défaut du domaine final uniquement dans `src/lib/site-url.ts` ; aucune URL de préproduction en dur.
+- Marquage au sol (`RoadLine`) en masque CSS : tirets arrondis nets à toutes les largeurs, une seule couleur à changer.
+
+### Pages intérieures (lot 4)
+- Plan coté (`DimensionDrawing`) : uniquement Porteur (6 m, 1,3 m, 7 t) et Remorque (6,5 m, 1 m, 9 t), même échelle (36 px/m) pour comparer ; la cote de longueur passe sous le véhicule pour ne pas croiser la grue.
+- Savoir-faire : l'itinéraire écoresponsable relie « Camions mieux remplis » à « Moins de kilométrages inutiles », sans aucun chiffre.
+- Équipement : « Remorques porte-béton » reste une carte sans photo (aucune photo identifiée, voir TODO-MANU).
+
+### Vente, formulaires (lot 5)
+- Formulaire de devis : itinéraire chargement → livraison affiché en direct (texte seul, sans carte ni géocodage), progression en marquage au sol avec le camion qui avance, récapitulatif « Bon de transport » avec ligne de découpe et bouton « Modifier », écran « Demande bien reçue » avec le camion qui démarre. Mêmes champs, même schéma, même endpoint ; sans JS, formulaire classique sur une page.
+- `RouteInline` passe en colonne sous 640 px pour ne jamais couper un nom de lieu.
+- Libellé d'envoi : « Envoyer ma demande de devis ».
+- Page Contact : seul le panneau asphalte (téléphones, e-mails, horaires, adresse, « Itinéraire ») est collant, la carte passe sous le formulaire ; les 3 `tel:` et 4 `mailto:` sont vérifiés par un test.
+- Vocabulaire : « Près de 25 ans d'expérience » devient « Près de 25 ans de métier » (micro-texte). Conservés car factuels ou métadonnées : la valeur « Expérience » de la page Histoire, « Solutions fiables… » (paragraphe de conclusion du savoir-faire) et « Des solutions sur mesure » (meta description de la page marchandises).
+- Liens des cartes de services : « En savoir plus » remplacé par le nom du service (« Le camion-grue »…), plus explicite hors contexte.

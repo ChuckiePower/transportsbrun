@@ -83,7 +83,7 @@ export const trustFacts: {
 }[] = [
   { label: "Entreprise familiale", detail: fr`Créée le 2 mars 2018`, visual: "family" },
   {
-    label: fr`Près de 25 ans d'expérience`,
+    label: fr`Près de 25 ans de métier`,
     detail: "dans le domaine du transport",
     visual: "route",
   },

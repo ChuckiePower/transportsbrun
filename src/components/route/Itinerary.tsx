@@ -113,7 +113,10 @@ export function Itinerary({
   );
 }
 
-/** Itinéraire compact sur une ligne (formulaire, encarts) : A ——— B */
+/**
+ * Itinéraire compact (formulaire, encarts) : A ——— B sur une ligne à partir de 640 px,
+ * A puis B l'un sous l'autre sur mobile pour ne jamais couper un nom de lieu.
+ */
 export function RouteInline({
   from,
   to,
@@ -129,33 +132,34 @@ export function RouteInline({
   dark?: boolean;
   className?: string;
 }) {
+  const label = cn("eyebrow text-[0.6875rem]", dark && "text-sun");
+  const place = cn(
+    "line-clamp-2 font-display leading-snug font-semibold [overflow-wrap:anywhere]",
+    dark ? "text-white" : "text-ink",
+  );
   return (
-    <div className={cn("flex items-center gap-3", className)}>
+    <div
+      className={cn(
+        "grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3 sm:flex sm:gap-3",
+        className,
+      )}
+    >
       <StopMarker kind="start" dark={dark} className="size-8" />
-      <div className="max-w-[40%] min-w-0">
-        <p className={cn("eyebrow text-[0.6875rem]", dark && "text-sun")}>{fromLabel}</p>
-        <p
-          className={cn(
-            "line-clamp-2 font-display leading-snug font-semibold break-words",
-            dark ? "text-white" : "text-ink",
-          )}
-        >
-          {from}
-        </p>
+      <div className="min-w-0 sm:max-w-[40%]">
+        <p className={label}>{fromLabel}</p>
+        <p className={place}>{from}</p>
       </div>
-      <RoadLine tone={dark ? "marking-soft" : "line"} className="min-w-10 flex-1" />
-      <div className="max-w-[40%] min-w-0 text-right">
-        <p className={cn("eyebrow text-[0.6875rem]", dark && "text-sun")}>{toLabel}</p>
-        <p
-          className={cn(
-            "line-clamp-2 font-display leading-snug font-semibold break-words",
-            dark ? "text-white" : "text-ink",
-          )}
-        >
-          {to}
-        </p>
+      <RoadLine
+        orientation="vertical"
+        tone={dark ? "marking-soft" : "line"}
+        className="col-start-1 row-start-2 my-1.5 h-5 justify-self-center sm:hidden"
+      />
+      <RoadLine tone={dark ? "marking-soft" : "line"} className="hidden min-w-10 flex-1 sm:block" />
+      <div className="col-start-2 row-start-3 min-w-0 sm:max-w-[40%] sm:text-right">
+        <p className={label}>{toLabel}</p>
+        <p className={place}>{to}</p>
       </div>
-      <StopMarker kind="end" dark={dark} className="size-8" />
+      <StopMarker kind="end" dark={dark} className="col-start-1 row-start-3 size-8" />
     </div>
   );
 }

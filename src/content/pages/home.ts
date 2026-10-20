@@ -63,7 +63,7 @@ export const homePage = {
     lead: fr`L'entreprise Brun, c'est avant tout de l'engagement : un transport de marchandises réalisé dans les règles, où ponctualité et respect sont les maîtres mots.`,
     experience: {
       value: 25,
-      label: fr`ans d'expérience dans le domaine du transport`,
+      label: fr`ans de métier dans le domaine du transport`,
       prefix: fr`Près de`,
     },
     cards: [

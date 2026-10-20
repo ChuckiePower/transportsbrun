@@ -210,3 +210,29 @@ test("navigation : la pastille de page active suit le lien courant", async ({ pa
     })
     .toBeLessThan(2);
 });
+
+test("page Contact : 3 téléphones et 4 e-mails cliquables dans le panneau, lien Itinéraire", async ({
+  page,
+}) => {
+  await page.goto("/contact");
+  const panel = page.getByRole("complementary", { name: "Coordonnées" });
+  const tels = await panel
+    .locator("a[href^='tel:']")
+    .evaluateAll((as) => as.map((a) => a.getAttribute("href")));
+  expect(tels).toEqual(["tel:+33389733463", "tel:+33788488725", "tel:+33617294086"]);
+  const mails = await panel
+    .locator("a[href^='mailto:']")
+    .evaluateAll((as) =>
+      as.map((a) => [a.getAttribute("href"), a.textContent?.replace(/\s/g, "")]),
+    );
+  expect(mails).toEqual([
+    ["mailto:contact@transports-brun.com", "contact@transports-brun.com"],
+    ["mailto:comptabilite@transports-brun.com", "comptabilite@transports-brun.com"],
+    ["mailto:exploitation@transports-brun.com", "exploitation@transports-brun.com"],
+    ["mailto:commercialtransportsbrun@gmail.com", "commercialtransportsbrun@gmail.com"],
+  ]);
+  await expect(panel.getByRole("link", { name: /Itinéraire/ })).toHaveAttribute(
+    "href",
+    /google\.com\/maps/,
+  );
+});

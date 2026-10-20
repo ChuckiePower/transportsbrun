@@ -20,7 +20,7 @@ export const contactPage = {
     intro: fr`Si vous avez des questions ou si vous souhaitez obtenir un devis, veuillez remplir le formulaire ci-dessous et nous vous contacterons dans les plus brefs délais. Nous sommes impatients de travailler avec vous et de répondre à tous vos besoins.`,
     /** Texte de consentement repris à l'identique du site actuel */
     consent: fr`En soumettant ce formulaire, j'accepte que les données renseignées soient utilisées par Transports Brun pour leur permettre de prendre connaissance de votre demande, y répondre ainsi que, le cas échéant, assurer la gestion de la relation contractuelle qui pourrait en découler.`,
-    submit: "Envoyer",
+    submit: "Envoyer ma demande de devis",
   },
 
   map: {
