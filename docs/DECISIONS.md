@@ -290,9 +290,12 @@ Avis : les étoiles se remplissent une fois à l'arrivée de la carte (rien en m
   sinon `localhost` est traité comme une préproduction (`noindex`) et l'audit SEO échoue.
 - **Avis de démonstration** : `REVIEWS_FIXTURE=1 pnpm build` substitue `tests/fixtures/reviews.ts` (alias
   `@reviews-data`) pour les tests et la capture `avis-donnees-de-test-*.jpg` ; jamais en production.
-- **Police des titres en `font-display: optional`** : mesurée derrière Caddy, l'accueil avait un CLS de
-  0,19 — l'arrivée tardive de Plus Jakarta refaisait la césure du grand titre du hero (un mot passait à
-  la ligne) et, le bloc étant aligné en bas de la photo, tout le texte du hero bougeait. Préchargée,
-  la police est presque toujours là au premier rendu ; sinon la police de repli reste pour cette page
-  (la suivante, déjà en cache, l'affiche). Inter (texte courant) reste en `swap`, Overpass aussi
-  (textes courts, sans effet mesuré). CLS de l'accueil après correction : 0,0002.
+- **Décalage de mise en page de l'accueil (CLS 0,19 sous Lighthouse)** : deux causes, corrigées.
+  1. Le petit script qui numérote les lignes du titre était placé juste après le `<h1>` : l'analyseur
+     s'y arrêtait et Chrome peignait un hero incomplet (eyebrow et titre seuls) ; le reste arrivait
+     ensuite et le bloc, aligné en bas de la photo, grandissait vers le haut. Le script est désormais
+     placé après la section du hero.
+  2. L'arrivée tardive de Plus Jakarta refaisait la césure du grand titre (un mot passait à la ligne,
+     CLS 0,05 mesuré en 4G simulée). La police des titres passe en `font-display: optional` :
+     préchargée, elle est presque toujours là au premier rendu ; sinon la police de repli reste pour
+     cette page (la suivante, en cache, l'affiche). Inter et Overpass restent en `swap`.
