@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Photo } from "@/components/media/Photo";
-import { Icon } from "@/components/ui/Icon";
-import { IconChip } from "@/components/ui/IconChip";
+import { Icon, VehicleIcon } from "@/components/ui/Icon";
 import { services } from "@/content/services";
 import { cn } from "@/lib/cn";
 
@@ -54,10 +53,12 @@ export function ServiceCards({ headingLevel: H = "h3" }: { headingLevel?: "h2" |
                   featured ? "lg:flex-none" : "flex-1 lg:pt-4",
                 )}
               >
-                <IconChip
-                  name={s.icon}
-                  className="group-focus-within:rotate-6 group-hover:rotate-6 motion-reduce:rotate-0"
-                />
+                <span
+                  aria-hidden="true"
+                  className="inline-flex h-12 w-16 items-center justify-center rounded-full bg-brand-soft text-brand transition-transform duration-300 ease-out-soft group-hover:translate-x-1 motion-reduce:transform-none"
+                >
+                  <VehicleIcon name={s.vehicle} className="size-10" />
+                </span>
                 <H className="mt-4 text-h3 font-bold">{s.title}</H>
                 <p className="mt-2 flex-1 text-ink-soft">{s.teaser}</p>
                 <Link

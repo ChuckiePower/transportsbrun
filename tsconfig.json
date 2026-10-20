@@ -19,7 +19,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@photos/*": ["./content/photos/*"],
-      "@brand/*": ["./content/brand/*"]
+      "@brand/*": ["./content/brand/*"],
+      "@reviews-data": ["./src/content/reviews.ts"]
     }
   },
   "include": [

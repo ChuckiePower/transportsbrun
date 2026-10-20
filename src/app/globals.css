@@ -210,6 +210,11 @@
       center top / 100% 24px repeat-y;
   }
 
+  /* Compteur kilométrique : chaque rouleau montre son chiffre final (état sans JavaScript) */
+  .odo-reel {
+    transform: translateY(calc(var(--d) * -10%));
+  }
+
   /* Asphalte : fond sombre + grain très léger (bruit SVG, 5 %) */
   .surface-asphalt {
     position: relative;

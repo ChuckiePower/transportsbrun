@@ -2,6 +2,7 @@
  * Les trois métiers mis en avant (cartes de l'accueil, bloc « Nos domaines d'expertise »,
  * maillage interne). Textes issus du site actuel.
  */
+import type { VehicleName } from "@/components/ui/Icon";
 import type { PhotoId } from "@/content/gallery";
 import { fr } from "@/lib/typo";
 
@@ -14,6 +15,8 @@ export type Service = {
   /** Une phrase pour les cartes */
   teaser: string;
   icon: "crane" | "flatbed" | "truck";
+  /** Silhouette du véhicule (cartes métiers) */
+  vehicle: VehicleName;
   href: string;
   linkLabel: string;
   photo: PhotoId;
@@ -29,6 +32,7 @@ export const services: Service[] = [
     summary: fr`Nos camions grues sont équipés pour répondre à tous vos besoins en matière de levage, garantissant un placement précis et sécurisé de vos charges, même dans les environnements les plus exigeants.`,
     teaser: fr`Des camions grues équipés pour un placement précis et sécurisé de vos charges, même dans les environnements les plus exigeants.`,
     icon: "crane",
+    vehicle: "camion-grue",
     href: "/transport-plateaux-camion-grue-haut-rhin-alsace#flotte",
     linkLabel: "Le camion-grue",
     photo: "grue/camion-grue-chantier-structure",
@@ -40,6 +44,7 @@ export const services: Service[] = [
     summary: fr`Le transport plateau est essentiel pour le déplacement sécurisé de marchandises industrielles de grandes dimensions, d'un site à un autre, que ce soit de chantier en chantier ou d'usine à usine.`,
     teaser: fr`Le déplacement sécurisé de marchandises industrielles de grandes dimensions, de chantier en chantier ou d'usine à usine.`,
     icon: "flatbed",
+    vehicle: "plateau",
     href: "/transport-plateaux-camion-grue-haut-rhin-alsace",
     linkLabel: "Le transport plateau",
     photo: "plateau/convoi-exceptionnel-man-conteneur",
@@ -52,10 +57,11 @@ export const services: Service[] = [
     summary: fr`La société Transports Brun est une société de fret interurbain qui réalise des transports sur tous types de route. Vous désirez faire transporter des matériaux ou des marchandises ? Transports Brun est l'entreprise idéale pour vous !`,
     teaser: fr`Du fret interurbain sur tous types de route, pour vos matériaux et vos marchandises.`,
     icon: "truck",
+    vehicle: "tautliner",
     href: "/transports-de-marchandises-et-btp-haut-rhin-alsace",
     linkLabel: "Le transport de marchandises",
-    photo: "marchandises/renault-tautliner-parking",
-    focal: "80% 50%",
+    photo: "marchandises/porteur-man-village",
+    focal: "62% 60%",
   },
 ];
 
@@ -67,15 +73,22 @@ export const expertise = {
 };
 
 /**
- * Bandeau de confiance : uniquement des faits présents sur le site actuel.
- * `detail` = précision affichée sous le libellé.
+ * Bandeau « en bref » : uniquement des faits présents sur le site actuel.
+ * `visual` : pictogramme, panneau convoi exceptionnel ou plaque ADR.
  */
-export const trustFacts: { label: string; detail: string }[] = [
-  { label: "Entreprise familiale", detail: fr`Créée le 2 mars 2018` },
-  { label: fr`Près de 25 ans d'expérience`, detail: "dans le domaine du transport" },
-  { label: "Convois exceptionnels", detail: fr`Agréments catégorie 1 et 2` },
-  { label: "ADR", detail: "ADR de base et colisage" },
-  { label: fr`Centrales nucléaires`, detail: fr`Accès référencés` },
-  { label: "Groupement France Plateau", detail: "Membre actif" },
-  { label: "Chauffeurs localisables", detail: fr`Prévenu en avance en cas de livraison tardive` },
+export const trustFacts: {
+  label: string;
+  detail: string;
+  visual: "convoi" | "adr" | "family" | "route" | "plant" | "badge";
+}[] = [
+  { label: "Entreprise familiale", detail: fr`Créée le 2 mars 2018`, visual: "family" },
+  {
+    label: fr`Près de 25 ans d'expérience`,
+    detail: "dans le domaine du transport",
+    visual: "route",
+  },
+  { label: "Convois exceptionnels", detail: fr`Agréments catégorie 1 et 2`, visual: "convoi" },
+  { label: "ADR", detail: "ADR de base et colisage", visual: "adr" },
+  { label: fr`Centrales nucléaires`, detail: fr`Accès référencés`, visual: "plant" },
+  { label: "Groupement France Plateau", detail: "Membre actif", visual: "badge" },
 ];

@@ -1,13 +1,14 @@
+import { RatingBadge } from "@/components/reviews/Reviews";
+import { AdrPlate } from "@/components/route/AdrPlate";
+import { ConvoiPanel } from "@/components/route/ConvoiPanel";
 import { Container } from "@/components/ui/Container";
 import { IconChip } from "@/components/ui/IconChip";
-import type { IconName } from "@/components/ui/Icon";
 import { trustFacts } from "@/content/services";
 
-const icons: IconName[] = ["family", "badge", "ruler", "flame", "shield", "users", "locate"];
-
 /**
- * Bandeau de confiance : carte blanche flottante qui chevauche le bas du hero.
- * Uniquement des faits du site actuel.
+ * Bandeau « en bref » : carte blanche flottante qui chevauche le bas du hero.
+ * Faits réels uniquement ; panneau convoi et plaque ADR à la place des pictogrammes génériques ;
+ * note Google seulement si elle est renseignée.
  */
 export function TrustBand() {
   return (
@@ -16,21 +17,32 @@ export function TrustBand() {
         Transports Brun en bref
       </h2>
       <Container>
-        <ul className="hero-trust grid grid-cols-1 gap-x-6 gap-y-5 rounded-lg border border-line bg-surface p-6 shadow-lg xs:grid-cols-2 sm:p-8 lg:grid-cols-4 xl:grid-cols-7 xl:gap-4 xl:p-7">
-          {trustFacts.map((fact, i) => (
-            <li key={fact.label} className="flex items-start gap-3 xl:flex-col xl:gap-3">
-              <IconChip name={icons[i] ?? "badge"} />
-              <span>
-                <span className="block font-display text-[0.95rem] leading-snug font-bold text-ink">
-                  {fact.label}
+        <div className="hero-trust rounded-lg border border-line bg-surface p-6 shadow-lg sm:p-8 xl:p-7">
+          <ul className="grid grid-cols-1 gap-x-6 gap-y-6 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 xl:gap-5">
+            {trustFacts.map((fact) => (
+              <li key={fact.label} className="flex items-start gap-3 xl:flex-col">
+                <span className="flex h-11 shrink-0 items-center">
+                  {fact.visual === "convoi" ? (
+                    <ConvoiPanel size="sm" category={false} />
+                  ) : fact.visual === "adr" ? (
+                    <AdrPlate size="md" className="h-8 w-[2.75rem]" />
+                  ) : (
+                    <IconChip name={fact.visual} />
+                  )}
                 </span>
-                <span className="mt-0.5 block text-[0.875rem] leading-snug text-ink-soft">
-                  {fact.detail}
+                <span>
+                  <span className="block font-display text-[0.95rem] leading-snug font-bold text-ink">
+                    {fact.label}
+                  </span>
+                  <span className="mt-0.5 block text-[0.875rem] leading-snug text-ink-soft">
+                    {fact.detail}
+                  </span>
                 </span>
-              </span>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ))}
+          </ul>
+          <RatingBadge className="mt-6 border-t border-line pt-5" />
+        </div>
       </Container>
     </section>
   );

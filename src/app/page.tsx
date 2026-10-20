@@ -2,20 +2,26 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { CallbackTrigger } from "@/components/form/CallbackTrigger";
 import { Photo } from "@/components/media/Photo";
+import { hasRating, RatingBadge, ReviewsSection } from "@/components/reviews/Reviews";
+import { AdrPlate } from "@/components/route/AdrPlate";
+import { ConvoiPanel } from "@/components/route/ConvoiPanel";
+import { RoadSegment } from "@/components/route/RoadLine";
+import { ClientLogos } from "@/components/sections/ClientLogos";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { ExpertiseBlock } from "@/components/sections/ExpertiseBlock";
 import { Faq } from "@/components/sections/Faq";
+import { HomeRoad } from "@/components/sections/HomeRoad";
 import { Marquee } from "@/components/sections/Marquee";
-import { Road } from "@/components/sections/Road";
 import { ServiceCards } from "@/components/sections/ServiceCards";
-import { ClientLogos, Testimonials } from "@/components/sections/SocialProof";
 import { Steps } from "@/components/sections/Steps";
+import { Team } from "@/components/sections/Team";
 import { TransportedCards } from "@/components/sections/TransportedCards";
 import { TrustBand } from "@/components/sections/TrustBand";
 import { WhyBrun } from "@/components/sections/WhyBrun";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { Icon, VehicleIcon, type VehicleName } from "@/components/ui/Icon";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { equipmentCategories } from "@/content/equipment";
@@ -26,11 +32,11 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata(page.meta, "/");
 
-/** Titre découpé en mots pour la révélation en cascade (le texte reste lisible sans JS) */
+/** Titre découpé en mots, révélés ligne par ligne derrière un masque (lisible sans JS) */
 function HeroTitle({ text }: { text: string }) {
   const words = text.split(" ");
   return (
-    <h1 className="text-h1 font-extrabold text-white">
+    <h1 data-lines="" className="text-h1 font-extrabold text-white">
       {words.map((w, i) => (
         <Fragment key={i}>
           <span className="inline-block overflow-hidden pb-[0.08em] align-top">
@@ -45,14 +51,33 @@ function HeroTitle({ text }: { text: string }) {
   );
 }
 
+const categoryVehicle: Record<string, VehicleName> = {
+  plateaux: "plateau",
+  openbox: "openbox",
+  "remorque-trax": "trax",
+  tautliner: "tautliner",
+  "camion-grue": "camion-grue",
+};
+
 export default function HomePage() {
-  const photoRadii = ["rounded-lg", "rounded-xl", "rounded-lg", "rounded-2xl"];
+  const mosaic = [
+    "col-span-4 row-span-2 aspect-[4/5] rounded-xl",
+    "col-span-2 aspect-[3/4] rounded-lg",
+    "col-span-2 aspect-[3/4] rounded-[20px]",
+    "col-span-6 aspect-[16/7] rounded-lg",
+  ];
+  const mosaicSizes = [
+    "(min-width: 1024px) 440px, 66vw",
+    "(min-width: 1024px) 220px, 33vw",
+    "(min-width: 1024px) 220px, 33vw",
+    "(min-width: 1024px) 670px, 100vw",
+  ];
   return (
     <div className="relative">
-      <Road />
+      <HomeRoad />
 
-      {/* 1. Hero : grande photo arrondie, voile doux sous le texte */}
-      <section className="px-3 pt-4 sm:px-4 lg:pt-6">
+      {/* 1. Hero : grande photo arrondie, voile sous le texte seulement */}
+      <section className="relative z-[2] px-3 pt-4 sm:px-4 lg:pt-6">
         <div className="surface-asphalt relative isolate mx-auto flex min-h-[calc(100svh-7rem)] max-w-[87.5rem] overflow-hidden rounded-xl md:min-h-[78vh]">
           <div data-parallax="" className="absolute inset-0 -z-20">
             <Photo
@@ -69,11 +94,11 @@ export default function HomePage() {
           </div>
           <div
             aria-hidden="true"
-            className="hero-veil absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgb(20_33_61/0.85)_0%,rgb(20_33_61/0.55)_45%,rgb(20_33_61/0)_80%)] md:bg-[linear-gradient(35deg,rgb(20_33_61/0.78)_0%,rgb(20_33_61/0.45)_42%,rgb(20_33_61/0)_70%)]"
+            className="hero-veil absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgb(35_38_44/0.88)_0%,rgb(35_38_44/0.6)_45%,rgb(35_38_44/0)_80%)] md:bg-[linear-gradient(35deg,rgb(35_38_44/0.82)_0%,rgb(35_38_44/0.5)_42%,rgb(35_38_44/0)_70%)]"
           />
           <Container className="flex flex-col justify-end pt-28 pb-28 sm:pb-32 lg:pb-36">
             <div className="max-w-[44rem]">
-              <Eyebrow className="hero-in mb-5 inline-flex rounded-full bg-[rgb(20_33_61/0.55)] px-3.5 py-1.5 text-white backdrop-blur-md">
+              <Eyebrow className="hero-in mb-5 inline-block rounded-full bg-[rgb(20_33_61/0.55)] px-3.5 py-1.5 text-white backdrop-blur-md max-sm:text-[0.6875rem]">
                 {page.hero.eyebrow}
               </Eyebrow>
               <HeroTitle text={page.hero.title} />
@@ -101,12 +126,36 @@ export default function HomePage() {
                 </ButtonLink>
                 <CallbackTrigger className="on-asphalt justify-center px-2 text-white xs:justify-start" />
               </div>
+              {/* Micro-preuves (ordinateur) */}
+              <ul
+                className="hero-in mt-8 hidden flex-wrap items-center gap-x-6 gap-y-3 text-[0.9rem] text-white/90 lg:flex"
+                style={{ ["--i" as string]: 5 }}
+                aria-label="En bref"
+              >
+                <li>
+                  <ConvoiPanel size="md" />
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <AdrPlate size="sm" className="h-[22px] w-[30px]" />
+                  ADR de base et colisage
+                </li>
+                <li className="flex items-center gap-2">
+                  {hasRating() ? (
+                    <RatingBadge dark />
+                  ) : (
+                    <>
+                      <Icon name="locate" className="size-[18px] text-sun" />
+                      {page.hero.proofFallback}
+                    </>
+                  )}
+                </li>
+              </ul>
             </div>
           </Container>
         </div>
       </section>
 
-      {/* 2. Bandeau de confiance (chevauche le hero) */}
+      {/* 2. En bref (chevauche le hero) */}
       <TrustBand />
 
       {/* 3. Savoir-faire en pastilles défilantes */}
@@ -127,12 +176,42 @@ export default function HomePage() {
       </Section>
       <CtaBand
         variant="compact"
-        title="Un transport plateau ou grue à prévoir ?"
-        text="Décrivez-le en quelques champs : nous vous répondons dans les plus brefs délais."
+        title="Un transport plateau ou un levage à prévoir ?"
+        text="Décrivez votre chargement : nous vous répondons dans les plus brefs délais."
       />
 
-      {/* 5. Ce que nous transportons */}
-      <Section tone="none" aria-labelledby="transport-titre">
+      {/* 5. Grande bande photo : un convoi sur la route */}
+      <section aria-label={page.band.quote} className="relative z-[2] px-3 py-10 sm:px-4 lg:py-16">
+        <div
+          data-reveal-photo=""
+          className="relative mx-auto aspect-[4/5] max-w-[87.5rem] overflow-hidden rounded-xl bg-asphalt sm:aspect-[16/8] lg:aspect-[16/6]"
+        >
+          <div data-parallax="" className="absolute inset-0">
+            <Photo
+              id={page.band.photo}
+              fill
+              sizes="(min-width: 1400px) 1400px, 100vw"
+              className="object-cover"
+              style={{ objectPosition: page.band.focal }}
+            />
+          </div>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[linear-gradient(10deg,rgb(35_38_44/0.85)_0%,rgb(35_38_44/0.35)_45%,rgb(35_38_44/0)_70%)]"
+          />
+          <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
+            <Eyebrow className="inline-block rounded-full bg-[rgb(20_33_61/0.55)] px-3.5 py-1.5 text-white backdrop-blur-md max-sm:text-[0.6875rem]">
+              {page.band.eyebrow}
+            </Eyebrow>
+            <p className="mt-4 max-w-2xl font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.05] font-extrabold tracking-tight text-white">
+              {page.band.quote}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Ce que nous transportons */}
+      <Section tone="cream-2" aria-labelledby="transport-titre">
         <Container>
           <SectionHeading
             id="transport-titre"
@@ -145,21 +224,25 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* 6. Pourquoi Transports Brun */}
+      {/* 7. Pourquoi Transports Brun (asphalte, compteur kilométrique) */}
       <WhyBrun />
 
-      {/* 7. Comment ça marche */}
+      {/* 8. Ce que disent nos clients (avis Google, masqué sans données) */}
+      <ReviewsSection />
+
+      {/* 9. Comment ça marche : l'itinéraire */}
       <Steps />
       <CtaBand
         variant="compact"
         title="Prêt à décrire votre transport ?"
         text="Le formulaire de devis se remplit en deux étapes."
       />
+      <RoadSegment className="pt-4" />
 
-      {/* 8. Nos domaines d'expertise */}
-      <ExpertiseBlock tone="none" photo={page.expertise.photo} />
+      {/* 10. Nos domaines d'expertise : la carte des routes */}
+      <ExpertiseBlock tone="none" />
 
-      {/* 9. Notre histoire */}
+      {/* 11. Notre histoire */}
       <Section tone="cream-2" aria-labelledby="histoire-titre">
         <Container className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
           <div className="grid grid-cols-6 gap-3 sm:gap-4 lg:order-2 lg:col-span-7">
@@ -168,28 +251,9 @@ export default function HomePage() {
                 key={id}
                 data-reveal-photo=""
                 style={{ ["--i" as string]: i }}
-                className={[
-                  "relative overflow-hidden bg-cream shadow-sm",
-                  photoRadii[i],
-                  i === 0
-                    ? "col-span-4 row-span-2 aspect-[4/5]"
-                    : i === 3
-                      ? "col-span-6 aspect-[16/7]"
-                      : "col-span-2 aspect-[3/4]",
-                ].join(" ")}
+                className={`relative overflow-hidden bg-cream shadow-sm ${mosaic[i]}`}
               >
-                <Photo
-                  id={id}
-                  fill
-                  sizes={
-                    i === 3
-                      ? "(min-width: 1024px) 670px, 100vw"
-                      : i === 0
-                        ? "(min-width: 1024px) 440px, 66vw"
-                        : "(min-width: 1024px) 220px, 33vw"
-                  }
-                  className="object-cover"
-                />
+                <Photo id={id} fill sizes={mosaicSizes[i]} className="object-cover" />
               </div>
             ))}
           </div>
@@ -222,37 +286,36 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* 10. Équipement */}
+      {/* 12. Équipement */}
       <Section tone="none" aria-labelledby="equipement-titre">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-            <div className="lg:col-span-7">
-              <SectionHeading
-                id="equipement-titre"
-                eyebrow={page.equipment.eyebrow}
-                title={page.equipment.title}
-                lead={page.equipment.lead}
-              />
-            </div>
-            <div data-reveal="" className="lg:col-span-5 lg:justify-self-end">
-              <ul
-                className="flex flex-wrap gap-2 lg:justify-end"
-                aria-label="Catégories de véhicules"
-              >
-                {equipmentCategories.map((cat) => (
-                  <li key={cat.id}>
-                    <Link
-                      href={`/notre-equipement#${cat.id}`}
-                      className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-4 font-display text-[0.9rem] font-semibold text-ink shadow-sm transition-colors hover:border-ink"
-                    >
-                      {cat.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          <SectionHeading
+            id="equipement-titre"
+            eyebrow={page.equipment.eyebrow}
+            title={page.equipment.title}
+            lead={page.equipment.lead}
+          />
+          <ul
+            data-reveal=""
+            className="mt-10 flex flex-wrap gap-2.5"
+            aria-label="Catégories de véhicules"
+          >
+            {equipmentCategories.map((cat) => (
+              <li key={cat.id}>
+                <Link
+                  href={`/notre-equipement#${cat.id}`}
+                  className="group inline-flex min-h-12 items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pr-5 pl-3 font-display text-[0.95rem] font-semibold text-ink shadow-sm transition-colors hover:border-ink"
+                >
+                  <VehicleIcon
+                    name={categoryVehicle[cat.id] ?? "plateau"}
+                    className="size-9 text-brand transition-transform duration-300 group-hover:translate-x-0.5"
+                  />
+                  {cat.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {page.equipment.thumbs.map((id, i) => (
               <div
                 key={id}
@@ -277,12 +340,14 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* 11. Preuves sociales : masquées tant qu'il n'y a pas de données réelles */}
-      <Testimonials />
+      {/* 13. Équipe et logos clients : masqués tant que les fichiers sont vides */}
+      <Team tone="cream-2" />
       <ClientLogos />
 
-      {/* 12. FAQ puis grand bandeau final */}
+      {/* 14. FAQ */}
       <Faq items={faqs} eyebrow={page.faq.eyebrow} title={page.faq.title} tone="cream-2" />
+
+      {/* 15. Bandeau final : l'arrivée */}
       <CtaBand />
     </div>
   );

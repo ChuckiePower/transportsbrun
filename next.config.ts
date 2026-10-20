@@ -46,6 +46,16 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Avis Google : données réelles (src/content/reviews.ts) ; données de démonstration
+  // uniquement pour un build de test lancé avec REVIEWS_FIXTURE=1 (jamais en production)
+  turbopack: {
+    resolveAlias: {
+      "@reviews-data":
+        process.env.REVIEWS_FIXTURE === "1"
+          ? "./tests/fixtures/reviews.ts"
+          : "./src/content/reviews.ts",
+    },
+  },
   // Serveur autonome pour l'image Docker ; sur Vercel (VERCEL=1 pendant le build),
   // on laisse Vercel empaqueter le site à sa façon.
   output: process.env.VERCEL ? undefined : "standalone",

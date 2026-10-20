@@ -19,6 +19,16 @@ export const homePage = {
     lead: fr`Du quai d'expédition jusqu'au client, nous nous occupons de tout : transport plateau et grue, fret interurbain et marchandises, en France et à l'étranger.`,
     photo: pid("grue/camion-grue-volvo-levage-module"),
     focal: "38% 45%",
+    /** Micro-preuve affichée quand la note Google n'est pas renseignée */
+    proofFallback: "Chauffeurs localisables",
+  },
+
+  /** Grande bande photo : un convoi sur la route, et une phrase tirée de « Nos domaines d'expertise » */
+  band: {
+    photo: pid("marchandises/scania-conteneur-foret"),
+    focal: "50% 55%",
+    eyebrow: fr`Régional · National · International`,
+    quote: fr`Du quai d'expédition jusqu'au client.`,
   },
 
   /** Bandeau défilant : savoir-faire cités sur le site */
@@ -99,10 +109,6 @@ export const homePage = {
     ],
   },
 
-  expertise: {
-    photo: pid("marchandises/scania-conteneur-foret"),
-  },
-
   story: {
     eyebrow: fr`L'entreprise Transports Brun`,
     title: "Notre histoire",
@@ -114,9 +120,9 @@ export const homePage = {
     linkLabel: "Lire notre histoire",
     mosaic: [
       pid("flotte/man-tgx-enseigne"),
-      pid("flotte/daf-xg-decoration-noire"),
-      pid("flotte/quatre-tracteurs-ciel-bleu"),
+      pid("flotte/daf-xg-livree"),
       pid("grue/camion-grue-batiment-historique"),
+      pid("flotte/flotte-alignee"),
     ],
   },
 
@@ -126,7 +132,7 @@ export const homePage = {
     lead: fr`Tracteurs, plateaux, openbox, tautliners, remorque Trax, remorques porte-béton et camion-grue avec remorque : un parc pensé pour répondre aux différents besoins de chargement et de livraison.`,
     linkLabel: fr`Voir notre équipement`,
     thumbs: [
-      pid("plateau/convoi-exceptionnel-man-conteneur"),
+      pid("plateau/plateau-man-voie-rapide"),
       pid("equipement/remorque-trax-cadres-beton"),
       pid("grue/camion-grue-volvo-fm"),
     ],
