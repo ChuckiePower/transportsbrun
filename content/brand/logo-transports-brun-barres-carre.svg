@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <title>Transports Brun</title>
+  <!-- Les 3 barres du logo, centrées sur un carré blanc (photo de profil, icône).
+       Elles restent dans le cercle inscrit : rien n'est coupé par un recadrage rond. -->
+  <rect width="1000" height="1000" fill="#FFFFFF"/>
+  <g transform="translate(131 344) scale(1.04)">
+    <path fill="#00007E" d="M145 0H290L145 300H0Z"/>
+    <path fill="#323232" d="M355 0H500L355 300H210Z"/>
+    <path fill="#BCBCBC" d="M565 0H710L565 300H420Z"/>
+  </g>
+</svg>
