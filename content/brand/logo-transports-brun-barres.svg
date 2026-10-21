@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710 300" width="710" height="300">
+  <title>Transports Brun</title>
+  <!-- Les 3 barres du logo Transports Brun, redessinées en vectoriel d'après le logo d'origine :
+       bleu marine #00007E, gris foncé #323232, gris clair #BCBCBC. -->
+  <path fill="#00007E" d="M145 0H290L145 300H0Z"/>
+  <path fill="#323232" d="M355 0H500L355 300H210Z"/>
+  <path fill="#BCBCBC" d="M565 0H710L565 300H420Z"/>
+</svg>
