@@ -30,7 +30,7 @@ données ne sont pas fournies (avis, équipe, logos clients). Détails dans les 
       cookies, données personnelles, directeur de la publication (voir §1).
 - [ ] **Adresse commerciale en Gmail** (`commercialtransportsbrun@gmail.com`) à remplacer par une adresse
       du domaine (par exemple `commercial@transports-brun.com`) : une seule ligne dans `src/content/site.ts`.
-- [ ] **Identifiants SMTP et `CONTACT_TO`** pour la production (voir §3), à saisir dans `.env` sur le VPS.
+- [ ] **Identifiants SMTP et `CONTACT_TO`** pour la production (voir §3) : `bash scripts/configurer.sh` sur le VPS.
 
 ## 1. Textes légaux (`src/content/legal.ts`, commentaires `TODO(manu): à valider`)
 
@@ -152,10 +152,13 @@ données ne sont pas fournies (avis, équipe, logos clients). Détails dans les 
 | `divers/man-fourgon-assombri.jpg` | 2000×636 | — (nom d'origine inconnu : voir `sourceMiroir`) |
 ## 3. Accès et paramètres de production
 
-- [ ] **SMTP** : confirmer l'hôte (`smtp.ionos.fr` probable), le port, et fournir la boîte d'envoi
-      + son mot de passe (à saisir dans `.env` sur le VPS uniquement, jamais dans le dépôt).
+- [ ] **SMTP** : messagerie chez Infomaniak (`mail.infomaniak.com`, port 465). Sur le VPS, lancer
+      `bash scripts/configurer.sh` : il demande la boîte d'envoi et son mot de passe (saisi en masqué)
+      et écrit `.env` ; jamais dans le dépôt.
 - [ ] **Destinataire** des demandes de devis (`CONTACT_TO`, par défaut `contact@transports-brun.com`).
-- [ ] **Accès à la zone DNS** (IONOS) le jour de la bascule et IP(v4/v6) du VPS (voir `DEPLOY.md` §5).
+- [ ] **Zone DNS chez Infomaniak** (Manager → Domaines → transports-brun.com → Zone DNS) : y ajouter
+      les enregistrements du site (A/AAAA de `@`, `www`) le jour de la bascule, avec l'IP du VPS
+      (voir `DEPLOY.md` §5). Ne pas toucher aux enregistrements de messagerie.
 - [ ] **Google Search Console** et **Google Business Profile** : accès pour soumettre le sitemap
       et vérifier le lien vers le site.
 - [ ] (Facultatif) **Mesure d'audience** : souhaitez-vous Umami ou Plausible auto-hébergé ? (désactivé par défaut)

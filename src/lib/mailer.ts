@@ -7,7 +7,7 @@ import type { CallbackData, QuoteData } from "./quote-schema";
 /**
  * Envoi des demandes de devis par e-mail.
  *
- * - SMTP_HOST défini → envoi réel via SMTP (IONOS : smtp.ionos.fr à confirmer).
+ * - SMTP_HOST défini → envoi réel via SMTP (messagerie Infomaniak : mail.infomaniak.com).
  * - MAIL_OUTBOX_FILE défini → aucun envoi, le message est ajouté (JSON) à ce fichier (tests).
  * - Sinon, hors production → aucun envoi, le message est affiché dans la console.
  * - Sinon (production sans SMTP) → erreur explicite : on ne perd pas une demande en silence.

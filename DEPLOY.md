@@ -24,20 +24,23 @@ côté DNS : toutes les commandes ci-dessous sont à exécuter par vous.
 sudo mkdir -p /opt/transports-brun && sudo chown "$USER" /opt/transports-brun
 git clone https://github.com/ChuckiePower/transportsbrun.git /opt/transports-brun
 cd /opt/transports-brun
-cp .env.example .env
-chmod 600 .env
-nano .env
+bash scripts/configurer.sh
 ```
 
-Variables à renseigner dans `.env` :
+`scripts/configurer.sh` pose les questions une à une (nom de domaine, adresse qui reçoit les
+demandes, boîte d'envoi, mot de passe saisi en masqué, serveur d'envoi) et écrit `.env` avec des
+droits 600, sans éditeur de texte. Relancez-le pour changer une valeur : les réponses précédentes
+sont proposées par défaut et l'ancien fichier est gardé dans `.env.bak`.
+
+Ce qu'il renseigne dans `.env` :
 
 | Variable | Valeur | Remarque |
 |---|---|---|
 | `SITE_URL` | `https://transports-brun.com` | sans slash final ; gravée dans les pages au build |
-| `SMTP_HOST` | `smtp.ionos.fr` | **à confirmer** dans l'espace client IONOS (rubrique e-mail) |
+| `SMTP_HOST` | `mail.infomaniak.com` | messagerie du domaine chez Infomaniak |
 | `SMTP_PORT` / `SMTP_SECURE` | `465` / `true` (SSL) ou `587` / `false` (STARTTLS) | |
 | `SMTP_USER` / `SMTP_PASS` | adresse complète de la boîte d'envoi + mot de passe | ex. une boîte dédiée `site@…` ou `contact@…` |
-| `CONTACT_FROM` | en général = `SMTP_USER` | IONOS refuse un expéditeur qui n'est pas la boîte authentifiée |
+| `CONTACT_FROM` | = `SMTP_USER` | avec le DMARC `p=reject` du domaine, l'expéditeur doit être la boîte authentifiée |
 | `CONTACT_TO` | `contact@transports-brun.com` | destinataire des demandes de devis |
 
 Sans `SMTP_HOST`, le formulaire refuse proprement l'envoi en production (message invitant à
@@ -100,14 +103,17 @@ rechargez Caddy et vérifiez tout le site sur `https://nouveau.transports-brun.c
 
 ## 5. Bascule DNS sans coupure des e-mails
 
-Les adresses `@transports-brun.com` sont hébergées chez IONOS. Seul le **site** déménage :
-on ne touche **qu'aux enregistrements A/AAAA** du site.
+Le domaine et les adresses `@transports-brun.com` sont chez **Infomaniak** (DNS `nsany1/nsany2.infomaniak.com`,
+MX `mta-gw.infomaniak.ch`). Seul le **site** est concerné : on ne touche **qu'aux enregistrements
+A/AAAA (et `www`)** du site. Zone DNS : Manager Infomaniak → Domaines → transports-brun.com → Zone DNS.
 
-1. **Inventaire** : dans la zone DNS (IONOS), faites une capture/export de *tous* les
-   enregistrements avant toute modification.
+1. **Inventaire** : exportez la zone DNS (*tous* les enregistrements) avant toute modification.
+   Export du 21/10/2026 : SOA, NS, MX, TXT SPF, `_dmarc`, `autoconfig`, `autodiscover`, et **aucun**
+   enregistrement A, AAAA ou CNAME pour `@` ni `www` (le domaine ne pointait alors vers aucun site).
 2. **À ne pas toucher** : `MX`, `TXT` SPF (`v=spf1 …`), DKIM (`…._domainkey`), DMARC (`_dmarc`),
    `autodiscover`/`autoconfig`, `mail`/`imap`/`smtp`, vérifications (Google, etc.).
-3. **J-2** : baissez le TTL des enregistrements `A`/`AAAA` de `@` et `www` à 300 s.
+3. **J-2** : baissez le TTL des enregistrements `A`/`AAAA` de `@` et `www` à 300 s (ou créez-les
+   directement avec un TTL de 300 s s'ils n'existent pas).
 4. **Jour J** :
    - `@` (`transports-brun.com`) : **A** → IPv4 du VPS ;
    - `www` : **A** → IPv4 du VPS (ou CNAME vers `transports-brun.com`) ;
@@ -116,9 +122,9 @@ on ne touche **qu'aux enregistrements A/AAAA** du site.
 5. Vérifiez la propagation : `dig +short transports-brun.com A`, `dig +short www.transports-brun.com A`.
 6. Vérifiez que la messagerie est intacte : `dig +short transports-brun.com MX` (inchangé),
    envoyez et recevez un e-mail de test sur `contact@`.
-7. Laissez l'ancien hébergement actif quelques jours (retour arrière = remettre les anciens A/AAAA).
-   Attention, chez IONOS, le nom de domaine, l'hébergement et la messagerie peuvent être dans le
-   même contrat : ne résiliez **que** la partie hébergement web, jamais la messagerie ni le domaine.
+7. S'il existait un ancien hébergement, laissez-le actif quelques jours (retour arrière = remettre
+   les anciens A/AAAA). Ne résiliez jamais la messagerie ni le domaine, qui restent chez Infomaniak.
+8. Une fois tout vérifié, remontez le TTL à 3600 s.
 
 ## 6. Contrôles après bascule
 
